@@ -12,6 +12,7 @@ import (
     */
     "github.com/lambda-platform/lambda"
     "github.com/lambda-platform/lambda/agent"
+    "github.com/lambda-platform/lambda/exportImport"
     "github.com/lambda-platform/lambda/krud"
     "github.com/lambda-platform/lambda/puzzle"
     /*
@@ -61,7 +62,7 @@ func Set() *lambda.Lambda {
     }
     agent.Set(lambda.Echo)
     krud.Set(lambda.Echo, gridCaller.GetMODEL, caller.GetMODEL, KrudMiddleWares, true)
-
+    exportImport.Set(lambda.Echo)
     /*
     	|----------------------------------------------
     	| MODULES

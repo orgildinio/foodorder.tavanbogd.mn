@@ -5,3 +5,7 @@
    You are ready :)
 
 More information: https://lambda-platform.github.io/ 
+
+## import url
+
+http://localhost:3000/crud/import/crud-export.json
