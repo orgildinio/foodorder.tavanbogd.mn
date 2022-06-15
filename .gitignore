@@ -11,3 +11,4 @@ tmp
 go.sum
 *.toml
 node_modules
+crud-export.json
