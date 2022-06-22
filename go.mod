@@ -6,7 +6,7 @@ require (
 	github.com/foolin/goview v0.3.0
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/labstack/echo/v4 v4.7.2
-	github.com/lambda-platform/lambda v0.5.12
+	github.com/lambda-platform/lambda v0.5.15
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/thedevsaddam/govalidator v1.9.10
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
