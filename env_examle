@@ -29,4 +29,4 @@ MAIL_FROM_NAME=LAMBDA
 
 GRAPHQL_DEBUG=true
 
-LAMBDA_ROOT="node_modules/@lambda-platform/lambda-builder"
+LAMBDA_ROOT="lambda-builder"
