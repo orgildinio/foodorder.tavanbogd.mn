@@ -41,10 +41,11 @@
 <script type="text/javascript" src="/vendor/echart/echarts-en.js"></script>
 <script type="text/javascript" src="/vendor/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/vendor/echart/theme/macarons.js"></script>
-<script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDJZAnIp-j3EH7HxB8wnBhszawu_yqtSsc&language=en"></script>
+{if .UseNotify}}
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-messaging.js"></script>
+<script src="{{index .mix "/assets/lambda/js/notification.js"}}"></script>
+{{end}}
 <script src="{{index .mix "/assets/lambda/js/moqup.js"}}"></script>
 <script src="{{index .mix "/assets/lambda/js/dataform.js"}}"></script>
 <script src="{{index .mix "/assets/lambda/js/datagrid-vendor.js"}}"></script>
