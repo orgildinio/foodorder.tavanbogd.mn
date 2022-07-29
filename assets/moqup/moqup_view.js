@@ -6,8 +6,6 @@ import axios from 'axios';
 import moqupView from './moqup/moqup';
 
 
-
-
 window.Vue = Vue;
 
 
@@ -15,11 +13,7 @@ window.axios = axios;
 Vue.config.productionTip = false;
 Vue.use(iView, { locale });
 
-console.log("hihi")
-
 new Vue({
-    components: {
-        moqupView
-    },
-    render: h => h(moqupView),
-}).$mount('#moqup');
+    el: '#moqup',
+    extends: moqupView,
+});

@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/labstack/echo/v4"
+	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/DB"
 	agentModels "github.com/lambda-platform/lambda/agent/models"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
@@ -10,7 +10,6 @@ import (
 	krudModels "github.com/lambda-platform/lambda/krud/models"
 	puzzleModels "github.com/lambda-platform/lambda/models"
 	"github.com/lambda-platform/lambda/utils"
-	"net/http"
 )
 
 type Permissions struct {
@@ -20,8 +19,8 @@ type Permissions struct {
 	Permissions interface{} `json:"permissions"`
 }
 
-func AdminIndex(UseNotify bool) echo.HandlerFunc {
-	return func(c echo.Context) error {
+func AdminIndex(UseNotify bool) fiber.Handler {
+	return func(c *fiber.Ctx) error {
 		User := agentUtils.AuthUserObject(c)
 		Role := agentModels.Role{}
 		DB.DB.Where("id = ?", User["role"]).Find(&Role)
@@ -37,7 +36,7 @@ func AdminIndex(UseNotify bool) echo.HandlerFunc {
 		FirebaseConfig := config.LambdaConfig.Notify.FirebaseConfig
 		//csrfToken := c.Get(middleware.DefaultCSRFConfig.ContextKey).(string)
 		csrfToken := ""
-		return c.Render(http.StatusOK, "admin.html", map[string]interface{}{
+		return c.Render("admin", map[string]interface{}{
 			"UseNotify":                 UseNotify,
 			"title":                     config.LambdaConfig.Title,
 			"extraStyles":               config.LambdaConfig.ControlPanel.ExtraStyles,

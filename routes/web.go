@@ -1,17 +1,16 @@
 package routes
 
 import (
-    "lambda/app/controllers"
-    "lambda/app/middlewares"
-    "github.com/labstack/echo/v4"
-    "github.com/lambda-platform/lambda/agent/agentMW"
+	"github.com/gofiber/fiber/v2"
+	"github.com/lambda-platform/lambda/agent/agentMW"
+	"lambda/app/controllers"
 )
 
-func Web(e *echo.Echo) {
+func Web(e *fiber.App) {
 
-    //WEB ROUTE
-    e.GET("/", controllers.HomeProduction, middlewares.ViewParser()) //production
+	//WEB ROUTE
+	e.Get("/", controllers.HomeProduction) //production
 
-    //ADMIN ROUTE
-    e.GET("/admin", controllers.AdminIndex(true), agentMW.IsLoggedInCookie)
+	//ADMIN ROUTE
+	e.Get("/admin", agentMW.IsLoggedIn(), controllers.AdminIndex(true))
 }

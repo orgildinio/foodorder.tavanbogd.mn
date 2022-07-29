@@ -1,16 +1,15 @@
 package controllers
 
 import (
-    "github.com/labstack/echo/v4"
-    "github.com/lambda-platform/lambda/DB"
-    "lambda/app/models"
-    "net/http"
+	"github.com/gofiber/fiber/v2"
+	"github.com/lambda-platform/lambda/DB"
+	"lambda/app/models"
 )
 
-func Users(c echo.Context) error {
+func Users(c *fiber.Ctx) error {
 
-    users := []models.Users{}
-    DB.DB.Find(&users)
+	users := []models.Users{}
+	DB.DB.Find(&users)
 
-    return c.JSON(http.StatusOK, users)
+	return c.JSON(users)
 }

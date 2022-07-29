@@ -1,14 +1,12 @@
 package controllers
 
 import (
-	"github.com/foolin/goview/supports/echoview-v4"
-	"github.com/labstack/echo/v4"
-	"net/http"
+	"github.com/gofiber/fiber/v2"
 )
 
 //home page
-func HomeProduction(c echo.Context) error {
-	return echoview.Render(c, http.StatusOK, "home", map[string]interface{}{})
+func HomeProduction(c *fiber.Ctx) error {
+	return c.Render("home", map[string]interface{}{})
 }
 
 func HomeData() map[string]interface{} {

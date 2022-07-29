@@ -1,11 +1,11 @@
 package routes
 
 import (
+    "github.com/gofiber/fiber/v2"
     "lambda/app/controllers"
-    "github.com/labstack/echo/v4"
 )
 
-func Api(e *echo.Echo) {
-    a := e.Group("/api")
-    a.GET("/users", controllers.Users)
+func Api(e *fiber.App) {
+	a := e.Group("/api")
+	a.Get("/users", controllers.Users)
 }

@@ -102,8 +102,7 @@ const compileModules = () => {
     mix.js("assets/admin/js/index.js", "public/assets/admin/js/app.js").vue();
     mix.sass("assets/admin/scss/style.scss", "public/assets/admin/css/app.css");
 
-    mix.js("assets/moqup/moqup_view.js", "public/assets/admin/js/moqup_view.js").vue();
-    mix.sass("assets/moqup/scss/moqup_view.scss", "public/assets/admin/css/moqup_view.css");
+
 
     mix .js(`${lambdaRoot}/src/index.js`, `public/assets/lambda/js/puzzle.js`).vue()
         .sass(`${lambdaRoot}/src/scss/style.scss`, `public/assets/lambda/css/puzzle.css`)
