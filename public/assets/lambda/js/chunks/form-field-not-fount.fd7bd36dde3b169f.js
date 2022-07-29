@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[9342],{2626:(e,t,l)=>{l.r(t),l.d(t,{default:()=>r});const n={props:["model","rule","label","meta"],computed:{lang(){const e=["notFound"];return e.reduce(((t,l,n)=>(t[l]=this.$t("dataForm."+e[n]),t)),{})}},methods:{}};const r=(0,l(51900).Z)(n,(function(){var e=this,t=e.$createElement,l=e._self._c||t;return l("FormItem",{attrs:{label:e.label,prop:e.rule}},[l("div",[e._v(e._s(e.lang.notFound))])])}),[],!1,null,null,null).exports}}]);
+//# sourceMappingURL=form-field-not-fount.fd7bd36dde3b169f.js.map

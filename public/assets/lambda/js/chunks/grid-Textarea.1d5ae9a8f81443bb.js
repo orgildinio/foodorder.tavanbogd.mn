@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[6555],{69138:(e,l,o)=>{o.r(l),o.d(l,{default:()=>n});const t={props:["model","label"]};const n=(0,o(51900).Z)(t,(function(){var e=this,l=e.$createElement,o=e._self._c||l;return o("FormItem",{attrs:{label:e.label}},[o("Input",{attrs:{type:"textarea"},model:{value:e.model.form[e.model.component],callback:function(l){e.$set(e.model.form,e.model.component,l)},expression:"model.form[model.component]"}})],1)}),[],!1,null,null,null).exports}}]);
+//# sourceMappingURL=grid-Textarea.1d5ae9a8f81443bb.js.map
