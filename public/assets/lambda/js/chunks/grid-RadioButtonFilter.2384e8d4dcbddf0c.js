@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[4273],{7722:(e,l,o)=>{o.r(l),o.d(l,{default:()=>n});const t={props:["model","label"]};const n=(0,o(51900).Z)(t,(function(){var e=this,l=e.$createElement,o=e._self._c||l;return o("FormItem",{attrs:{label:e.label}},[o("Input",{attrs:{type:"text"},model:{value:e.model.form[e.model.component],callback:function(l){e.$set(e.model.form,e.model.component,l)},expression:"model.form[model.component]"}})],1)}),[],!1,null,null,null).exports}}]);
+//# sourceMappingURL=grid-RadioButtonFilter.2384e8d4dcbddf0c.js.map
