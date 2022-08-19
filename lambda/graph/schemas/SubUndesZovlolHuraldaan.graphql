@@ -1,7 +1,0 @@
-type SubUndesZovlolHuraldaan  {
-    huraldaan: String
-    huraldaan_en: String
-    id: ID!
-    undes_zovlol_id: Int
-    zovlomj: String   
-} 

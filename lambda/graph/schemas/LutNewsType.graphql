@@ -1,4 +1,0 @@
-type LutNewsType  {
-    id: ID!
-    news_type: String   
-} 

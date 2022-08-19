@@ -1,7 +1,0 @@
-type SubOronNutagTogtool  {
-    id: ID!
-    o_zovlol_id: Int
-    tailbar_en: String
-    tailbar_mn: String
-    togtool: String   
-} 

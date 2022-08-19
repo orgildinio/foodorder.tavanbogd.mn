@@ -1,5 +1,0 @@
-type SubNewsSocialTypies  {
-    id: ID!
-    news_id: Int
-    social_type_id: Int   
-} 

@@ -1,6 +1,0 @@
-type SubOronNutagGamshigErsdel  {
-    id: ID!
-    o_zovlol_id: Int
-    ognoo: Date
-    tosov: String   
-} 
