@@ -1,0 +1,14 @@
+type ViewOronNutagZovlol  {
+    aimag_id: Int
+    aimagname: String
+    created_at: Time
+    deleted_at: Time
+    id: Int
+    sum_id: Int
+    sumname: String
+    updated_at: Time  
+    sub_oron_nutag_gamshig_ersdel:[SubOronNutagGamshigErsdel!]
+    sub_oron_nutag_togtool:[SubOronNutagTogtool!]
+    sub_oron_nutag_ua_heregjilt:[SubOronNutagUaHeregjilt!]
+    sub_oron_nutag_ua_tolvolgoo:[SubOronNutagUaTolvolgoo!] 
+} 

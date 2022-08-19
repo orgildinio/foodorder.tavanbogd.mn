@@ -1,0 +1,5 @@
+type LutDocumentSorting  {
+    document_sorting: String
+    document_sorting_en: String
+    id: ID!   
+} 

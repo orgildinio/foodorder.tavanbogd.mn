@@ -1,0 +1,9 @@
+type HamtragchBaiguullaga  {
+    b_ner: String
+    created_at: Time
+    deleted_at: Time
+    id: ID!
+    link: String
+    logo: String
+    updated_at: Time   
+} 

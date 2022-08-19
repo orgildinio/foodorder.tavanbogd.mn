@@ -1,0 +1,16 @@
+type ViewNews  {
+    created_at: Time
+    deleted_at: Time
+    delgerengui: String
+    garchig: String
+    handalt: Int
+    id: Int
+    logo: String
+    news_type: String
+    news_type_id: Int
+    share: Int
+    updated_at: Time
+    ursah_eseh: Int
+    zurag: String  
+    sub_news_social_typies:[SubNewsSocialTypies!] 
+} 

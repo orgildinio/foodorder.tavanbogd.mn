@@ -1,0 +1,41 @@
+type Query {
+    lut_document_sorting(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [LutDocumentSorting!]
+    view_ez_bodlogiin_bb(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [ViewEzBodlogiinBb!]
+    hamtragch_baiguullaga(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [HamtragchBaiguullaga!]
+    sub_oron_nutag_gamshig_ersdel(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubOronNutagGamshigErsdel!]
+    sub_oron_nutag_togtool(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubOronNutagTogtool!]
+    sub_oron_nutag_ua_heregjilt(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubOronNutagUaHeregjilt!]
+    sub_oron_nutag_ua_tolvolgoo(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubOronNutagUaTolvolgoo!]
+    view_oron_nutag_zovlol(sorts:[sort], groupFilters:[groupFilter], filters:[filter], subSorts:[subSort], subFilters:[subFilter], limit: Int, offset: Int): [ViewOronNutagZovlol!]
+    sub_undes_zovlol_huraldaan(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubUndesZovlolHuraldaan!]
+    sub_undes_zovlol_gamshig_ersdel_buuruulah(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubUndesZovlolGamshigErsdelBuuruulah!]
+    view_undesnii_zovlol(sorts:[sort], groupFilters:[groupFilter], filters:[filter], subSorts:[subSort], subFilters:[subFilter], limit: Int, offset: Int): [ViewUndesniiZovlol!]
+    lut_angi(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [LutAngi!]
+    sub_news_social_typies(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [SubNewsSocialTypies!]
+    view_news(sorts:[sort], groupFilters:[groupFilter], filters:[filter], subSorts:[subSort], subFilters:[subFilter], limit: Int, offset: Int): [ViewNews!]
+    lut_news_type(sorts:[sort], groupFilters:[groupFilter], filters:[filter], limit: Int, offset: Int): [LutNewsType!]
+    paginate(sorts: [sort], groupFilters:[groupFilter], filters:[filter], subSorts:[subSort], subFilters:[subFilter], page:Int!, size:Int!): paginate!
+}
+
+type paginate  {
+    page: Int!
+    total: Int!
+    last_page: Int!
+    lut_document_sorting:[LutDocumentSorting!]
+    view_ez_bodlogiin_bb:[ViewEzBodlogiinBb!]
+    hamtragch_baiguullaga:[HamtragchBaiguullaga!]
+    sub_oron_nutag_gamshig_ersdel:[SubOronNutagGamshigErsdel!]
+    sub_oron_nutag_togtool:[SubOronNutagTogtool!]
+    sub_oron_nutag_ua_heregjilt:[SubOronNutagUaHeregjilt!]
+    sub_oron_nutag_ua_tolvolgoo:[SubOronNutagUaTolvolgoo!]
+    view_oron_nutag_zovlol:[ViewOronNutagZovlol!]
+    sub_undes_zovlol_huraldaan:[SubUndesZovlolHuraldaan!]
+    sub_undes_zovlol_gamshig_ersdel_buuruulah:[SubUndesZovlolGamshigErsdelBuuruulah!]
+    view_undesnii_zovlol:[ViewUndesniiZovlol!]
+    lut_angi:[LutAngi!]
+    sub_news_social_typies:[SubNewsSocialTypies!]
+    view_news:[ViewNews!]
+    lut_news_type:[LutNewsType!]
+}
+
+

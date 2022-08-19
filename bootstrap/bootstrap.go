@@ -3,6 +3,8 @@ package bootstrap
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/chart"
+	"lambda/app/middlewares"
+	"lambda/lambda/graph"
 	"lambda/lambda/models/form/caller"
 	gridCaller "lambda/lambda/models/grid/caller"
 	/*
@@ -15,12 +17,7 @@ import (
 	"github.com/lambda-platform/lambda/exportImport"
 	"github.com/lambda-platform/lambda/krud"
 	"github.com/lambda-platform/lambda/puzzle"
-	/*
-		|----------------------------------------------
-		| Graphql
-		|----------------------------------------------
-	*/
-	"lambda/lambda/graph"
+
 	/*
 		|----------------------------------------------
 		| PRO MODULES
@@ -29,12 +26,6 @@ import (
 
 	"github.com/lambda-platform/lambda/moqup"
 
-	/*
-		|----------------------------------------------
-		| App
-		|----------------------------------------------
-	*/
-	"lambda/app/middlewares"
 	"lambda/routes"
 )
 
@@ -47,6 +38,7 @@ func Set() *lambda.Lambda {
 	Lambda := lambda.New(&lambda.Settings{
 		ModuleName: "lambda",
 	})
+	middlewares.Set(Lambda.App)
 	KrudMiddleWares := []fiber.Handler{
 		// arcGIS.MW(caller.GetMODEL, gridCaller.GetMODEL),
 	}
@@ -62,7 +54,7 @@ func Set() *lambda.Lambda {
 	puzzle.Set(Lambda.App, Lambda.ModuleName, gridCaller.GetMODEL, false, true)
 	chart.Set(Lambda.App)
 	moqup.Set(Lambda.App)
-	middlewares.Set(Lambda.App)
+
 	/*
 		|----------------------------------------------
 		| ROUTES

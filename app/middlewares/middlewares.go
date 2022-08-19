@@ -16,8 +16,10 @@ func Set(app *fiber.App) {
 	app.Use(helmet.New())
 	app.Use(recover.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*, http://localhost:*, http://127.0.0.1:*",
-		AllowHeaders: "Origin, Content-Type, Accept, X-Requested-With, x-csrf-token",
+		AllowCredentials: true,
+		AllowOrigins:     "*, http://localhost:3001",
+		AllowHeaders:     "Origin, Content-Type, Accept, X-Requested-With, x-csrf-token, Accept-Language, Content-Length, Authorization, Accept-Encoding, Connection",
+		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH",
 	}))
 
 }

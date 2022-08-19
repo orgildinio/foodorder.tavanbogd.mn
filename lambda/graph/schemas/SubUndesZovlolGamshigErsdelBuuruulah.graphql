@@ -1,0 +1,7 @@
+type SubUndesZovlolGamshigErsdelBuuruulah  {
+    id: ID!
+    tailbar_en: String
+    tailbar_mn: String
+    togtool_file: String
+    undes_zovlol_id: Int   
+} 

@@ -1,0 +1,1 @@
+import{B as t}from"./Banner-52018682.mjs";import{_ as a,r as n,o as r,c as s,a as c,b as e}from"./entry-15e717bf.mjs";const _={components:{Banner:t},data(){return{}}},p=e("div",{class:"container m-auto"},[e("h1",{class:"text-3xl font-bold"}," About ")],-1);function d(l,m,i,u,f,B){const o=n("Banner");return r(),s("div",null,[p,c(o)])}var v=a(_,[["render",d]]);export{v as default};

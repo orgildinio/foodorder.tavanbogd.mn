@@ -41,7 +41,9 @@
         "vue": "^2.6.12",
         "vue-apollo": "^3.1.0",
         "vue-axios": "^3.4.1",
+        "vue-inline-svg": "^2.1.0",
         "vue-input-tag": "^2.0.7",
+        "vue-json-editor": "^1.4.3",
         "vue-router": "^3.5.1",
         "vuex": "^3.6.2"
     }

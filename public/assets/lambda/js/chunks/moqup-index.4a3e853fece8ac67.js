@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[6075],{16217:(e,u,l)=>{l.r(u),l.d(u,{default:()=>n});const n=(0,l(51900).Z)({},(function(){return(0,this._self._c)("router-view")}),[],!1,null,null,null).exports}}]);
+//# sourceMappingURL=moqup-index.4a3e853fece8ac67.js.map

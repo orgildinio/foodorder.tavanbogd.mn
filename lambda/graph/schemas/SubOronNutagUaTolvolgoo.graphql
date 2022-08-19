@@ -1,0 +1,7 @@
+type SubOronNutagUaTolvolgoo  {
+    id: ID!
+    o_zovlol_id: Int
+    tailbar_en: String
+    tailbar_mn: String
+    tolvolgoo: String   
+} 

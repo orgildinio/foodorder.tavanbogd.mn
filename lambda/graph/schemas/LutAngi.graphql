@@ -1,0 +1,4 @@
+type LutAngi  {
+    angi: String
+    id: ID!   
+} 

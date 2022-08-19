@@ -6,7 +6,7 @@ import (
 
 //home page
 func HomeProduction(c *fiber.Ctx) error {
-	return c.Render("home", map[string]interface{}{})
+	return c.Render("public/index", map[string]interface{}{})
 }
 
 func HomeData() map[string]interface{} {
