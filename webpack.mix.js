@@ -109,9 +109,9 @@ const compileModules = () => {
         .sass(`${lambdaRoot}/src/scss/style.scss`, `public/assets/lambda/css/puzzle.css`)
         .js(`${lambdaModule}/agent/index.js`, `public/assets/lambda/js/agent.js`).vue()
         .sass(`${lambdaModule}/agent/scss/agent.scss`, `public/assets/lambda/css/agent.css`)
-
-        .js(`${lambdaModule}/agent/auth.js`, `public/assets/lambda/js/auth.js`).vue()
-        .sass(`${lambdaModule}/agent/scss/auth.scss`, `public/assets/lambda/css/auth.css`)
+        //
+        // .js(`${lambdaModule}/agent/auth.js`, `public/assets/lambda/js/auth.js`).vue()
+        // .sass(`${lambdaModule}/agent/scss/auth.scss`, `public/assets/lambda/css/auth.css`)
 
         .js(`${lambdaModule}/krud/index.js`, "public/assets/lambda/js/krud.js").vue()
         .sass(`${lambdaModule}/krud/scss/krud.scss`, `public/assets/lambda/css/krud.css`)
@@ -127,21 +127,21 @@ const compileModules = () => {
         .js(`${lambdaModule}/datasource/index.js`, `public/assets/lambda/js/datasource.js`).vue()
         .sass(`${lambdaModule}/datasource/scss/style.scss`, `public/assets/lambda/css/datasource.css`)
 
-        .js(`${lambdaModule}/page/index.js`, "public/assets/lambda/js/page.js").vue()
-        .js(`${lambdaModule}/page/page-nav.js`, "public/assets/lambda/js/page-nav.js").vue()
+        // .js(`${lambdaModule}/page/index.js`, "public/assets/lambda/js/page.js").vue()
+        // .js(`${lambdaModule}/page/page-nav.js`, "public/assets/lambda/js/page-nav.js").vue()
+        //
+        // .js(`${lambdaModule}/moqup/index.js`, `public/assets/lambda/js/moqup.js`).vue()
+        // .sass(`${lambdaModule}/moqup/scss/style.scss`, `public/assets/lambda/css/moqup.css`)
+        //
+        // .js(`${lambdaModule}/chart/index.js`, "public/assets/lambda/js/chart.js").vue()
+        // .js(`${lambdaModule}/chart/index-builder.js`, `public/assets/lambda/js/chart-builder.js`).vue()
+        // .sass(`${lambdaModule}/chart/scss/style.scss`, "public/assets/lambda/css/chart.css")
 
-        .js(`${lambdaModule}/moqup/index.js`, `public/assets/lambda/js/moqup.js`).vue()
-        .sass(`${lambdaModule}/moqup/scss/style.scss`, `public/assets/lambda/css/moqup.css`)
+        // .js(`${lambdaModule}/notify/index.js`, `public/assets/lambda/js/notification.js`).vue()
 
-        .js(`${lambdaModule}/chart/index.js`, "public/assets/lambda/js/chart.js").vue()
-        .js(`${lambdaModule}/chart/index-builder.js`, `public/assets/lambda/js/chart-builder.js`).vue()
-        .sass(`${lambdaModule}/chart/scss/style.scss`, "public/assets/lambda/css/chart.css")
-
-        .js(`${lambdaModule}/notify/index.js`, `public/assets/lambda/js/notification.js`).vue()
-
-        .js(`${lambdaModule}/logger/index.js`, "public/assets/lambda/logger.js")
-        .sass(`${lambdaModule}/logger/scss/logger.scss`, "public/assets/lambda/logger.css")
-        .sourceMaps()
+        // .js(`${lambdaModule}/logger/index.js`, "public/assets/lambda/logger.js")
+        // .sass(`${lambdaModule}/logger/scss/logger.scss`, "public/assets/lambda/logger.css")
+        // .sourceMaps()
 };
 
 const compileTemplate = () => {

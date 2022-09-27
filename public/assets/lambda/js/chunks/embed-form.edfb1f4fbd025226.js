@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[2163],{3632:(r,n,o)=>{o.r(n),o.d(n,{default:()=>e});const s={methods:{onSuccess:function(r){},onError:function(r){}}};const e=(0,o(51900).Z)(s,(function(){var r=this;return(0,r._self._c)("dataform",{ref:"form",attrs:{schemaID:r.$route.params.id,editMode:!1,onSuccess:r.onSuccess,onError:r.onError}})}),[],!1,null,null,null).exports}}]);
-//# sourceMappingURL=embed-form.edfb1f4fbd025226.js.map

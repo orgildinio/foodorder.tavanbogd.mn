@@ -13,7 +13,7 @@
     "logoText": "",
     "super_url": "/lambda/puzzle",
     "app_url": "/admin",
-    "has_language": false,
+    "has_language": true,
     "withCrudLog": false,
     "krud_public": false,
     "languages": [
@@ -24,10 +24,6 @@
         {
             "label": "English",
             "code": "en_US"
-        },
-        {
-            "label": "Korea",
-            "code": "ko_KR"
         }
     ],
     "default_language": "mn_MN",
@@ -40,7 +36,11 @@
     "user_data_fields": [
         "id"
     ],
-    "data_form_custom_elements": [],
+    "data_form_custom_elements": [
+        {
+            "element": "manaikhorooPlanCreator"
+        }
+    ],
     "data_grid_custom_elements": [],
     "password_reset_time_out": 0,
     "static_words": {

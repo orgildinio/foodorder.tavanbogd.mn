@@ -9,4 +9,5 @@ func Api(e *fiber.App) {
 	a := e.Group("/api")
 	a.Get("/users", controllers.Users)
 	//a.Get("/read-icons", controllers.ReadIcons)
+
 }
