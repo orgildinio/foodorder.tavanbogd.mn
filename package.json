@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-vue2": "^3.0.1",
-        "@lambda-platform/lambda-builder": "3.0.2",
+        "@lambda-platform/lambda-builder": "3.0.4",
         "@tinymce/tinymce-vue": "^5.0.0",
         "apollo-cache-inmemory": "^1.6.6",
         "apollo-client": "^2.6.10",

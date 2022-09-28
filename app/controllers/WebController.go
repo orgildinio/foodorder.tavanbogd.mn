@@ -10,7 +10,7 @@ func Home(c *fiber.Ctx) error {
 }
 func Admin(c *fiber.Ctx) error {
 
-	return JustRenderTemplate("public/index.html", c)
+	return JustRenderTemplate("public/admin/index.html", c)
 }
 func Login(c *fiber.Ctx) error {
 

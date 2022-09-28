@@ -10,6 +10,8 @@
     "bg": "/assets/lambda/images/bg.png",
     "logo": "/assets/lambda/images/logo.svg",
     "logo_dark": "/assets/lambda/images/logo_dark.svg",
+    "logo_squire": "/assets/lambda/images/logo.svg",
+    "logo_squire_dark": "/assets/lambda/images/logo_dark.svg",
     "logoText": "",
     "super_url": "/lambda/puzzle",
     "app_url": "/admin",
