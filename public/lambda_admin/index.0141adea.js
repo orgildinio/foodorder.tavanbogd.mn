@@ -1,1 +1,0 @@
-import{a as e,o as t,e as o,h as s}from"./entry.feddb565.js";const n={name:"index"},r={class:"bg-white dark:bg-slate-900 rounded-md grid grow grid-nogutter"},a=s("div",null,"HOME",-1),d=[a];function c(i,_,l,p,u,f){return t(),o("div",r,d)}const h=e(n,[["render",c]]);export{h as default};

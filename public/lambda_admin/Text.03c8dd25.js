@@ -1,1 +1,0 @@
-import{a as p,r as m,o as r,c as s}from"./entry.feddb565.js";const a={props:["model","label"]};function d(o,e,t,c,u,f){const n=m("InputText");return r(),s(n,{type:"text",modelValue:o.$props.model.form[t.model.component],"onUpdate:modelValue":e[0]||(e[0]=l=>o.$props.model.form[t.model.component]=l)},null,8,["modelValue"])}const x=p(a,[["render",d]]);export{x as default};

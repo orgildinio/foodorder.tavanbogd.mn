@@ -1,1 +1,0 @@
-import{a as t,r,o as a,c as n}from"./entry.feddb565.js";const s={};function c(o,p,_,f,u,l){const e=r("NuxtPage");return a(),n(e,{key:o.$route.fullPath})}const $=t(s,[["render",c]]);export{$ as default};

@@ -8,7 +8,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.37.0-rc.1
 	github.com/gofiber/helmet/v2 v2.2.14
 	github.com/gorilla/websocket v1.5.0
-	github.com/lambda-platform/lambda v0.5.24
+	github.com/lambda-platform/lambda v0.5.30
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.20.0 // indirect
