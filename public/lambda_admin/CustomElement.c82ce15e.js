@@ -1,1 +1,0 @@
-import{a as o,r as a,o as s,c as l,w as r,i as n}from"./entry.fff4ff4b.js";const c={props:["model","rule","label","meta"]},m=n(" Custom Element ");function _(u,f,e,i,d,p){const t=a("a-form-item");return s(),l(t,{label:e.label,rules:e.rule},{default:r(()=>[m]),_:1},8,["label","rules"])}const b=o(c,[["render",_]]);export{b as default};

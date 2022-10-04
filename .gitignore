@@ -12,3 +12,8 @@ go.sum
 *.toml
 node_modules
 crud-export.json
+public/uploaded
+lambda/graph
+lambda/microservices
+lambda/models
+lambda/schemas
