@@ -1,1 +1,0 @@
-import{a,H as o,r as n,o as s,c as r,w as m,h as l}from"./entry.82d5962d.js";const c={mixins:[o]},p=l("h3",null,"Currently not support tree select",-1);function i(e,_,d,f,u,b){const t=n("lambda-form-item");return s(),r(t,{label:e.label,name:e.model.component,meta:e.meta},{default:m(()=>[p]),_:1},8,["label","name","meta"])}const $=a(c,[["render",i]]);export{$ as default};
