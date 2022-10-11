@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[5955],{28401:(l,e,t)=>{t.r(e),t.d(e,{default:()=>s});const n={props:["model","rule","label","meta"]};const s=(0,t(51900).Z)(n,(function(){var l=this;return(0,l._self._c)("FormItem",{attrs:{label:l.label,prop:l.rule}},[l._v("\n    Custom Element\n")])}),[],!1,null,null,null).exports}}]);

@@ -1,0 +1,1 @@
+import{a as t,r as l,o as m,c as s}from"./entry.edf531c9.js";const p={props:["model","label"]};function d(e,o,a,c,u,f){const n=l("Textarea",!0);return m(),s(n,{modelValue:e.$props.model.form[a.model.component],"onUpdate:modelValue":o[0]||(o[0]=r=>e.$props.model.form[a.model.component]=r)},null,8,["modelValue"])}const i=t(p,[["render",d]]);export{i as default};
