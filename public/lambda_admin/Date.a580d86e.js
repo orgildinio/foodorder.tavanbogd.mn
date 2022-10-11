@@ -1,0 +1,1 @@
+import{a as e,o as s,e as t,t as r}from"./entry.dda881ff.js";const n={};function o(a,p,l,c,u,f){return s(),t("span",null,r(a.params.value!=null?a.params.value.substr(0,10):""),1)}const m=e(n,[["render",o]]);export{m as default};
