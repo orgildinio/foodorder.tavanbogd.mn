@@ -6,7 +6,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.37.0-rc.1
 	github.com/gofiber/helmet/v2 v2.2.14
 	github.com/google/go-cmp v0.5.8 // indirect
-	github.com/lambda-platform/lambda v0.5.32
+	github.com/lambda-platform/lambda v0.5.33
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/thedevsaddam/govalidator v1.9.10
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4 // indirect
