@@ -1,1 +1,0 @@
-import{a as t,r,o as a,c as n}from"./entry.dda881ff.js";const s={};function c(o,p,_,f,u,l){const e=r("NuxtPage");return a(),n(e,{key:o.$route.fullPath})}const $=t(s,[["render",c]]);export{$ as default};
