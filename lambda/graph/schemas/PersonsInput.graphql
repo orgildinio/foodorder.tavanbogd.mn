@@ -1,4 +1,0 @@
-input PersonsInput  {
-    FIRST_NAME: String!
-    LAST_NAME: String!   
-} 

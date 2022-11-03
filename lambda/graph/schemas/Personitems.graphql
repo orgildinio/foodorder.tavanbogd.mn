@@ -1,6 +1,0 @@
-type PersonItems  {
-    ID: ID!
-    ITEM_DESCRIPTION: String!
-    ITEM_NAME: String!
-    PERSON_ID: Int!   
-} 
