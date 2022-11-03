@@ -14,25 +14,26 @@ var _ = time.Time{}
 var _ = DB.Date{}
 
 type NotificationTarget struct {
-	ID    int64  `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
-	Title string `gorm:"column:title" json:"title"`
+	ID    int    `gorm:"column:ID;primaryKey;autoIncrement" json:"id"`
+	Title string `gorm:"column:TITLE" json:"title"`
 }
 
 type NotificationTargetMainTable struct {
-	Body       string `gorm:"column:body" json:"body"`
-	Condition  string `gorm:"column:condition" json:"condition"`
-	ID         int64  `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
-	Link       string `gorm:"column:link" json:"link"`
-	SchemaID   int    `gorm:"column:schema_id" json:"schema_id"`
-	TargetRole int    `gorm:"column:target_role" json:"target_role"`
-	Title      string `gorm:"column:title" json:"title"`
+	Body      string `gorm:"column:BODY" json:"body"`
+	Condition string `gorm:"column:CONDITION" json:"condition"`
+	ID        int    `gorm:"column:ID;primaryKey;autoIncrement" json:"id"`
+	Link      string `gorm:"column:LINK" json:"link"`
+	SchemaID  int    `gorm:"column:SCHEMA_ID" json:"schema_id"`
+
+	TargetRole int    `gorm:"column:TARGET_ROLE" json:"target_role"`
+	Title      string `gorm:"column:TITLE" json:"title"`
 }
 
 func (n *NotificationTargetMainTable) TableName() string {
 	return "notification_targets"
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (n *NotificationTarget) TableName() string {
 	return "notification_targets"
 }

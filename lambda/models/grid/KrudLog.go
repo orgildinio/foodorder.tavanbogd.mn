@@ -14,16 +14,16 @@ var _ = time.Time{}
 var _ = DB.Date{}
 
 type CrudLog struct {
-	Action    string     `gorm:"column:action" json:"action"`
-	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
-	FirstName string     `gorm:"column:first_name" json:"first_name"`
-	ID        int        `gorm:"column:id" json:"id"`
-	Input     string     `gorm:"column:input" json:"input"`
-	IP        string     `gorm:"column:ip" json:"ip"`
-	LastName  string     `gorm:"column:last_name" json:"last_name"`
-	Name      string     `gorm:"column:name" json:"name"`
-	RowID     string     `gorm:"column:row_id" json:"row_id"`
-	UserAgent string     `gorm:"column:user_agent" json:"user_agent"`
+	Action    string     `gorm:"column:ACTION" json:"action"`
+	CreatedAt *time.Time `gorm:"column:CREATED_AT" json:"created_at"`
+	FirstName string     `gorm:"column:FIRST_NAME" json:"first_name"`
+	ID        int        `gorm:"column:ID" json:"id"`
+	Input     string     `gorm:"column:INPUT" json:"input"`
+	IP        string     `gorm:"column:IP" json:"ip"`
+	LastName  string     `gorm:"column:LAST_NAME" json:"last_name"`
+	Name      string     `gorm:"column:NAME" json:"name"`
+	RowID     string     `gorm:"column:ROW_ID" json:"row_id"`
+	UserAgent string     `gorm:"column:USER_AGENT" json:"user_agent"`
 }
 
 type CrudLogMainTable struct {
@@ -42,9 +42,9 @@ func (m *CrudLogMainTable) TableName() string {
 	return "ds_crud_log"
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (d *CrudLog) TableName() string {
-	return "crud_log"
+	return "CRUD_LOG"
 }
 
 var CrudLogDatagrid datagrid.Datagrid = datagrid.Datagrid{

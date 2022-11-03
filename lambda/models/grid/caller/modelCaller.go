@@ -23,7 +23,10 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 		return grid.NotificationTargetDatagrid
 
 	case "2":
-		return grid.Friends2Datagrid
+		return grid.Persons2Datagrid
+
+	case "7":
+		return grid.ViewItems7Datagrid
 
 	}
 	return datagrid.Datagrid{}

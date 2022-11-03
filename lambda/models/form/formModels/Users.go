@@ -10,59 +10,60 @@ var _ = time.Time{}
 var _ = DB.Date{}
 
 type Users struct {
-	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
-	FcmToken  string     `gorm:"column:fcm_token" json:"fcm_token"`
-	ID        int        `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
-	Password  string     `gorm:"column:password" json:"password"`
-	UpdatedAt *time.Time `gorm:"column:updated_at" json:"updated_at"`
+	FcmToken  string     `gorm:"column:FCM_TOKEN" json:"fcm_token"`
+	ID        int        `gorm:"column:ID;primaryKey;autoIncrement" json:"id"`
+	Password  string     `gorm:"column:PASSWORD" json:"password"`
+	CreatedAt *time.Time `gorm:"column:CREATED_AT" json:"created_at"`
+	UpdatedAt *time.Time `gorm:"column:UPDATED_AT" json:"updated_at"`
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (u *Users) TableName() string {
 	return "users"
 }
 
 type UserForm struct {
-	Avatar         string         `gorm:"column:avatar" json:"avatar"`
-	Bio            string         `gorm:"column:bio" json:"bio"`
-	Birthday       DB.Date        `gorm:"column:birthday" json:"birthday"`
-	CreatedAt      *time.Time     `gorm:"column:created_at" json:"-"`
-	DeletedAt      gorm.DeletedAt `gorm:"column:deleted_at" json:"-"`
-	Email          string         `gorm:"column:email" json:"email"`
-	FcmToken       string         `gorm:"column:fcm_token" json:"fcm_token"`
-	FirstName      string         `gorm:"column:first_name" json:"first_name"`
-	Gender         string         `gorm:"column:gender" json:"gender"`
-	ID             int            `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
-	LastName       string         `gorm:"column:last_name" json:"last_name"`
-	Login          string         `gorm:"column:login" json:"login"`
-	Password       string         `gorm:"column:password" json:"password"`
-	Phone          string         `gorm:"column:phone" json:"phone"`
-	RegisterNumber string         `gorm:"column:register_number" json:"register_number"`
-	Role           int            `gorm:"column:role" json:"role"`
-	//Status         string     `gorm:"column:status" json:"status"`
-	UpdatedAt *time.Time `gorm:"column:updated_at" json:"-"`
+	ID             int64          `gorm:"column:ID;primaryKey;autoIncrement" json:"id"`
+	Avatar         *string        `gorm:"column:AVATAR" json:"avatar"`
+	Bio            *string        `gorm:"column:BIO" json:"bio"`
+	Birthday       DB.Date        `gorm:"column:BIRTHDAY;type:DATE" json:"birthday"`
+	Email          string         `gorm:"column:EMAIL" json:"email"`
+	FcmToken       string         `gorm:"column:FCM_TOKEN" json:"fcm_token"`
+	FirstName      string         `gorm:"column:FIRST_NAME" json:"first_name"`
+	Gender         string         `gorm:"column:GENDER" json:"gender"`
+	LastName       string         `gorm:"column:LAST_NAME" json:"last_name"`
+	Login          string         `gorm:"column:LOGIN" json:"login"`
+	Password       string         `gorm:"column:PASSWORD" json:"password"`
+	Phone          string         `gorm:"column:PHONE" json:"phone"`
+	RegisterNumber string         `gorm:"column:REGISTER_NUMBER" json:"register_number"`
+	Role           int64          `gorm:"column:ROLE" json:"role"`
+	CreatedAt      *time.Time     `gorm:"column:CREATED_AT" json:"created_at"`
+	UpdatedAt      *time.Time     `gorm:"column:UPDATED_AT" json:"updated_at"`
+	DeletedAt      gorm.DeletedAt `gorm:"column:DELETED_AT" json:"-"`
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (u *UserForm) TableName() string {
-	return "users"
+	return "USERS"
 }
 
 type UserProfile struct {
-	Avatar         string  `gorm:"column:avatar" json:"avatar"`
-	Bio            string  `gorm:"column:bio" json:"bio"`
-	Birthday       DB.Date `gorm:"column:birthday" json:"birthday"`
-	Phone          string  `gorm:"column:phone" json:"phone"`
-	FirstName      string  `gorm:"column:first_name" json:"first_name"`
-	Gender         string  `gorm:"column:gender" json:"gender"`
-	ID             int     `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
-	LastName       string  `gorm:"column:last_name" json:"last_name"`
-	Login          string  `gorm:"column:login;unique_index;not null;unique" json:"login"`
-	Email          string  `gorm:"column:email;unique_index;not null;unique" json:"email"`
-	RegisterNumber string  `gorm:"column:register_number;not null;unique" json:"register_number"`
+	ID             int64   `gorm:"column:ID;primaryKey;autoIncrement" json:"id"`
+	Avatar         *string `gorm:"column:AVATAR" json:"avatar"`
+	Bio            *string `gorm:"column:BIO" json:"bio"`
+	Birthday       DB.Date `gorm:"column:BIRTHDAY;type:DATE" json:"birthday"`
+	Email          string  `gorm:"column:EMAIL" json:"email"`
+	FcmToken       *string `gorm:"column:FCM_TOKEN" json:"fcm_token"`
+	FirstName      string  `gorm:"column:FIRST_NAME" json:"first_name"`
+	Gender         string  `gorm:"column:GENDER" json:"gender"`
+	LastName       string  `gorm:"column:LAST_NAME" json:"last_name"`
+	Login          string  `gorm:"column:LOGIN" json:"login"`
+	Password       string  `gorm:"column:PASSWORD" json:"password"`
+	Phone          string  `gorm:"column:PHONE" json:"phone"`
+	RegisterNumber string  `gorm:"column:REGISTER_NUMBER" json:"register_number"`
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (u *UserProfile) TableName() string {
-	return "users"
+	return "USERS"
 }

@@ -99,7 +99,10 @@ mix.extract(
 const compileModules = () => {
 
 
-    mix .js(`${lambdaRoot}/src/index.js`, `public/assets/lambda/js/puzzle.js`).vue()
+    mix
+        .js(`${lambdaModule}/agent/index.js`, `public/assets/lambda/js/agent.js`).vue()
+        .sass(`${lambdaModule}/agent/scss/agent.scss`, `public/assets/lambda/css/agent.css`)
+        .js(`${lambdaRoot}/src/index.js`, `public/assets/lambda/js/puzzle.js`).vue()
         .sass(`${lambdaRoot}/src/scss/style.scss`, `public/assets/lambda/css/puzzle.css`)
 
         .js(`${lambdaModule}/krud/index.js`, "public/assets/lambda/js/krud.js").vue()

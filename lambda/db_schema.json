@@ -1,0 +1,688 @@
+{
+ "tableList": [
+  "KRUD",
+  "KRUD_TEMPLATES",
+  "PASSWORD_RESETS",
+  "PERSONS",
+  "PERSON_ITEMS",
+  "ROLES",
+  "USERS",
+  "VB_SCHEMAS",
+  "VB_SCHEMAS_ADMIN"
+ ],
+ "viewList": [
+  "VIEW_ITEMS"
+ ],
+ "tableMeta": {
+  "KRUD": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "KRUD",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "ACTIONS",
+    "title": "ACTIONS",
+    "dbType": "varchar",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "FORM",
+    "title": "FORM",
+    "dbType": "NUMBER",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "GRID",
+    "title": "GRID",
+    "dbType": "NUMBER",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "TEMPLATE",
+    "title": "TEMPLATE",
+    "dbType": "varchar",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "TITLE",
+    "title": "TITLE",
+    "dbType": "varchar",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "UPDATED_AT",
+    "title": "UPDATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "DELETED_AT",
+    "title": "DELETED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "KRUD",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "KRUD_TEMPLATES": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "KRUD_TEMPLATES",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "TEMPLATE_NAME",
+    "title": "TEMPLATE_NAME",
+    "dbType": "varchar",
+    "table": "KRUD_TEMPLATES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "PASSWORD_RESETS": [
+   {
+    "model": "TOKEN",
+    "title": "TOKEN",
+    "dbType": "varchar",
+    "table": "PASSWORD_RESETS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "WRONG",
+    "title": "WRONG",
+    "dbType": "NUMBER",
+    "table": "PASSWORD_RESETS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "EMAIL",
+    "title": "EMAIL",
+    "dbType": "varchar",
+    "table": "PASSWORD_RESETS",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "PASSWORD_RESETS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "PERSONS": [
+   {
+    "model": "PERSON_ID",
+    "title": "PERSON_ID",
+    "dbType": "NUMBER",
+    "table": "PERSONS",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "FIRST_NAME",
+    "title": "FIRST_NAME",
+    "dbType": "varchar",
+    "table": "PERSONS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "LAST_NAME",
+    "title": "LAST_NAME",
+    "dbType": "varchar",
+    "table": "PERSONS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6)",
+    "table": "PERSONS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "UPDATED_AT",
+    "title": "UPDATED_AT",
+    "dbType": "TIMESTAMP(6)",
+    "table": "PERSONS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "DELETED_AT",
+    "title": "DELETED_AT",
+    "dbType": "TIMESTAMP(6)",
+    "table": "PERSONS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "PERSON_ITEMS": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "PERSON_ITEMS",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "PERSON_ID",
+    "title": "PERSON_ID",
+    "dbType": "NUMBER",
+    "table": "PERSON_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "ITEM_NAME",
+    "title": "ITEM_NAME",
+    "dbType": "varchar",
+    "table": "PERSON_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "ITEM_DESCRIPTION",
+    "title": "ITEM_DESCRIPTION",
+    "dbType": "varchar",
+    "table": "PERSON_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "ROLES": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "ROLES",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "DESCRIPTION",
+    "title": "DESCRIPTION",
+    "dbType": "varchar",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "DISPLAY_NAME",
+    "title": "DISPLAY_NAME",
+    "dbType": "varchar",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "EXTRA",
+    "title": "EXTRA",
+    "dbType": "varchar",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "MENU",
+    "title": "MENU",
+    "dbType": "varchar",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "NAME",
+    "title": "NAME",
+    "dbType": "varchar",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "PERMISSIONS",
+    "title": "PERMISSIONS",
+    "dbType": "text",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "UPDATED_AT",
+    "title": "UPDATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "DELETED_AT",
+    "title": "DELETED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "ROLES",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "USERS": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "USERS",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "AVATAR",
+    "title": "AVATAR",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "BIO",
+    "title": "BIO",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "BIRTHDAY",
+    "title": "BIRTHDAY",
+    "dbType": "DATE",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "EMAIL",
+    "title": "EMAIL",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "FCM_TOKEN",
+    "title": "FCM_TOKEN",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "FIRST_NAME",
+    "title": "FIRST_NAME",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "GENDER",
+    "title": "GENDER",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "LAST_NAME",
+    "title": "LAST_NAME",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "LOGIN",
+    "title": "LOGIN",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "PASSWORD",
+    "title": "PASSWORD",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "PHONE",
+    "title": "PHONE",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "REGISTER_NUMBER",
+    "title": "REGISTER_NUMBER",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "ROLE",
+    "title": "ROLE",
+    "dbType": "NUMBER",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "STATUS",
+    "title": "STATUS",
+    "dbType": "varchar",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "UPDATED_AT",
+    "title": "UPDATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "DELETED_AT",
+    "title": "DELETED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "USERS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "VB_SCHEMAS": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "VB_SCHEMAS",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "NAME",
+    "title": "NAME",
+    "dbType": "varchar",
+    "table": "VB_SCHEMAS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "SCHEMA",
+    "title": "SCHEMA",
+    "dbType": "text",
+    "table": "VB_SCHEMAS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "TYPE",
+    "title": "TYPE",
+    "dbType": "varchar",
+    "table": "VB_SCHEMAS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "VB_SCHEMAS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "UPDATED_AT",
+    "title": "UPDATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "VB_SCHEMAS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "VB_SCHEMAS_ADMIN": [
+   {
+    "model": "VB_ID",
+    "title": "VB_ID",
+    "dbType": "NUMBER",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": ""
+   },
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "varchar",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "NAME",
+    "title": "NAME",
+    "dbType": "varchar",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "SCHEMA",
+    "title": "SCHEMA",
+    "dbType": "text",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "TYPE",
+    "title": "TYPE",
+    "dbType": "varchar",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "CREATED_AT",
+    "title": "CREATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "UPDATED_AT",
+    "title": "UPDATED_AT",
+    "dbType": "TIMESTAMP(6) WITH TIME ZONE",
+    "table": "VB_SCHEMAS_ADMIN",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ],
+  "VIEW_ITEMS": [
+   {
+    "model": "ID",
+    "title": "ID",
+    "dbType": "NUMBER",
+    "table": "VIEW_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "PERSON_ID",
+    "title": "PERSON_ID",
+    "dbType": "NUMBER",
+    "table": "VIEW_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "ITEM_NAME",
+    "title": "ITEM_NAME",
+    "dbType": "varchar",
+    "table": "VIEW_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "ITEM_DESCRIPTION",
+    "title": "ITEM_DESCRIPTION",
+    "dbType": "varchar",
+    "table": "VIEW_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "FIRST_NAME",
+    "title": "FIRST_NAME",
+    "dbType": "varchar",
+    "table": "VIEW_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   },
+   {
+    "model": "LAST_NAME",
+    "title": "LAST_NAME",
+    "dbType": "varchar",
+    "table": "VIEW_ITEMS",
+    "key": "",
+    "extra": "",
+    "nullable": ""
+   }
+  ]
+ },
+ "microservice_id": 0,
+ "microservice": ""
+}

@@ -26,7 +26,10 @@ func GetMODEL(schema_id string) dataform.Dataform {
 		return form.UsersDataform()
 
 	case "1":
-		return form.Friends1Dataform()
+		return form.Persons1Dataform()
+
+	case "5":
+		return form.PersonItems5Dataform()
 
 	}
 	return dataform.Dataform{}

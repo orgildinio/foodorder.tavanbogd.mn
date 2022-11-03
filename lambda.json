@@ -15,7 +15,7 @@
     "logoText": "",
     "super_url": "/lambda/puzzle",
     "app_url": "/admin",
-    "has_language": true,
+    "has_language": false,
     "withCrudLog": false,
     "krud_public": false,
     "languages": [

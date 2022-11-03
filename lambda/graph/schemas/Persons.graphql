@@ -1,0 +1,9 @@
+type Persons  {
+    CREATED_AT: Time!
+    DELETED_AT: GormDeletedAt
+    FIRST_NAME: String!
+    LAST_NAME: String!
+    PERSON_ID: ID!
+    UPDATED_AT: Time!  
+    PERSON_ITEMS:[PersonItems!] 
+} 

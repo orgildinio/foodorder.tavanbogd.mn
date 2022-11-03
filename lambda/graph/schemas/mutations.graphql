@@ -1,0 +1,11 @@
+type Mutation {
+	
+    "mutation-create"
+    createPersons(input: PersonsInput!):Persons!
+	
+    "mutation-update"
+    updatePersons(id: ID!, input:PersonsInput!):Persons!
+    
+    "mutation-delete"
+    deletePersons(id: ID!):Persons!
+}
