@@ -67,6 +67,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "68":
 		return form.FoodOrder68Dataform()
 
+	case "102":
+		return form.FoodOrderInBasket102Dataform()
+
 	case "17":
 		return form.Users17Dataform()
 
