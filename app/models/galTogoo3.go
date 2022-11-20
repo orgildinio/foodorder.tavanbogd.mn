@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type TblMenuGtNeg struct {
+type TblMenuGtGuraw struct {
 	BranchChefID   *int           `gorm:"column:branch_chef_id" json:"branch_chef_id"`
 	CreatedAt      *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt      gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
@@ -23,61 +23,61 @@ type TblMenuGtNeg struct {
 	UserID         *int           `gorm:"column:user_id" json:"user_id"`
 }
 
-func (t *TblMenuGtNeg) TableName() string {
-	return "tbl_menu_gt_neg"
+func (t *TblMenuGtGuraw) TableName() string {
+	return "tbl_menu_gt_guraw"
 }
 
-type SubMenuDesertGtNeg struct {
+type SubMenuDesertGtGuraw struct {
 	FoodDesertID *int     `gorm:"column:food_desert_id" json:"food_desert_id"`
 	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
 	ID           int      `gorm:"column:id" json:"id"`
 	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
 }
 
-func (s *SubMenuDesertGtNeg) TableName() string {
-	return "sub_menu_desert_gt_neg"
+func (s *SubMenuDesertGtGuraw) TableName() string {
+	return "sub_menu_desert_gt_guraw"
 }
 
-type SubMenuHoerGtNeg struct {
+type SubMenuHoerGtGuraw struct {
 	FoodHoerID   *int     `gorm:"column:food_hoer_id" json:"food_hoer_id"`
 	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
 	ID           int      `gorm:"column:id" json:"id"`
 	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
 }
 
-func (s *SubMenuHoerGtNeg) TableName() string {
-	return "sub_menu_hoer_gt_neg"
+func (s *SubMenuHoerGtGuraw) TableName() string {
+	return "sub_menu_hoer_gt_guraw"
 }
 
-type SubMenuNegGtNeg struct {
+type SubMenuNegGtGuraw struct {
 	FoodNegID    *int     `gorm:"column:food_neg_id" json:"food_neg_id"`
 	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
 	ID           int      `gorm:"column:id" json:"id"`
 	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
 }
 
-func (s *SubMenuNegGtNeg) TableName() string {
-	return "sub_menu_neg_gt_neg"
+func (s *SubMenuNegGtGuraw) TableName() string {
+	return "sub_menu_neg_gt_guraw"
 }
 
-type SubMenuSalatGtNeg struct {
+type SubMenuSalatGtGuraw struct {
 	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
 	FoodSalatID  *int     `gorm:"column:food_salat_id" json:"food_salat_id"`
 	ID           int      `gorm:"column:id" json:"id"`
 	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
 }
 
-func (s *SubMenuSalatGtNeg) TableName() string {
-	return "sub_menu_salat_gt_neg"
+func (s *SubMenuSalatGtGuraw) TableName() string {
+	return "sub_menu_salat_gt_guraw"
 }
 
-type SubMenuUuhimGtNeg struct {
+type SubMenuUuhimGtGuraw struct {
 	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
 	FoodUuhimID  *int     `gorm:"column:food_uuhim_id" json:"food_uuhim_id"`
 	ID           int      `gorm:"column:id" json:"id"`
 	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
 }
 
-func (s *SubMenuUuhimGtNeg) TableName() string {
-	return "sub_menu_uuhim_gt_neg"
+func (s *SubMenuUuhimGtGuraw) TableName() string {
+	return "sub_menu_uuhim_gt_guraw"
 }

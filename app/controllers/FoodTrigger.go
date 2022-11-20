@@ -22,8 +22,8 @@ func MenuAfterInsertUpdate(menuPre interface{}) {
 	DB.DB.Where("menu_form_id = ?", menu.ID).Find(&salats)
 
 	SaveGalTogoo1(menu, uuhYums, deserts, negHools, hoerHools, salats)
-	//SaveGalTogoo2(menu, uuhYums, deserts)
-	//SaveGalTogoo3(menu, uuhYums, deserts)
+	SaveGalTogoo2(menu, uuhYums, deserts, negHools, hoerHools, salats)
+	SaveGalTogoo3(menu, uuhYums, deserts, negHools, hoerHools, salats)
 
 }
 
@@ -159,6 +159,286 @@ func SaveGalTogoo1(menu *formModels.TblMenu21, uuhYums []models.SubMenuUuhim, de
 			gtHoerHool := models.SubMenuHoerGtNeg{}
 
 			gtHoerHool.MenuFormID = &galTogoo1.ID
+			gtHoerHool.FoodHoerID = hoerHool.FoodHoerID
+
+			DB.DB.Create(&gtHoerHool)
+		}
+
+	}
+}
+
+func SaveGalTogoo2(menu *formModels.TblMenu21, uuhYums []models.SubMenuUuhim, deserts []models.SubMenuDesert, negHools []models.SubMenuNeg, hoerHools []models.SubMenuHoer, salats []models.SubMenuSalat) {
+
+	galTogoo2 := models.TblMenuGtHoer{}
+	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&galTogoo2)
+	if galTogoo2.ID >= 1 {
+		//DO update
+
+		existingUuhYUmsIDS := []int{}
+		for _, uuhYum := range uuhYums {
+			gtUuhYum := models.SubMenuUuhimGtHoer{}
+
+			DB.DB.Where("food_uuhim_id = ? AND menu_form_id = ?", uuhYum.FoodUuhimID, galTogoo2.ID).Find(&gtUuhYum)
+
+			if gtUuhYum.ID <= 0 {
+				gtUuhYum.MenuFormID = &galTogoo2.ID
+				gtUuhYum.FoodUuhimID = uuhYum.FoodUuhimID
+				DB.DB.Create(&gtUuhYum)
+			}
+
+			existingUuhYUmsIDS = append(existingUuhYUmsIDS, gtUuhYum.ID)
+
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo2.ID, existingUuhYUmsIDS).Delete(models.SubMenuUuhimGtHoer{})
+
+		existingDesertIDS := []int{}
+		for _, desert := range deserts {
+			gtDesert := models.SubMenuDesertGtHoer{}
+
+			DB.DB.Where("food_desert_id = ? AND menu_form_id = ?", desert.FoodDesertID, galTogoo2.ID).Find(&gtDesert)
+
+			if gtDesert.ID <= 0 {
+				gtDesert.MenuFormID = &galTogoo2.ID
+				gtDesert.FoodDesertID = desert.FoodDesertID
+				DB.DB.Create(&gtDesert)
+			}
+			existingDesertIDS = append(existingDesertIDS, gtDesert.ID)
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo2.ID, existingDesertIDS).Delete(models.SubMenuDesertGtHoer{})
+
+		existingNegHoolsIDS := []int{}
+		for _, negHool := range negHools {
+			gtNegHool := models.SubMenuNegGtHoer{}
+
+			DB.DB.Where("food_neg_id = ? AND menu_form_id = ?", negHool.FoodNegID, galTogoo2.ID).Find(&gtNegHool)
+
+			if gtNegHool.ID <= 0 {
+				gtNegHool.MenuFormID = &galTogoo2.ID
+				gtNegHool.FoodNegID = negHool.FoodNegID
+				DB.DB.Create(&gtNegHool)
+			}
+
+			existingNegHoolsIDS = append(existingNegHoolsIDS, gtNegHool.ID)
+
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo2.ID, existingNegHoolsIDS).Delete(models.SubMenuNegGtHoer{})
+
+		existingHoerHoolIDS := []int{}
+		for _, hoerHool := range hoerHools {
+			gtHoerHool := models.SubMenuHoerGtHoer{}
+
+			DB.DB.Where("food_hoer_id = ? AND menu_form_id = ?", hoerHool.FoodHoerID, galTogoo2.ID).Find(&gtHoerHool)
+
+			if gtHoerHool.ID <= 0 {
+				gtHoerHool.MenuFormID = &galTogoo2.ID
+				gtHoerHool.FoodHoerID = hoerHool.FoodHoerID
+				DB.DB.Create(&gtHoerHool)
+			}
+
+			existingHoerHoolIDS = append(existingHoerHoolIDS, gtHoerHool.ID)
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo2.ID, existingHoerHoolIDS).Delete(models.SubMenuHoerGtHoer{})
+
+		existingSalatIDS := []int{}
+		for _, salat := range salats {
+			gtSalat := models.SubMenuSalatGtHoer{}
+
+			DB.DB.Where("food_salat_id = ? AND menu_form_id = ?", salat.FoodSalatID, galTogoo2.ID).Find(&salat)
+
+			if gtSalat.ID <= 0 {
+				gtSalat.MenuFormID = &galTogoo2.ID
+				gtSalat.FoodSalatID = salat.FoodSalatID
+				DB.DB.Create(&gtSalat)
+			}
+
+			existingSalatIDS = append(existingSalatIDS, gtSalat.ID)
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo2.ID, existingSalatIDS).Delete(models.SubMenuSalatGtHoer{})
+
+	} else {
+		galTogoo2.MainMenuID = &menu.ID
+		galTogoo2.SetDate = menu.SetDate
+		galTogoo2.SetName = menu.SetName
+		galTogoo2.FoodTimeTypeID = menu.FoodTimeTypeID
+
+		DB.DB.Create(&galTogoo2)
+
+		for _, uuhYum := range uuhYums {
+			gtUuhYum := models.SubMenuUuhimGtHoer{}
+
+			gtUuhYum.MenuFormID = &galTogoo2.ID
+			gtUuhYum.FoodUuhimID = uuhYum.FoodUuhimID
+
+			DB.DB.Create(&gtUuhYum)
+		}
+
+		for _, desert := range deserts {
+			gtDesert := models.SubMenuDesertGtHoer{}
+
+			gtDesert.MenuFormID = &galTogoo2.ID
+			gtDesert.FoodDesertID = desert.FoodDesertID
+
+			DB.DB.Create(&gtDesert)
+		}
+
+		for _, negHool := range negHools {
+			gtNegHool := models.SubMenuNegGtHoer{}
+
+			gtNegHool.MenuFormID = &galTogoo2.ID
+			gtNegHool.FoodNegID = negHool.FoodNegID
+
+			DB.DB.Create(&gtNegHool)
+		}
+
+		for _, hoerHool := range hoerHools {
+			gtHoerHool := models.SubMenuHoerGtHoer{}
+
+			gtHoerHool.MenuFormID = &galTogoo2.ID
+			gtHoerHool.FoodHoerID = hoerHool.FoodHoerID
+
+			DB.DB.Create(&gtHoerHool)
+		}
+
+	}
+}
+
+func SaveGalTogoo3(menu *formModels.TblMenu21, uuhYums []models.SubMenuUuhim, deserts []models.SubMenuDesert, negHools []models.SubMenuNeg, hoerHools []models.SubMenuHoer, salats []models.SubMenuSalat) {
+
+	galTogoo3 := models.TblMenuGtGuraw{}
+	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&galTogoo3)
+	if galTogoo3.ID >= 1 {
+		//DO update
+
+		existingUuhYUmsIDS := []int{}
+		for _, uuhYum := range uuhYums {
+			gtUuhYum := models.SubMenuUuhimGtGuraw{}
+
+			DB.DB.Where("food_uuhim_id = ? AND menu_form_id = ?", uuhYum.FoodUuhimID, galTogoo3.ID).Find(&gtUuhYum)
+
+			if gtUuhYum.ID <= 0 {
+				gtUuhYum.MenuFormID = &galTogoo3.ID
+				gtUuhYum.FoodUuhimID = uuhYum.FoodUuhimID
+				DB.DB.Create(&gtUuhYum)
+			}
+
+			existingUuhYUmsIDS = append(existingUuhYUmsIDS, gtUuhYum.ID)
+
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo3.ID, existingUuhYUmsIDS).Delete(models.SubMenuUuhimGtGuraw{})
+
+		existingDesertIDS := []int{}
+		for _, desert := range deserts {
+			gtDesert := models.SubMenuDesertGtGuraw{}
+
+			DB.DB.Where("food_desert_id = ? AND menu_form_id = ?", desert.FoodDesertID, galTogoo3.ID).Find(&gtDesert)
+
+			if gtDesert.ID <= 0 {
+				gtDesert.MenuFormID = &galTogoo3.ID
+				gtDesert.FoodDesertID = desert.FoodDesertID
+				DB.DB.Create(&gtDesert)
+			}
+			existingDesertIDS = append(existingDesertIDS, gtDesert.ID)
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo3.ID, existingDesertIDS).Delete(models.SubMenuDesertGtGuraw{})
+
+		existingNegHoolsIDS := []int{}
+		for _, negHool := range negHools {
+			gtNegHool := models.SubMenuNegGtGuraw{}
+
+			DB.DB.Where("food_neg_id = ? AND menu_form_id = ?", negHool.FoodNegID, galTogoo3.ID).Find(&gtNegHool)
+
+			if gtNegHool.ID <= 0 {
+				gtNegHool.MenuFormID = &galTogoo3.ID
+				gtNegHool.FoodNegID = negHool.FoodNegID
+				DB.DB.Create(&gtNegHool)
+			}
+
+			existingNegHoolsIDS = append(existingNegHoolsIDS, gtNegHool.ID)
+
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo3.ID, existingNegHoolsIDS).Delete(models.SubMenuNegGtGuraw{})
+
+		existingHoerHoolIDS := []int{}
+		for _, hoerHool := range hoerHools {
+			gtHoerHool := models.SubMenuHoerGtGuraw{}
+
+			DB.DB.Where("food_hoer_id = ? AND menu_form_id = ?", hoerHool.FoodHoerID, galTogoo3.ID).Find(&gtHoerHool)
+
+			if gtHoerHool.ID <= 0 {
+				gtHoerHool.MenuFormID = &galTogoo3.ID
+				gtHoerHool.FoodHoerID = hoerHool.FoodHoerID
+				DB.DB.Create(&gtHoerHool)
+			}
+
+			existingHoerHoolIDS = append(existingHoerHoolIDS, gtHoerHool.ID)
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo3.ID, existingHoerHoolIDS).Delete(models.SubMenuHoerGtGuraw{})
+
+		existingSalatIDS := []int{}
+		for _, salat := range salats {
+			gtSalat := models.SubMenuSalatGtGuraw{}
+
+			DB.DB.Where("food_salat_id = ? AND menu_form_id = ?", salat.FoodSalatID, galTogoo3.ID).Find(&salat)
+
+			if gtSalat.ID <= 0 {
+				gtSalat.MenuFormID = &galTogoo3.ID
+				gtSalat.FoodSalatID = salat.FoodSalatID
+				DB.DB.Create(&gtSalat)
+			}
+
+			existingSalatIDS = append(existingSalatIDS, gtSalat.ID)
+		}
+
+		DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo3.ID, existingSalatIDS).Delete(models.SubMenuSalatGtGuraw{})
+
+	} else {
+		galTogoo3.MainMenuID = &menu.ID
+		galTogoo3.SetDate = menu.SetDate
+		galTogoo3.SetName = menu.SetName
+		galTogoo3.FoodTimeTypeID = menu.FoodTimeTypeID
+
+		DB.DB.Create(&galTogoo3)
+
+		for _, uuhYum := range uuhYums {
+			gtUuhYum := models.SubMenuUuhimGtGuraw{}
+
+			gtUuhYum.MenuFormID = &galTogoo3.ID
+			gtUuhYum.FoodUuhimID = uuhYum.FoodUuhimID
+
+			DB.DB.Create(&gtUuhYum)
+		}
+
+		for _, desert := range deserts {
+			gtDesert := models.SubMenuDesertGtGuraw{}
+
+			gtDesert.MenuFormID = &galTogoo3.ID
+			gtDesert.FoodDesertID = desert.FoodDesertID
+
+			DB.DB.Create(&gtDesert)
+		}
+
+		for _, negHool := range negHools {
+			gtNegHool := models.SubMenuNegGtGuraw{}
+
+			gtNegHool.MenuFormID = &galTogoo3.ID
+			gtNegHool.FoodNegID = negHool.FoodNegID
+
+			DB.DB.Create(&gtNegHool)
+		}
+
+		for _, hoerHool := range hoerHools {
+			gtHoerHool := models.SubMenuHoerGtGuraw{}
+
+			gtHoerHool.MenuFormID = &galTogoo3.ID
 			gtHoerHool.FoodHoerID = hoerHool.FoodHoerID
 
 			DB.DB.Create(&gtHoerHool)
