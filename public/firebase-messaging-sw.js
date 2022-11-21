@@ -2,13 +2,13 @@ importScripts('https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/7.19.1/firebase-messaging.js');
 
 firebase.initializeApp({
-    apiKey: "AIzaSyAxLGoG4teww5fIaNTJ3t2Y70k2FCO8O68",
-    authDomain: "b2b-finance.firebaseapp.com",
-    projectId: "b2b-finance",
-    storageBucket: "b2b-finance.appspot.com",
-    messagingSenderId: "930334511447",
-    appId: "1:930334511447:web:64cc282890d29b502eee12",
-    measurementId: "G-YHQB6W0029",
+    apiKey: "AIzaSyCAnFbVIVTC_s8fkWDSFOGLvA5hGgPK3w0",
+    authDomain: "tavanbogd-mmk.firebaseapp.com",
+    projectId: "tavanbogd-mmk",
+    storageBucket: "tavanbogd-mmk.appspot.com",
+    messagingSenderId: "1058813657869",
+    appId: "1:1058813657869:web:d2db0d7b885ce1f4c5e644",
+    measurementId: "G-BHEEP0MHC2"
 });
 
 const messaging = firebase.messaging();

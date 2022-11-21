@@ -77,17 +77,17 @@
     },
     "notify": {
         "firebaseConfig": {
-            "apiKey": "",
-            "publicKey": "",
-            "authDomain": "",
+            "apiKey": "AIzaSyCAnFbVIVTC_s8fkWDSFOGLvA5hGgPK3w0",
+            "publicKey": "BKNlR0Chll4xmfO01gTZ1QIDyjzHeIB5_3RF89ITxB0vEiSz6_AKg0itc3y7eymh30x-1xOx-DOMwoZpoeO1Awk ",
+            "authDomain": "tavanbogd-mmk.firebaseapp.com\"",
             "databaseURL": "",
-            "projectId": "",
-            "storageBucket": "",
-            "messagingSenderId": "",
-            "appId": "",
+            "projectId": "tavanbogd-mmk",
+            "storageBucket": "tavanbogd-mmk.appspot.com",
+            "messagingSenderId": "1058813657869",
+            "appId": "1:1058813657869:web:d2db0d7b885ce1f4c5e644",
             "measurementId": ""
         },
-        "serverKey": "",
+        "serverKey": "AAAA9oY2Qw0:APA91bHZEZOJubDW8ewnzc5lDlh1b9tPHe-9RUpUxY3wEdzVz_Ek7tiYhrs0zFDNEyDimHoT8Ou8kMOpbkYUX2mMbfCW78MXFP1CU__Rx4tF9KAeJd2iYwXHFUP9AnEHhEecJ-FkRc3K",
         "sound": "/assets/lambda/notification.mp3",
         "icon": ""
     }

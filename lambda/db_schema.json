@@ -63,6 +63,12 @@
  "viewList": [
   "active_food_order",
   "del_view",
+  "gal_togoo_neg_desert",
+  "gal_togoo_neg_hoer",
+  "gal_togoo_neg_neg",
+  "gal_togoo_neg_salat",
+  "gal_togoo_neg_set_menu",
+  "gal_togoo_neg_uuhim",
   "kitchen_orders",
   "kitchen_orders_sub_menu",
   "menu_date_time_filtered",
@@ -1200,6 +1206,504 @@
     "title": "deleted_at",
     "dbType": "timestamp",
     "table": "food_price",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   }
+  ],
+  "gal_togoo_neg_desert": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_desert_id",
+    "title": "food_desert_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "menu_form_id",
+    "title": "menu_form_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_quantity",
+    "title": "food_quantity",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_iamge",
+    "title": "food_iamge",
+    "dbType": "text",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_calorie",
+    "title": "food_calorie",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_price",
+    "title": "food_price",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   }
+  ],
+  "gal_togoo_neg_hoer": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_hoer_id",
+    "title": "food_hoer_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "menu_form_id",
+    "title": "menu_form_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_quantity",
+    "title": "food_quantity",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_iamge",
+    "title": "food_iamge",
+    "dbType": "text",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_calorie",
+    "title": "food_calorie",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_price",
+    "title": "food_price",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   }
+  ],
+  "gal_togoo_neg_neg": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_neg_id",
+    "title": "food_neg_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "menu_form_id",
+    "title": "menu_form_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_quantity",
+    "title": "food_quantity",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_iamge",
+    "title": "food_iamge",
+    "dbType": "text",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_calorie",
+    "title": "food_calorie",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_price",
+    "title": "food_price",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   }
+  ],
+  "gal_togoo_neg_salat": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_salat_id",
+    "title": "food_salat_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "menu_form_id",
+    "title": "menu_form_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_quantity",
+    "title": "food_quantity",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_iamge",
+    "title": "food_iamge",
+    "dbType": "text",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_calorie",
+    "title": "food_calorie",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_price",
+    "title": "food_price",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_salat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   }
+  ],
+  "gal_togoo_neg_set_menu": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_time_type_id",
+    "title": "food_time_type_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "set_name",
+    "title": "set_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "set_date",
+    "title": "set_date",
+    "dbType": "date",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "branch_chef_id",
+    "title": "branch_chef_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "main_menu_id",
+    "title": "main_menu_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "order_cancel_time",
+    "title": "order_cancel_time",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "morning_order_start",
+    "title": "morning_order_start",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_set_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   }
+  ],
+  "gal_togoo_neg_uuhim": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_uuhim_id",
+    "title": "food_uuhim_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "menu_form_id",
+    "title": "menu_form_id",
+    "dbType": "int8",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_quantity",
+    "title": "food_quantity",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_iamge",
+    "title": "food_iamge",
+    "dbType": "text",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_calorie",
+    "title": "food_calorie",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_uuhim",
+    "key": "",
+    "extra": "",
+    "nullable": "YES"
+   },
+   {
+    "model": "food_price",
+    "title": "food_price",
+    "dbType": "numeric",
+    "table": "gal_togoo_neg_uuhim",
     "key": "",
     "extra": "",
     "nullable": "YES"
