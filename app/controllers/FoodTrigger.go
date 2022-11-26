@@ -459,7 +459,7 @@ func MenuAfterInsertUpdate(menuPre interface{}) {
 	menu := menuPre.(*formModels.TblMenu157)
 	// subMenu := subMenuPre.(*formModels.SubMenu158)
 
-	subMenuPre := models.SubMenu{}
+	// subMenuPre := models.SubMenu{}
 
 	mainSubMenus := []models.SubMenu{}
 	mainSubMenuFoods := []models.SubMenuFoods{}
