@@ -7,77 +7,39 @@ import (
 )
 
 type TblMenuGtGuraw struct {
-	BranchChefID   *int           `gorm:"column:branch_chef_id" json:"branch_chef_id"`
-	CreatedAt      *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt      gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	FoodDesertID   *int           `gorm:"column:food_desert_id" json:"food_desert_id"`
-	FoodHoerID     *int           `gorm:"column:food_hoer_id" json:"food_hoer_id"`
-	FoodSalatID    *int           `gorm:"column:food_salat_id" json:"food_salat_id"`
-	FoodTimeTypeID *int           `gorm:"column:food_time_type_id" json:"food_time_type_id"`
-	FoodUuhimID    *int           `gorm:"column:food_uuhim_id" json:"food_uuhim_id"`
-	ID             int            `gorm:"column:id" json:"id"`
-	MainMenuID     *int           `gorm:"column:main_menu_id" json:"main_menu_id"`
-	SetDate        *DB.Date       `gorm:"column:set_date" json:"set_date"`
-	SetName        *string        `gorm:"column:set_name" json:"set_name"`
-	UpdatedAt      *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	UserID         *int           `gorm:"column:user_id" json:"user_id"`
+	CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	FoodTypeID  *int           `gorm:"column:food_type_id" json:"food_type_id"`
+	ID          int            `gorm:"column:id" json:"id"`
+	MainMenuID  *int           `gorm:"column:main_menu_id" json:"main_menu_id"`
+	OrderRuleID *int           `gorm:"column:order_rule_id" json:"order_rule_id"`
+	SetDate     DB.Date        `gorm:"column:set_date" json:"set_date"`
+	SetName     *string        `gorm:"column:set_name" json:"set_name"`
+	UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID      *int           `gorm:"column:user_id" json:"user_id"`
 }
 
 func (t *TblMenuGtGuraw) TableName() string {
 	return "tbl_menu_gt_guraw"
 }
 
-type SubMenuDesertGtGuraw struct {
-	FoodDesertID *int     `gorm:"column:food_desert_id" json:"food_desert_id"`
+type SubMenuGtGuraw struct {
+	FoodTypeID *int `gorm:"column:food_type_id" json:"food_type_id"`
+	ID         int  `gorm:"column:id" json:"id"`
+	MenuID     *int `gorm:"column:menu_id" json:"menu_id"`
+}
+
+func (s *SubMenuGtGuraw) TableName() string {
+	return "sub_menu_gt_guraw"
+}
+
+type SubMenuFoodsGtGuraw struct {
+	FoodID       *int     `gorm:"column:food_id" json:"food_id"`
 	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
 	ID           int      `gorm:"column:id" json:"id"`
-	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
+	SubMenuID    *int     `gorm:"column:sub_menu_id" json:"sub_menu_id"`
 }
 
-func (s *SubMenuDesertGtGuraw) TableName() string {
-	return "sub_menu_desert_gt_guraw"
-}
-
-type SubMenuHoerGtGuraw struct {
-	FoodHoerID   *int     `gorm:"column:food_hoer_id" json:"food_hoer_id"`
-	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
-	ID           int      `gorm:"column:id" json:"id"`
-	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
-}
-
-func (s *SubMenuHoerGtGuraw) TableName() string {
-	return "sub_menu_hoer_gt_guraw"
-}
-
-type SubMenuNegGtGuraw struct {
-	FoodNegID    *int     `gorm:"column:food_neg_id" json:"food_neg_id"`
-	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
-	ID           int      `gorm:"column:id" json:"id"`
-	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
-}
-
-func (s *SubMenuNegGtGuraw) TableName() string {
-	return "sub_menu_neg_gt_guraw"
-}
-
-type SubMenuSalatGtGuraw struct {
-	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
-	FoodSalatID  *int     `gorm:"column:food_salat_id" json:"food_salat_id"`
-	ID           int      `gorm:"column:id" json:"id"`
-	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
-}
-
-func (s *SubMenuSalatGtGuraw) TableName() string {
-	return "sub_menu_salat_gt_guraw"
-}
-
-type SubMenuUuhimGtGuraw struct {
-	FoodQuantity *float32 `gorm:"column:food_quantity" json:"food_quantity"`
-	FoodUuhimID  *int     `gorm:"column:food_uuhim_id" json:"food_uuhim_id"`
-	ID           int      `gorm:"column:id" json:"id"`
-	MenuFormID   *int     `gorm:"column:menu_form_id" json:"menu_form_id"`
-}
-
-func (s *SubMenuUuhimGtGuraw) TableName() string {
-	return "sub_menu_uuhim_gt_guraw"
+func (s *SubMenuFoodsGtGuraw) TableName() string {
+	return "sub_menu_foods_gt_guraw"
 }

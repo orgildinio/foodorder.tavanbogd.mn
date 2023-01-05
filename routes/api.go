@@ -8,6 +8,11 @@ import (
 func Api(e *fiber.App) {
 	a := e.Group("/api")
 	a.Get("/users", controllers.Users)
+	a.Post("/food-type", controllers.FoodType)
 	//a.Get("/read-icons", controllers.ReadIcons)
+
+	agent := e.Group("/auth")
+	//a.Get("/", handlers.LoginPage)
+	agent.Post("/login", controllers.Login)
 
 }

@@ -1,19 +1,199 @@
 package controllers
 
 import (
-	"fmt"
+	"github.com/lambda-platform/lambda/DB"
 	"lambda/app/models"
 	"lambda/lambda/models/form/formModels"
-
-	"github.com/lambda-platform/lambda/DB"
 )
 
-//import (
-//	"github.com/lambda-platform/lambda/DB"
-//	"lambda/app/models"
-//	"lambda/lambda/models/form/formModels"
-//)
-//
+func MenuAfterInsertUpdate(menuPre interface{}) {
+	var menu *formModels.TblMenu157 = menuPre.(*formModels.TblMenu157)
+
+	subMenus := []models.SubMenu{}
+	subMenuFoods := []models.SubMenuFoods{}
+	subMenuID := models.SubMenu{}
+	DB.DB.Find(&subMenuID)
+
+	DB.DB.Where("menu_id = ?", menu.ID).Find(&subMenus)
+	DB.DB.Where("sub_menu_id = ?", subMenuID.ID).Find(&subMenuFoods)
+
+	saveGalTogoo1(menu, subMenus, subMenuFoods)
+	//saveGalTogoo2(menu, subMenus, subMenuFoods)
+}
+
+func saveGalTogoo1(menu *formModels.TblMenu157, subMenus []models.SubMenu, subMenuFoods []models.SubMenuFoods) {
+	galTogoo1 := models.TblMenuGtNeg{}
+
+	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&galTogoo1)
+
+	if galTogoo1.ID >= 1 {
+		//Do Update
+
+		galTogoo1.ID = menu.ID
+		galTogoo1.MainMenuID = &menu.ID
+		galTogoo1.OrderRuleID = menu.OrderRuleID
+		galTogoo1.SetDate = &menu.SetDate
+		galTogoo1.SetName = menu.SetName
+
+		DB.DB.Save(&galTogoo1)
+
+		existingSubMenuID := []int{}
+
+		for _, subMenu := range subMenus {
+			gt1SubMenu := models.SubMenuGtNeg{}
+
+			DB.DB.Where("food_type_id = ? AND menu_id = ?", subMenu.FoodTypeID, galTogoo1.ID).Find(&gt1SubMenu)
+
+			if gt1SubMenu.ID <= 0 {
+				//fmt.Println("hihihi")
+				//gt1SubMenu.ID = subMenu.ID
+				gt1SubMenu.MenuID = &galTogoo1.ID
+				gt1SubMenu.FoodTypeID = subMenu.FoodTypeID
+
+				DB.DB.Create(&gt1SubMenu)
+
+				existingSubMenuFoodID := []int{}
+
+				for _, subMenuFood := range subMenuFoods {
+					gt1SubMenuFood := models.SubMenuFoodsGtNeg{}
+
+					DB.DB.Where("food_id = ? AND sub_menu_id = ?", subMenuFood.FoodID, gt1SubMenu.ID).Find(&gt1SubMenuFood)
+
+					if gt1SubMenuFood.ID <= 0 {
+						gt1SubMenuFood.SubMenuID = &gt1SubMenu.ID
+						gt1SubMenuFood.FoodID = subMenuFood.FoodID
+
+						DB.DB.Save(&gt1SubMenuFood)
+					}
+
+					existingSubMenuFoodID = append(existingSubMenuFoodID, gt1SubMenuFood.ID)
+				}
+
+				DB.DB.Where("sub_menu_id = ? AND id NOT IN ?", gt1SubMenu.ID, existingSubMenuFoodID).Delete(models.SubMenuFoodsGtNeg{})
+			}
+
+			existingSubMenuID = append(existingSubMenuID, gt1SubMenu.ID)
+		}
+
+		DB.DB.Where("menu_id = ? AND id NOT IN ?", galTogoo1.ID, existingSubMenuID).Delete(models.SubMenuGtNeg{})
+
+	} else {
+		galTogoo1.ID = menu.ID
+		galTogoo1.MainMenuID = &menu.ID
+		galTogoo1.OrderRuleID = menu.OrderRuleID
+		galTogoo1.SetDate = &menu.SetDate
+		galTogoo1.SetName = menu.SetName
+
+		DB.DB.Create(&galTogoo1)
+
+		for _, subMenu := range subMenus {
+			gt1SubMenu := models.SubMenuGtNeg{}
+
+			gt1SubMenu.ID = subMenu.ID
+			gt1SubMenu.MenuID = subMenu.MenuID
+			gt1SubMenu.FoodTypeID = subMenu.FoodTypeID
+
+			DB.DB.Create(&gt1SubMenu)
+
+			for _, subMenuFood := range subMenuFoods {
+				gt1SubMenuFood := models.SubMenuFoodsGtNeg{}
+
+				gt1SubMenuFood.SubMenuID = subMenuFood.SubMenuID
+				gt1SubMenuFood.FoodID = subMenuFood.FoodID
+
+				DB.DB.Create(&gt1SubMenuFood)
+			}
+
+		}
+	}
+}
+
+func saveGalTogoo2(menu *formModels.TblMenu157, subMenus []models.SubMenu, subMenuFoods []models.SubMenuFoods) {
+	galTogoo2 := models.TblMenuGtHoer{}
+
+	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&galTogoo2)
+
+	if galTogoo2.ID >= 1 {
+		//Do Update
+
+		galTogoo2.ID = menu.ID
+		galTogoo2.MainMenuID = &menu.ID
+		galTogoo2.OrderRuleID = menu.OrderRuleID
+		galTogoo2.SetDate = menu.SetDate
+		galTogoo2.SetName = menu.SetName
+
+		DB.DB.Save(&galTogoo2)
+
+		existingSubMenuID := []int{}
+
+		for _, subMenu := range subMenus {
+			gt2SubMenu := models.SubMenuGtHoer{}
+
+			DB.DB.Where("food_type_id = ? AND menu_id = ?", subMenu.FoodTypeID, galTogoo2.ID)
+
+			if gt2SubMenu.ID <= 0 {
+				gt2SubMenu.ID = subMenu.ID
+				gt2SubMenu.MenuID = &galTogoo2.ID
+				gt2SubMenu.FoodTypeID = subMenu.FoodTypeID
+
+				DB.DB.Save(&gt2SubMenu)
+
+				existingSubMenuFoodID := []int{}
+
+				for _, subMenuFood := range subMenuFoods {
+					gt2SubMenuFood := models.SubMenuFoodsGtHoer{}
+
+					DB.DB.Where("food_id = ? AND sub_menu_id = ?", subMenuFood.FoodID, gt2SubMenu.ID)
+
+					if gt2SubMenuFood.ID <= 0 {
+						gt2SubMenuFood.SubMenuID = &gt2SubMenu.ID
+						gt2SubMenuFood.FoodID = subMenuFood.FoodID
+
+						DB.DB.Save(&gt2SubMenuFood)
+					}
+
+					existingSubMenuFoodID = append(existingSubMenuFoodID, gt2SubMenuFood.ID)
+				}
+
+				DB.DB.Where("sub_menu_id = ? AND id NOT IN ?", gt2SubMenu.ID, existingSubMenuFoodID).Delete(models.SubMenuFoodsGtHoer{})
+			}
+
+			existingSubMenuID = append(existingSubMenuID, gt2SubMenu.ID)
+		}
+
+		DB.DB.Where("menu_id = ? AND id NOT IN ?", galTogoo2.ID, existingSubMenuID).Delete(models.SubMenuGtHoer{})
+
+	} else {
+		galTogoo2.ID = menu.ID
+		galTogoo2.MainMenuID = &menu.ID
+		galTogoo2.OrderRuleID = menu.OrderRuleID
+		galTogoo2.SetDate = menu.SetDate
+		galTogoo2.SetName = menu.SetName
+
+		DB.DB.Create(&galTogoo2)
+
+		for _, subMenu := range subMenus {
+			gt2SubMenu := models.SubMenuGtHoer{}
+
+			gt2SubMenu.ID = subMenu.ID
+			gt2SubMenu.MenuID = subMenu.MenuID
+			gt2SubMenu.FoodTypeID = subMenu.FoodTypeID
+
+			DB.DB.Create(&gt2SubMenu)
+
+			for _, subMenuFood := range subMenuFoods {
+				gt2SubMenuFood := models.SubMenuFoodsGtHoer{}
+
+				gt2SubMenuFood.SubMenuID = subMenuFood.SubMenuID
+				gt2SubMenuFood.FoodID = subMenuFood.FoodID
+
+				DB.DB.Create(&gt2SubMenuFood)
+			}
+
+		}
+	}
+}
+
 //func MenuAfterInsertUpdate(menuPre interface{}) {
 //	var menu *formModels.TblMenu21 = menuPre.(*formModels.TblMenu21)
 //
@@ -455,96 +635,105 @@ import (
 //	}
 //}
 
-func MenuAfterInsertUpdate(menuPre interface{}) {
-	menu := menuPre.(*formModels.TblMenu157)
-	// subMenu := subMenuPre.(*formModels.SubMenu158)
-
-	// subMenuPre := models.SubMenu{}
-
-	mainSubMenus := []models.SubMenu{}
-	mainSubMenuFoods := []models.SubMenuFoods{}
-
-	DB.DB.Where("menu_form_id = ?", menu.ID).Find(&mainSubMenus)
-	DB.DB.Where("sub_menu_form_id = ?", menu.ID).Find(&mainSubMenuFoods)
-
-	fmt.Println("Hello", mainSubMenuFoods)
-	// fmt.Println("HelloSub", mainSubMenus)
-
-	saveGalTogoo1(menu, mainSubMenus, mainSubMenuFoods)
-}
-
-func saveGalTogoo1(menu *formModels.TblMenu157, mainSubMenus []models.SubMenu, mainSubMenuFoods []models.SubMenuFoods) {
-	galTogoo1 := models.TblMenuGtNeg{}
-
-	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&galTogoo1)
-
-	if galTogoo1.ID >= 1 {
-
-		//UPDATE
-
-		existingSubMenuIDS := []int{}
-
-		for _, mainSubMenu := range mainSubMenus {
-			gtNegSubMenu := models.SubMenuGtNeg{}
-
-			DB.DB.Where("food_type_id = ? AND menu_form_id = ?", gtNegSubMenu.FoodTypeID, galTogoo1.ID).Find(&gtNegSubMenu)
-
-			if gtNegSubMenu.ID <= 0 {
-				gtNegSubMenu.MenuFormID = &galTogoo1.ID
-				gtNegSubMenu.FoodTypeID = mainSubMenu.FoodTypeID
-
-				DB.DB.Create(&gtNegSubMenu)
-
-				existingSubMenuIDS = append(existingSubMenuIDS, gtNegSubMenu.ID)
-
-				for _, mainSubMenuFood := range mainSubMenuFoods {
-					gtNegSubMenuFood := models.SubMenuFoods{}
-
-					DB.DB.Where("food_id = ? AND sub_menu_form_id = ?", gtNegSubMenuFood.FoodID, gtNegSubMenu.ID).Find(&gtNegSubMenuFood)
-
-					if gtNegSubMenuFood.ID <= 0 {
-						gtNegSubMenuFood.FoodID = mainSubMenuFood.FoodID
-						gtNegSubMenuFood.SubMenuFormID = &gtNegSubMenu.ID
-
-						DB.DB.Create(&gtNegSubMenuFood)
-					}
-				}
-				DB.DB.Where("menu_form_id = ? AND id NOT IN ?", galTogoo1.ID, existingSubMenuIDS).Delete(models.SubMenuGtNeg{})
-			}
-		}
-	} else {
-
-		//INSERT
-
-		galTogoo1.MainMenuID = &menu.ID
-		galTogoo1.SetName = menu.SetName
-		galTogoo1.SetDate = menu.SetDate
-		galTogoo1.OrderRuleID = menu.OrderRuleID
-
-		DB.DB.Create(&galTogoo1)
-
-		for _, mainSubMenu := range mainSubMenus {
-
-			gtNegSubMenu := models.SubMenuGtNeg{}
-
-			fmt.Println(mainSubMenuFoods)
-
-			gtNegSubMenu.MenuFormID = &galTogoo1.ID
-			gtNegSubMenu.FoodTypeID = mainSubMenu.FoodTypeID
-
-			DB.DB.Create(&gtNegSubMenu)
-
-			for _, mainSubMenuFood := range mainSubMenuFoods {
-
-				gtNegSubMenuFood := models.SubMenuFoodsGtNeg{}
-
-				fmt.Println("Create", mainSubMenuFood)
-
-				gtNegSubMenuFood.SubMenuFormID = &mainSubMenu.ID
-				gtNegSubMenuFood.FoodID = mainSubMenuFood.FoodID
-
-				DB.DB.Create(&gtNegSubMenuFood)
-			}
-		}
-	}
-}
+//func MenuAfterInsertUpdate(menuPre interface{}) {
+//	menu := menuPre.(*formModels.TblMenu157)
+//
+//	mainSubMenus := []models.SubMenu{}
+//	subMenuFoods := []models.SubMenuFoods{}
+//	subMenuID := models.SubMenu{}
+//	DB.DB.Find(&subMenuID)
+//	//fmt.Println("Testing", subMenuID.ID, *subMenuID.FoodTypeID)
+//
+//	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&mainSubMenus)
+//	DB.DB.Where("sub_menu_id = ?", subMenuID.ID).Find(&subMenuFoods)
+//
+//	saveGalTogoo1(menu, mainSubMenus, subMenuFoods)
+//}
+//
+//func saveGalTogoo1(menu *formModels.TblMenu157, mainSubMenus []models.SubMenu, subMenuFoods []models.SubMenuFoods) {
+//	galTogoo1 := models.TblMenuGtNeg{}
+//	DB.DB.Where("main_menu_id = ?", menu.ID).Find(&galTogoo1)
+//
+//	DB.DB.First(&galTogoo1)
+//
+//	galTogoo1.ID = menu.ID
+//	galTogoo1.MainMenuID = &menu.ID
+//	galTogoo1.SetName = menu.SetName
+//	//galTogoo1.SetDate = menu.SetDate
+//	galTogoo1.OrderRuleID = menu.OrderRuleID
+//
+//	DB.DB.Save(&galTogoo1)
+//
+//	if galTogoo1.ID >= 1 {
+//		//UPDATE
+//
+//		existSubMenuID := []int{}
+//		for _, mainSubMenu := range mainSubMenus {
+//			gtSubMenu := models.SubMenuGtNeg{}
+//
+//			DB.DB.Where("food_type_id = ? AND menu_id = ?", mainSubMenu.FoodTypeID, galTogoo1.ID).Find(&gtSubMenu)
+//
+//			existSubMenuFoodID := []int{}
+//			if gtSubMenu.ID <= 0 {
+//
+//				gtSubMenu.ID = mainSubMenu.ID
+//				gtSubMenu.MenuID = &galTogoo1.ID
+//				gtSubMenu.FoodTypeID = mainSubMenu.FoodTypeID
+//
+//				DB.DB.Create(&gtSubMenu)
+//
+//				for _, subMenuFood := range subMenuFoods {
+//					gtSubMenuFoods := models.SubMenuFoodsGtNeg{}
+//
+//					DB.DB.Where("food_id = ? AND sub_menu_id = ?", subMenuFood.FoodID, gtSubMenu.ID).Find(&gtSubMenuFoods)
+//
+//					if gtSubMenuFoods.ID <= 0 {
+//						gtSubMenuFoods.SubMenuID = &mainSubMenu.ID
+//						gtSubMenuFoods.FoodID = subMenuFood.FoodID
+//
+//						DB.DB.Create(&gtSubMenuFoods)
+//					}
+//
+//					existSubMenuFoodID = append(existSubMenuFoodID, gtSubMenuFoods.ID)
+//				}
+//
+//				DB.DB.Where("sub_menu_id = ? AND id NOT IN ?", gtSubMenu.ID, existSubMenuFoodID).Delete(models.SubMenuFoodsGtNeg{})
+//			}
+//
+//			existSubMenuID = append(existSubMenuID, gtSubMenu.ID)
+//		}
+//
+//		DB.DB.Where("menu_id = ? AND id NOT IN ?", galTogoo1.ID, existSubMenuID).Delete(models.SubMenuGtNeg{})
+//	} else {
+//		galTogoo1.ID = menu.ID
+//		galTogoo1.MainMenuID = &menu.ID
+//		galTogoo1.SetName = menu.SetName
+//		//galTogoo1.SetDate = menu.SetDate
+//		galTogoo1.OrderRuleID = menu.OrderRuleID
+//
+//		DB.DB.Create(&galTogoo1)
+//
+//		for _, mainSubMenu := range mainSubMenus {
+//			gtSubMenu := models.SubMenuGtNeg{}
+//
+//			fmt.Println("HEEEEEELLLLOOOOOO", mainSubMenu.FoodTypeID)
+//
+//			gtSubMenu.ID = mainSubMenu.ID
+//			gtSubMenu.MenuID = &galTogoo1.ID
+//			gtSubMenu.FoodTypeID = mainSubMenu.FoodTypeID
+//
+//			DB.DB.Create(&gtSubMenu)
+//
+//			for _, subMenuFood := range subMenuFoods {
+//				gtSubMenuFood := models.SubMenuFoodsGtNeg{}
+//
+//				gtSubMenuFood.SubMenuID = &mainSubMenu.ID
+//				gtSubMenuFood.FoodID = subMenuFood.FoodID
+//
+//				fmt.Println(&gtSubMenuFood.FoodID)
+//
+//				DB.DB.Create(&gtSubMenuFood)
+//			}
+//		}
+//	}
+//}

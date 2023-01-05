@@ -13,7 +13,8 @@ func Admin(c *fiber.Ctx) error {
 
 	return JustRenderTemplate("public/admin/index.html", c)
 }
-func Login(c *fiber.Ctx) error {
+
+func LoginPage(c *fiber.Ctx) error {
 
 	return JustRenderTemplate("public/auth/index.html", c)
 }
