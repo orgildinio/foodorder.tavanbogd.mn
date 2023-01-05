@@ -1,16 +1,15 @@
 package main
 
 import (
-    "lambda/bootstrap"
+	"lambda/bootstrap"
 )
 
 func main() {
 
 	lambda := bootstrap.Set()
-	//DBSchema.GetStruct("tbl_menu_gt_neg")
-	//DBSchema.GetStruct("sub_menu_gt_neg")
-	//DBSchema.GetStruct("sub_menu_foods_gt_neg")
-	//DBSchema.GetStruct("VB_SCHEMAS_ADMIN")
+	//DBSchema.GetStruct("users")
+	//DBSchema.GetStruct("sub_menu_gt_guraw")
+	//DBSchema.GetStruct("sub_menu_foods_gt_guraw")
 	lambda.Start()
 
 }
