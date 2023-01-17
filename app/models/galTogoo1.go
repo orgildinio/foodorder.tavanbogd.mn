@@ -13,7 +13,7 @@ type TblMenuGtNeg struct {
 	ID          int            `gorm:"column:id" json:"id"`
 	MainMenuID  *int           `gorm:"column:main_menu_id" json:"main_menu_id"`
 	OrderRuleID *int           `gorm:"column:order_rule_id" json:"order_rule_id"`
-	SetDate     *DB.Date       `gorm:"column:set_date" json:"set_date"`
+	SetDate     DB.Date        `gorm:"column:set_date" json:"set_date"`
 	SetName     *string        `gorm:"column:set_name" json:"set_name"`
 	UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 	UserID      *int           `gorm:"column:user_id" json:"user_id"`

@@ -24,6 +24,10 @@
   "lut_payment_type",
   "lut_position_type",
   "lut_staff_type",
+  "notification_status",
+  "notification_targets",
+  "notification_user_tokens",
+  "notifications",
   "password_resets",
   "roles",
   "sub_menu",
@@ -1259,6 +1263,234 @@
     "scale": ""
    }
   ],
+  "notification_status": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "notification_status",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "notif_id",
+    "title": "notif_id",
+    "dbType": "int8",
+    "table": "notification_status",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "receiver_id",
+    "title": "receiver_id",
+    "dbType": "int8",
+    "table": "notification_status",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "seen",
+    "title": "seen",
+    "dbType": "int8",
+    "table": "notification_status",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "seen_time",
+    "title": "seen_time",
+    "dbType": "timestamp",
+    "table": "notification_status",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "notification_targets": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "link",
+    "title": "link",
+    "dbType": "text",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "title",
+    "title": "title",
+    "dbType": "text",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "body",
+    "title": "body",
+    "dbType": "text",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "schema_id",
+    "title": "schema_id",
+    "dbType": "int8",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "target_role",
+    "title": "target_role",
+    "dbType": "int8",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "condition",
+    "title": "condition",
+    "dbType": "text",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "target_actions",
+    "title": "target_actions",
+    "dbType": "text",
+    "table": "notification_targets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "notification_user_tokens": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "notification_user_tokens",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "notification_user_tokens",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "fcm_token",
+    "title": "fcm_token",
+    "dbType": "text",
+    "table": "notification_user_tokens",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "notifications": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "link",
+    "title": "link",
+    "dbType": "text",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "sender",
+    "title": "sender",
+    "dbType": "numeric",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "title",
+    "title": "title",
+    "dbType": "text",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "body",
+    "title": "body",
+    "dbType": "text",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "password_resets": [
    {
     "model": "token",
@@ -1673,8 +1905,8 @@
     "title": "id",
     "dbType": "int8",
     "table": "sub_menu_gt_neg",
-    "key": "PRI",
-    "extra": "auto_increment",
+    "key": "",
+    "extra": "",
     "nullable": "NO",
     "scale": ""
    },
@@ -3849,6 +4081,76 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "set_date",
+    "title": "set_date",
+    "dbType": "date",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "first_name",
+    "title": "first_name",
+    "dbType": "text",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "last_name",
+    "title": "last_name",
+    "dbType": "text",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_start",
+    "title": "morning_order_start",
+    "dbType": "varchar",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "varchar",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule",
+    "title": "order_rule",
+    "dbType": "text",
+    "table": "view_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "view_food_order": [
@@ -4537,6 +4839,46 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "morning_order_start",
+    "title": "morning_order_start",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_guraw",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_guraw",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_guraw",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule",
+    "title": "order_rule",
+    "dbType": "text",
+    "table": "view_tbl_menu_gt_guraw",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "view_tbl_menu_gt_hoer": [
@@ -4639,6 +4981,46 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "morning_order_start",
+    "title": "morning_order_start",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule",
+    "title": "order_rule",
+    "dbType": "text",
+    "table": "view_tbl_menu_gt_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "view_tbl_menu_gt_neg": [
@@ -4736,6 +5118,46 @@
     "model": "set_date",
     "title": "set_date",
     "dbType": "date",
+    "table": "view_tbl_menu_gt_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_start",
+    "title": "morning_order_start",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "view_tbl_menu_gt_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule",
+    "title": "order_rule",
+    "dbType": "text",
     "table": "view_tbl_menu_gt_neg",
     "key": "",
     "extra": "",

@@ -21,7 +21,7 @@ func FoodType(c *fiber.Ctx) error {
 
 	DB.DB.Where("food_type_id = ?", foodTypeReq.Model.FoodTypeID).Find(&foodData)
 
-	fmt.Println(foodData)
+	//fmt.Println("Heehehe", foodData)
 
 	options := []map[string]interface{}{}
 
@@ -44,12 +44,11 @@ func FoodType(c *fiber.Ctx) error {
 		},
 	}
 	field2 := models.Field{
-		Field: "sub_menu_foods",
+		//Field: "sub_menu_foods",
 		Value: []map[string]interface{}{},
 	}
 
 	SubSchemas = append(SubSchemas, field)
-	//SubSchemas = append(SubSchemas, field2)
 
 	return c.JSON(map[string]interface{}{
 		"status": true,
