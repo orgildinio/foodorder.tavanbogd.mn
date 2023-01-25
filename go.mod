@@ -7,7 +7,7 @@ require (
 	github.com/gofiber/helmet/v2 v2.2.18
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/lambda-platform/lambda v0.5.77
+	github.com/lambda-platform/lambda v0.5.79
 	github.com/thedevsaddam/govalidator v1.9.10
 	golang.org/x/net v0.2.0 // indirect
 	golang.org/x/tools v0.2.0 // indirect

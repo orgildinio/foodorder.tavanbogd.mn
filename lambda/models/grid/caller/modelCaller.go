@@ -49,20 +49,11 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 	case "20":
 		return grid.ViewFood20Datagrid
 
-	case "168":
-		return grid.ViewTblMenuGtHoer168Datagrid
-
 	case "113":
 		return grid.LutBank113Datagrid
 
 	case "67":
 		return grid.ViewFoodOrder67Datagrid
-
-	case "163":
-		return grid.ViewTblMenuGtNeg163Datagrid
-
-	case "172":
-		return grid.ViewTblMenuGtGuraw172Datagrid
 
 	case "116":
 		return grid.ViewUser116Datagrid
@@ -94,14 +85,26 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 	case "92":
 		return grid.MenuOglooniiTsai92Datagrid
 
+	case "180":
+		return grid.ViewFoodMenu180Datagrid
+
 	case "118":
 		return grid.KitchenOrders118Datagrid
+
+	case "177":
+		return grid.ViewFoodMenu177Datagrid
 
 	case "64":
 		return grid.LutKitchenType64Datagrid
 
+	case "183":
+		return grid.ViewFoodMenu183Datagrid
+
 	case "103":
 		return grid.ActiveFoodOrder103Datagrid
+
+	case "187":
+		return grid.ViewFoodMenu187Datagrid
 
 	case "55":
 		return grid.ViewMaterial55Datagrid
