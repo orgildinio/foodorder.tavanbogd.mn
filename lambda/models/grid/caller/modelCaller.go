@@ -67,6 +67,9 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 	case "105":
 		return grid.FoodPrice105Datagrid
 
+	case "190":
+		return grid.ViewTblMenuGtNeg190Datagrid
+
 	case "101":
 		return grid.LutMaterialStatus101Datagrid
 
@@ -103,11 +106,11 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 	case "103":
 		return grid.ActiveFoodOrder103Datagrid
 
-	case "187":
-		return grid.ViewFoodMenu187Datagrid
-
 	case "55":
 		return grid.ViewMaterial55Datagrid
+
+	case "195":
+		return grid.OrdersView195Datagrid
 
 	}
 	return datagrid.Datagrid{}

@@ -40,7 +40,8 @@
   "sub_menu_gt_guraw",
   "sub_menu_gt_hoer",
   "sub_menu_gt_neg",
-  "sub_order_menu",
+  "sub_order_food",
+  "sub_order_food_type",
   "tbl_corp",
   "tbl_food",
   "tbl_material",
@@ -55,10 +56,12 @@
   "vb_schemas_admin"
  ],
  "viewList": [
+  "food_type_view",
+  "orders_view",
+  "user_order",
   "view_company",
   "view_food",
   "view_food_menu",
-  "view_food_order",
   "view_material",
   "view_order_rule",
   "view_tbl_menu_gt_guraw",
@@ -859,6 +862,28 @@
     "title": "food_location_type",
     "dbType": "varchar",
     "table": "food_price",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "food_type_view": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "food_type_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_type",
+    "title": "food_type",
+    "dbType": "varchar",
+    "table": "food_type_view",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -1707,6 +1732,128 @@
     "scale": ""
    }
   ],
+  "orders_view": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "menu_id",
+    "title": "menu_id",
+    "dbType": "int8",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_at",
+    "title": "payment_at",
+    "dbType": "timestamp",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_type",
+    "title": "payment_type",
+    "dbType": "varchar",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "gt_branch",
+    "title": "gt_branch",
+    "dbType": "varchar",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cancelled_at",
+    "title": "cancelled_at",
+    "dbType": "timestamp",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_status",
+    "title": "order_status",
+    "dbType": "varchar",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "password_resets": [
    {
     "model": "token",
@@ -2227,152 +2374,74 @@
     "scale": ""
    }
   ],
-  "sub_order_menu": [
+  "sub_order_food": [
    {
     "model": "id",
     "title": "id",
     "dbType": "int8",
-    "table": "sub_order_menu",
+    "table": "sub_order_food",
     "key": "PRI",
     "extra": "auto_increment",
     "nullable": "NO",
     "scale": ""
    },
    {
-    "model": "menu_id",
-    "title": "menu_id",
-    "dbType": "int8",
-    "table": "sub_order_menu",
+    "model": "food_id",
+    "title": "food_id",
+    "dbType": "int4",
+    "table": "sub_order_food",
     "key": "",
     "extra": "",
     "nullable": "YES",
     "scale": ""
    },
    {
-    "model": "food_order_id",
-    "title": "food_order_id",
-    "dbType": "int8",
-    "table": "sub_order_menu",
+    "model": "order_quantity",
+    "title": "order_quantity",
+    "dbType": "int4",
+    "table": "sub_order_food",
     "key": "",
     "extra": "",
     "nullable": "YES",
     "scale": ""
    },
    {
-    "model": "food_name_neg",
-    "title": "food_name_neg",
-    "dbType": "varchar",
-    "table": "sub_order_menu",
+    "model": "order_id",
+    "title": "order_id",
+    "dbType": "int4",
+    "table": "sub_order_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "sub_order_food_type": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int4",
+    "table": "sub_order_food_type",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "food_type_id",
+    "title": "food_type_id",
+    "dbType": "int4",
+    "table": "sub_order_food_type",
     "key": "",
     "extra": "",
     "nullable": "YES",
     "scale": ""
    },
    {
-    "model": "food_name_hoer",
-    "title": "food_name_hoer",
-    "dbType": "varchar",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_uuhim",
-    "title": "food_name_uuhim",
-    "dbType": "varchar",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_salat",
-    "title": "food_name_salat",
-    "dbType": "varchar",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_desert",
-    "title": "food_name_desert",
-    "dbType": "varchar",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "set_name",
-    "title": "set_name",
-    "dbType": "varchar",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_neg",
-    "title": "food_image_neg",
-    "dbType": "text",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_hoer",
-    "title": "food_image_hoer",
-    "dbType": "text",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_uuhim",
-    "title": "food_image_uuhim",
-    "dbType": "text",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_salat",
-    "title": "food_image_salat",
-    "dbType": "text",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_desert",
-    "title": "food_image_desert",
-    "dbType": "text",
-    "table": "sub_order_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "unique_id",
-    "title": "unique_id",
-    "dbType": "uuid",
-    "table": "sub_order_menu",
+    "model": "order_menu_id",
+    "title": "order_menu_id",
+    "dbType": "int4",
+    "table": "sub_order_food_type",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -3597,6 +3666,88 @@
     "scale": ""
    }
   ],
+  "user_order": [
+   {
+    "model": "order_rule_id",
+    "title": "order_rule_id",
+    "dbType": "int8",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_name",
+    "title": "set_name",
+    "dbType": "varchar",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_date",
+    "title": "set_date",
+    "dbType": "date",
+    "table": "user_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "users": [
    {
     "model": "id",
@@ -4493,408 +4644,6 @@
     "title": "order_rule",
     "dbType": "text",
     "table": "view_food_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   }
-  ],
-  "view_food_order": [
-   {
-    "model": "id",
-    "title": "id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_order_id",
-    "title": "food_order_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_neg",
-    "title": "food_name_neg",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_hoer",
-    "title": "food_name_hoer",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_uuhim",
-    "title": "food_name_uuhim",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_salat",
-    "title": "food_name_salat",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_name_desert",
-    "title": "food_name_desert",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "set_name",
-    "title": "set_name",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_neg",
-    "title": "food_image_neg",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_hoer",
-    "title": "food_image_hoer",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_uuhim",
-    "title": "food_image_uuhim",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_salat",
-    "title": "food_image_salat",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_image_desert",
-    "title": "food_image_desert",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "unique_id",
-    "title": "unique_id",
-    "dbType": "uuid",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "order_id",
-    "title": "order_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "user_id",
-    "title": "user_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "menu_id",
-    "title": "menu_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "order_no",
-    "title": "order_no",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "kitchen_type_id",
-    "title": "kitchen_type_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "is_location",
-    "title": "is_location",
-    "dbType": "int2",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "payment_type_id",
-    "title": "payment_type_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "barimt_type_id",
-    "title": "barimt_type_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "created_at",
-    "title": "created_at",
-    "dbType": "timestamp",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "updated_at",
-    "title": "updated_at",
-    "dbType": "timestamp",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "deleted_at",
-    "title": "deleted_at",
-    "dbType": "timestamp",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "readed_qr_code",
-    "title": "readed_qr_code",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qr_readed_at",
-    "title": "qr_readed_at",
-    "dbType": "timestamp",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "location_type_id",
-    "title": "location_type_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "is_delivery",
-    "title": "is_delivery",
-    "dbType": "int4",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "is_cash",
-    "title": "is_cash",
-    "dbType": "int2",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "is_cash_in_kitchen",
-    "title": "is_cash_in_kitchen",
-    "dbType": "int2",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qpay_cash",
-    "title": "qpay_cash",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qpay_cash_in_kitchen",
-    "title": "qpay_cash_in_kitchen",
-    "dbType": "varchar",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "order_numb",
-    "title": "order_numb",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "orders_date",
-    "title": "orders_date",
-    "dbType": "date",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_price_id",
-    "title": "food_price_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "total_price_id",
-    "title": "total_price_id",
-    "dbType": "int8",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "first_name",
-    "title": "first_name",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "last_name",
-    "title": "last_name",
-    "dbType": "text",
-    "table": "view_food_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "full_name",
-    "title": "full_name",
-    "dbType": "text",
-    "table": "view_food_order",
     "key": "",
     "extra": "",
     "nullable": "YES",
