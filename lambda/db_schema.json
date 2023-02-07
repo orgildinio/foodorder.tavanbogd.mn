@@ -1852,6 +1852,56 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "order_rule_id",
+    "title": "order_rule_id",
+    "dbType": "int8",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_date",
+    "title": "set_date",
+    "dbType": "date",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_cancel_time",
+    "title": "order_cancel_time",
+    "dbType": "time",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_start",
+    "title": "morning_order_start",
+    "dbType": "varchar",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "varchar",
+    "table": "orders_view",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "password_resets": [
@@ -3498,7 +3548,7 @@
    {
     "model": "order_cancel_time",
     "title": "order_cancel_time",
-    "dbType": "varchar",
+    "dbType": "time",
     "table": "tbl_order_rule",
     "key": "",
     "extra": "",
@@ -4796,7 +4846,7 @@
    {
     "model": "order_cancel_time",
     "title": "order_cancel_time",
-    "dbType": "varchar",
+    "dbType": "time",
     "table": "view_order_rule",
     "key": "",
     "extra": "",
@@ -4827,6 +4877,16 @@
     "model": "food_order_time_name",
     "title": "food_order_time_name",
     "dbType": "varchar",
+    "table": "view_order_rule",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "caneceling_time",
+    "title": "caneceling_time",
+    "dbType": "time",
     "table": "view_order_rule",
     "key": "",
     "extra": "",

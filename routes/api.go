@@ -13,7 +13,7 @@ func Api(e *fiber.App) {
 
 	/* Order */
 	a.Post("/create-order", controllers.CreateOrder)
-	a.Get("/get-order", controllers.GetOrders)
+	a.Post("/time-order", controllers.TimeCounter)
 
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)
