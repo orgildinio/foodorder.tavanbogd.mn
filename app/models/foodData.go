@@ -52,5 +52,6 @@ type Field struct {
 }
 type Field2 struct {
 	Field string                 `json:"field"`
+	Value interface{}            `json:"value"`
 	Props map[string]interface{} `json:"props"`
 }

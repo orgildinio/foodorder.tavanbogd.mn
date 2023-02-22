@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/DB"
 	"lambda/app/models"
@@ -17,7 +16,7 @@ func FoodType(c *fiber.Ctx) error {
 		return err
 	}
 
-	fmt.Println(foodTypeReq.Model.FoodTypeID)
+	//fmt.Println(foodTypeReq.Model.FoodTypeID)
 
 	DB.DB.Where("food_type_id = ?", foodTypeReq.Model.FoodTypeID).Find(&foodData)
 
@@ -38,13 +37,13 @@ func FoodType(c *fiber.Ctx) error {
 
 	field := models.Field2{
 		Field: "food_id",
-		//Value: nil,
+		Value: nil,
 		Props: map[string]interface{}{
 			"options": options,
 		},
 	}
 	field2 := models.Field{
-		//Field: "sub_menu_foods",
+		Field: "sub_menu_foods",
 		Value: []map[string]interface{}{},
 	}
 

@@ -15,6 +15,9 @@ func Api(e *fiber.App) {
 	a.Post("/create-order", controllers.CreateOrder)
 	a.Post("/time-order", controllers.TimeCounter)
 
+	//Register
+	a.Post("/user-register", controllers.UserRegistration)
+
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)
 	agent.Post("/login", controllers.Login)
