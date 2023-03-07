@@ -64,7 +64,7 @@ func UserRegistration(c *fiber.Ctx) error {
 	userData.RegisterNumber = &userRegisterData.RegisterNumber
 	userData.Phone = userRegisterData.Phone
 	userData.Role = GetIntPointer(4)
-	userData.Login = strings.ToLower(userRegisterData.Email)
+	userData.Login = strings.ToLower(userRegisterData.Login)
 	userData.Email = strings.ToLower(userRegisterData.Email)
 	password, _ := agentUtils.Hash(*userRegisterData.Password)
 	userData.Password = password

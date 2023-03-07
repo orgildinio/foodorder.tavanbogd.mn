@@ -29,63 +29,6 @@ func CreateKitchensMenu(menu *formModels.TblMenu157, subMenus []models.SubMenu, 
 	kitchens := []models.Kitchen{}
 	DB.DB.Find(&kitchens)
 
-	//branchKitchenID := []int{}
-	//
-	//for _, kitchen := range kitchens {
-	//
-	//	branchKitchen := models.TblMenuGtNeg{}
-	//	DB.DB.Where("main_menu_id = ? AND id = ?", menu.ID, branchKitchen.ID).Find(&branchKitchen)
-	//
-	//	if branchKitchen.ID <= 0 {
-	//
-	//		branchKitchen.KitchenID = kitchen.ID
-	//		branchKitchen.MainMenuID = menu.ID
-	//		branchKitchen.OrderRuleID = menu.OrderRuleID
-	//		branchKitchen.SetName = menu.SetName
-	//		branchKitchen.SetDate = menu.SetDate
-	//
-	//		fmt.Println("Create")
-	//
-	//		DB.DB.Debug().Save(&branchKitchen)
-	//	} else {
-	//		branchKitchen.KitchenID = kitchen.ID
-	//		branchKitchen.MainMenuID = menu.ID
-	//		branchKitchen.OrderRuleID = menu.OrderRuleID
-	//		branchKitchen.SetName = menu.SetName
-	//		branchKitchen.SetDate = menu.SetDate
-	//
-	//		fmt.Println("Update")
-	//
-	//		DB.DB.Debug().Create(&branchKitchen)
-	//		branchKitchenID = append(branchKitchenID, branchKitchen.ID)
-	//	}
-	//	DB.DB.Where("kitchen_id = ? AND id NOT IN ?", kitchen.ID, branchKitchenID).Delete(models.TblMenuGtNeg{})
-	//}
-	//for _, submenu := range subMenus {
-	//	branchKitchenSubMenu := models.SubMenuGtNeg{}
-	//	DB.DB.Where("id = ? AND menu_id = ?", branchKitchen.ID, branchKitchenSubMenu.MenuID).Find(&branchKitchenSubMenu)
-	//
-	//	branchKitchenSubMenu.FoodTypeID = submenu.FoodTypeID
-	//	branchKitchenSubMenu.MenuID = branchKitchen.ID
-	//
-	//	DB.DB.Save(&branchKitchenSubMenu)
-	//
-	//	subMenuFoods1 := []models.SubMenuFoods{}
-	//	DB.DB.Where("sub_menu_id = ?", submenu.ID).Find(&subMenuFoods1)
-	//
-	//	for _, subMenuFood := range subMenuFoods1 {
-	//
-	//		branchKitchenSubMenuFood := models.SubMenuFoodsGtNeg{}
-	//		DB.DB.Where("id = ? AND food_id = ?", branchKitchenSubMenuFood.ID, subMenuFood.FoodID).Find(&branchKitchenSubMenuFood)
-	//
-	//		branchKitchenSubMenuFood.FoodID = subMenuFood.FoodID
-	//		branchKitchenSubMenuFood.SubMenuID = branchKitchenSubMenu.ID
-	//
-	//		DB.DB.Debug().Create(&branchKitchenSubMenuFood)
-	//
-	//	}
-	//}
-
 	for _, kitchen := range kitchens {
 		branchKitchen := models.TblMenuGtNeg{}
 		DB.DB.Where("main_menu_id = ? AND id = ?", menu.ID, branchKitchen.ID).Find(&branchKitchen)

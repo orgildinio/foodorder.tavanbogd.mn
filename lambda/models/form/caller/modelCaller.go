@@ -67,12 +67,6 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "14":
 		return form.TblCorp14Dataform()
 
-	case "164":
-		return form.SubMenu164Dataform()
-
-	case "114":
-		return form.Users114Dataform()
-
 	case "68":
 		return form.FoodOrder68Dataform()
 
@@ -82,11 +76,14 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "17":
 		return form.Users17Dataform()
 
+	case "18":
+		return form.TblFood18Dataform()
+
 	case "100":
 		return form.LutMaterialStatus100Dataform()
 
-	case "18":
-		return form.TblFood18Dataform()
+	case "164":
+		return form.SubMenu164Dataform()
 
 	case "112":
 		return form.LutBank112Dataform()
@@ -94,8 +91,17 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "33":
 		return form.LutFoodType33Dataform()
 
+	case "114":
+		return form.Users114Dataform()
+
+	case "236":
+		return form.SubMenuGtNeg236Dataform()
+
 	case "35":
 		return form.TblOrderRule35Dataform()
+
+	case "237":
+		return form.TblMenuGtNeg237Dataform()
 
 	case "104":
 		return form.FoodPrice104Dataform()
@@ -109,32 +115,14 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "192":
 		return form.Orders192Dataform()
 
-	case "178":
-		return form.TblMenu178Dataform()
-
-	case "179":
-		return form.SubMenu179Dataform()
-
-	case "176":
-		return form.SubMenu176Dataform()
-
 	case "117":
 		return form.FoodOrder117Dataform()
 
-	case "181":
-		return form.TblMenu181Dataform()
-
-	case "182":
-		return form.SubMenu182Dataform()
-
-	case "175":
-		return form.TblMenu175Dataform()
+	case "157":
+		return form.TblMenu157Dataform()
 
 	case "63":
 		return form.LutKitchenType63Dataform()
-
-	case "157":
-		return form.TblMenu157Dataform()
 
 	case "70":
 		return form.AddLocation70Dataform()
@@ -142,23 +130,17 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "60":
 		return form.FoodOrder60Dataform()
 
-	case "227":
-		return form.SubMenuGtNeg227Dataform()
-
-	case "226":
-		return form.TblMenuGtNeg226Dataform()
-
 	case "199":
 		return form.SubOrderFoodType199Dataform()
 
 	case "221":
 		return form.Kitchen221Dataform()
 
-	case "188":
-		return form.TblMenuGtNeg188Dataform()
-
 	case "189":
 		return form.SubMenuGtNeg189Dataform()
+
+	case "229":
+		return form.TblMenuGtNeg229Dataform()
 
 	}
 	return dataform.Dataform{}
