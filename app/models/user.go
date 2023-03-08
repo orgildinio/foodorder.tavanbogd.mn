@@ -38,6 +38,21 @@ func (d *Users) TableName() string {
 }
 
 type UserRegiser struct {
+	LastName       string  `gorm:"column:last_name" json:"last_name"`
+	FirstName      string  `gorm:"column:first_name" json:"first_name"`
+	RegisterNumber string  `gorm:"column:register_number" json:"register_number"`
+	Email          string  `gorm:"column:email" json:"email"`
+	Phone          string  `gorm:"column:phone" json:"phone"`
+	Password       *string `gorm:"column:password" json:"password"`
+	ConfirmCode    string  `gorm:"column:confirm_code" json:"confirm_code"`
+	Login          string  `gorm:"column:login" json:"login"`
+}
+
+func (u *UserRegiser) TableName() string {
+	return "users"
+}
+
+type UserRegisterRequestData struct {
 	LastName        string  `gorm:"column:last_name" json:"last_name"`
 	FirstName       string  `gorm:"column:first_name" json:"first_name"`
 	RegisterNumber  string  `gorm:"column:register_number" json:"register_number"`
@@ -46,5 +61,6 @@ type UserRegiser struct {
 	Password        *string `gorm:"column:password" json:"password"`
 	ConfirmPassword *string `gorm:"column:confirm_password" json:"confirm_password"`
 	ConfirmCode     string  `gorm:"column:confirm_code" json:"confirm_code"`
+	Status          string  `gorm:"column:status" json:"status"`
 	Login           string  `gorm:"column:login" json:"login"`
 }

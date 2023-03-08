@@ -15,7 +15,7 @@ func GetIntPointer(value int) *int {
 }
 
 func UserRegistration(c *fiber.Ctx) error {
-	userRegisterData := new(models.UserRegiser)
+	userRegisterData := new(models.UserRegisterRequestData)
 	userData := models.Users{}
 
 	err := c.BodyParser(&userRegisterData)
@@ -36,12 +36,12 @@ func UserRegistration(c *fiber.Ctx) error {
 	if userDataEmail.ID > 0 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":  "error",
-			"message": "Бүртгэлтэй е-майл хаяг байна.\n Өөр е-майл хаяг ашиглана уу!",
+			"message": "Бүртгэлтэй е-майл хаяг байна.",
 		})
 	} else if userDataPhone.ID > 0 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":  "error",
-			"message": "Бүртгэлтэй утасны дугаар байна.\n Өөр утасны дугаар ашиглана уу!",
+			"message": "Бүртгэлтэй утасны дугаар байна.",
 		})
 	} else if userDataLogin.ID > 0 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
@@ -61,15 +61,14 @@ func UserRegistration(c *fiber.Ctx) error {
 
 	userData.LastName = &userRegisterData.LastName
 	userData.FirstName = &userRegisterData.FirstName
-	userData.RegisterNumber = &userRegisterData.RegisterNumber
 	userData.Phone = userRegisterData.Phone
-	userData.Role = GetIntPointer(4)
+	userData.Role = GetIntPointer(3)
 	userData.Login = strings.ToLower(userRegisterData.Login)
 	userData.Email = strings.ToLower(userRegisterData.Email)
 	password, _ := agentUtils.Hash(*userRegisterData.Password)
 	userData.Password = password
 
-	DB.DB.Create(&userRegisterData)
+	DB.DB.Create(&userData)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",

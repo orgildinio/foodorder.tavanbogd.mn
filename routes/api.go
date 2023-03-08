@@ -23,3 +23,5 @@ func Api(e *fiber.App) {
 	agent.Post("/login", controllers.Login)
 
 }
+
+///api/food-type
