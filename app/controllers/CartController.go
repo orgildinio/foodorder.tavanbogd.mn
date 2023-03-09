@@ -6,7 +6,6 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	"lambda/app/models"
 	"net/http"
-	"time"
 )
 
 func AddToCart(c *fiber.Ctx) error {
@@ -35,12 +34,6 @@ func UpdateCart(c *fiber.Ctx) error {
 		fmt.Errorf(err.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
-
-	//cartUser := agentUtils.AuthUserObject(c)
-
-	//currentTime := time.Now()
-	//today := currentTime.Format("2006-01-02 15:04:05")
-	fmt.Println(time.Now())
 
 	editCart := models.CartZahialgat{}
 	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartReqData.UserID).Find(&editCart)
