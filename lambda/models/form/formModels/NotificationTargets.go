@@ -19,7 +19,7 @@ type NotificationTargets struct {
 	Title         string `gorm:"column:title" json:"title"`
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (n *NotificationTargets) TableName() string {
 	return "notification_targets"
 }

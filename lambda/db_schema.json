@@ -5147,16 +5147,6 @@
     "scale": ""
    },
    {
-    "model": "cart_order_number",
-    "title": "cart_order_number",
-    "dbType": "varchar",
-    "table": "view_cart_zahialga",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "first_name",
     "title": "first_name",
     "dbType": "text",
@@ -5190,16 +5180,6 @@
     "model": "kitchen_image",
     "title": "kitchen_image",
     "dbType": "text",
-    "table": "view_cart_zahialga",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qty",
-    "title": "qty",
-    "dbType": "numeric",
     "table": "view_cart_zahialga",
     "key": "",
     "extra": "",
@@ -5260,6 +5240,16 @@
     "model": "food_price",
     "title": "food_price",
     "dbType": "numeric",
+    "table": "view_cart_zahialga",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int8",
     "table": "view_cart_zahialga",
     "key": "",
     "extra": "",

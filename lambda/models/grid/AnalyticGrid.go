@@ -68,7 +68,7 @@ func (a *AnalyticMainTable) TableName() string {
 	return "analytic"
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (a *AnalyticGrid) TableName() string {
 	return "analytic"
 }

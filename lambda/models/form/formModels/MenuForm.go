@@ -16,7 +16,7 @@ type VbSchemas struct {
 	UpdatedAt *time.Time `gorm:"column:updated_at" json:"updated_at"`
 }
 
-//  TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type
 func (v *VbSchemas) TableName() string {
 	return "vb_schemas"
 }

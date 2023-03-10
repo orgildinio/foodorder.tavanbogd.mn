@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/DB"
+	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"net/http"
 )
@@ -35,8 +36,10 @@ func UpdateCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
+	cartUser := agentUtils.AuthUserObject(c)
+
 	editCart := models.CartZahialgat{}
-	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartReqData.UserID).Find(&editCart)
+	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Find(&editCart)
 
 	if (editCart.Qty + cartReqData.Qty) > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
@@ -64,8 +67,10 @@ func DeleteCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
+	cartUser := agentUtils.AuthUserObject(c)
+
 	editCart := models.CartZahialgat{}
-	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartReqData.UserID).Delete(&editCart)
+	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Delete(&editCart)
 
 	//DB.DB.Debug().Delete(&editCart)
 

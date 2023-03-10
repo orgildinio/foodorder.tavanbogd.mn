@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/lambda-platform/lambda/agent/agentMW"
 	"lambda/app/controllers"
 )
 
@@ -19,9 +20,9 @@ func Api(e *fiber.App) {
 	a.Post("/user-register", controllers.UserRegistration)
 
 	//CART
-	a.Post("/cart/add", controllers.AddToCart)
-	a.Post("/cart/edit", controllers.UpdateCart)
-	a.Post("/cart/delete", controllers.DeleteCart)
+	a.Post("/cart/add", agentMW.IsLoggedIn(), controllers.AddToCart)
+	a.Post("/cart/edit", agentMW.IsLoggedIn(), controllers.UpdateCart)
+	a.Post("/cart/delete", agentMW.IsLoggedIn(), controllers.DeleteCart)
 
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)
