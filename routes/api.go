@@ -24,6 +24,10 @@ func Api(e *fiber.App) {
 	a.Post("/cart/edit", agentMW.IsLoggedIn(), controllers.UpdateCart)
 	a.Post("/cart/delete", agentMW.IsLoggedIn(), controllers.DeleteCart)
 
+	a.Post("/cart/add-set", controllers.AddCartSet)
+	a.Post("/cart/edit-set", controllers.UpdateCartSet)
+	a.Delete("/cart/delete-set", controllers.DeleteCartSet)
+
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)
 	agent.Post("/login", controllers.Login)

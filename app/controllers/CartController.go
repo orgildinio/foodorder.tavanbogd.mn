@@ -41,21 +41,21 @@ func UpdateCart(c *fiber.Ctx) error {
 	editCart := models.CartZahialgat{}
 	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Find(&editCart)
 
-	if (editCart.Qty + cartReqData.Qty) > 5 {
+	editCart.Qty = editCart.Qty + cartReqData.Qty
+
+	if (editCart.Qty + cartReqData.Qty) >= 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",
-			"message":   "Ихдээ 5-ийг авах боломжтой",
+			"message":   "5 хоол захиалах боломжтой",
 		})
 	}
-
-	editCart.Qty = editCart.Qty + cartReqData.Qty
 
 	DB.DB.Debug().Save(&editCart)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
-		"message": "Засвар амжилттай",
+		"message": "Сагсалсан хоол засагдлаа",
 	})
 }
 
