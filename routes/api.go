@@ -13,20 +13,26 @@ func Api(e *fiber.App) {
 	//a.Get("/read-icons", controllers.ReadIcons)
 
 	/* Order */
-	a.Post("/create-order", controllers.CreateOrder)
-	a.Post("/time-order", controllers.TimeCounter)
+	a.Post("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
+	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
 
 	//Register
 	a.Post("/user-register", controllers.UserRegistration)
 
-	//CART
+	//CART zahialgat
 	a.Post("/cart/add", agentMW.IsLoggedIn(), controllers.AddToCart)
 	a.Post("/cart/edit", agentMW.IsLoggedIn(), controllers.UpdateCart)
 	a.Post("/cart/delete", agentMW.IsLoggedIn(), controllers.DeleteCart)
 
-	a.Post("/cart/add-set", controllers.AddCartSet)
-	a.Post("/cart/edit-set", controllers.UpdateCartSet)
-	a.Delete("/cart/delete-set", controllers.DeleteCartSet)
+	//CART bagts hool
+	a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)
+	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.UpdateCartSet)
+	a.Delete("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartSet)
+
+	//QPAY
+	//a.Post("/qpay/invoice", controllers.QPayInvoice)
+	//a.Post("/qpay/check", controllers.QPayPaymentCheck)
+	//a.Get("/qpay/callback/:invoice_id", controllers.QPayCallBack)
 
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)

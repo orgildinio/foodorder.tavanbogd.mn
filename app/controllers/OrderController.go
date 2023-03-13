@@ -4,75 +4,82 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/DB"
-	"gorm.io/gorm"
+	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"net/http"
-	"time"
 )
 
 func CreateOrder(c *fiber.Ctx) error {
+	order := new(models.Orders)
+	err := c.BodyParser(&order)
 
-	var activeMenu []models.AcitiveMenu
+	if err != nil {
+		fmt.Println(err.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
 
-	emptyCheck := DB.DB.First(&activeMenu).Error
+	orderUser := agentUtils.AuthUserObject(c)
+	order.UserID = int(orderUser["id"].(int64))
 
-	if emptyCheck == gorm.ErrRecordNotFound {
-		return c.Status(http.StatusNotFound).JSON(map[string]string{
-			"status":  "unsuccessful",
-			"message": "Идэвхтэй цэс байхгүй байна",
-		})
+	orderCheck := models.CheckOrders{}
+	DB.DB.Debug().Where("user_id = ? AND cart_id = ? AND menu_id = ? AND age(created_at) <= '15 minutes'", order.UserID, order.CartID, order.MenuID).Order("id DESC").Find(&orderCheck)
 
-	} else {
-		orderReq := new(models.Orders)
-		orderErr := c.BodyParser(&orderReq)
-
-		if orderErr != nil {
-			fmt.Println(orderErr.Error())
-			return c.Status(http.StatusInternalServerError).JSON("server error")
-		}
-
-		var activeOrder []models.ActiveOrder
-
-		DB.DB.Table("active_order").Where("user_id = ?", orderReq.UserID).Find(&activeOrder)
-
-		if len(activeOrder) > 0 {
-			return c.Status(http.StatusOK).JSON(map[string]string{
-				"status":  "warning",
-				"message": "Таньд захиалга байна",
-			})
-		}
-
-		DB.DB.Create(&orderReq)
-		return c.Status(http.StatusOK).JSON(map[string]string{
-			"status":  "success",
-			"message": "Захиалга амжилттай үүсгэлээ",
+	if orderCheck.ID >= 1 {
+		return c.JSON(map[string]string{
+			"status":      "warning",
+			"orderNumber": "Таньд " + *orderCheck.OrderNumber + " дугаартай захиалга үүссэн байна.",
+			"status_mn":   "Анхааруулга",
 		})
 	}
 
+	cartZahialga := models.CartZahialgat{}
+	DB.DB.Debug().Where("id = ?", order.CartID).Find(&cartZahialga)
+
+	fmt.Println("zahialsan_id", cartZahialga.FoodID)
+
+	foodBalance := models.FoodBalance{}
+	DB.DB.Where("food_id = ?", cartZahialga.FoodID).Find(&foodBalance)
+
+	fmt.Println("balansiin_id", foodBalance.FoodID)
+	foodBalance.Qty = foodBalance.Qty - cartZahialga.Qty
+
+	fmt.Println("too shirheg", foodBalance.Qty)
+
+	DB.DB.Debug().Save(&foodBalance)
+
+	DB.DB.Create(&order)
+
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+		"status":  "success",
+		"message": "Захиалга үүсгэлээ",
+	})
 }
 
-func TimeCounter(c *fiber.Ctx) error {
+func CancelOrder(c *fiber.Ctx) error {
+	order := new(models.Orders)
+	err := c.BodyParser(&order)
 
-	activeOrder := models.ActiveOrder{}
-	DB.DB.Where("order_status = ?", "pending").Find(&activeOrder)
-
-	curActive := activeOrder.CancelledAt.Format("2006-01-02 15:04:05")
-
-	fmt.Println("Hey", curActive)
-
-	for {
-		curTime := time.Now().Format("2006-01-02 15:04:05")
-		time.Sleep(1 * time.Second)
-		fmt.Println(curTime)
-
-		if curActive == curTime {
-			orders := models.Orders{}
-			DB.DB.Where("order_status = ?", "pending").Find(&orders)
-			orders.OrderStatus = "update with TIMESTAMP"
-			DB.DB.Save(&orders)
-			fmt.Println("Hello World")
-		}
+	if err != nil {
+		fmt.Println(err.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
-	return c.JSON("Hello")
+	orderUser := agentUtils.AuthUserObject(c)
+	order.UserID = int(orderUser["id"].(int64))
+
+	checkOrder := models.ViewOrders{}
+	DB.DB.Debug().Where("id = ?", order.ID).Order("id DESC").Find(&checkOrder)
+
+	order.OrderStatus = GetStringPointer("cancel")
+
+	DB.DB.Save(&order)
+
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+		"status":  "success",
+		"message": checkOrder.OrderNumber + " дугаартай захиалга цуцлагдлаа",
+	})
+}
+
+func GetStringPointer(value string) *string {
+	return &value
 }

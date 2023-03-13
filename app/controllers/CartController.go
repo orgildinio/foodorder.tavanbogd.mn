@@ -17,8 +17,8 @@ func AddToCart(c *fiber.Ctx) error {
 		fmt.Println(err.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
-	//User := agentUtils.AuthUserObject(c)
-	//cart.UserID = int(User["id"].(int64))
+	cartUser := agentUtils.AuthUserObject(c)
+	cart.UserID = int(cartUser["id"].(int64))
 
 	DB.DB.Create(&cart)
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
@@ -76,6 +76,6 @@ func DeleteCart(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
-		"message": "Мэдээлэл устгагдлаа",
+		"message": "Сагсалсан хоол устгагдлаа",
 	})
 }

@@ -10,7 +10,7 @@ import (
 )
 
 func AddCartSet(c *fiber.Ctx) error {
-	setCart := new(models.CartSet)
+	setCart := models.CartSet{}
 	err := c.BodyParser(&setCart)
 
 	if err != nil {
@@ -19,12 +19,12 @@ func AddCartSet(c *fiber.Ctx) error {
 	}
 
 	checkCart := models.ViewCartSet{}
-	DB.DB.Where("user_id = ? AND menu_id = ? AND sub_menu_id = ? AND sub_menu_food_id = ? AND food_id = ?", setCart.UserID, setCart.MenuID, setCart.SubMenuID, setCart.SubMenuFoodID, setCart.FoodID).Find(&checkCart)
+	DB.DB.Where("user_id = ? AND menu_id = ?", setCart.UserID, setCart.MenuID).Find(&checkCart)
 
 	if setCart.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]interface{}{
 			"status":  "warning",
-			"message": "захиалга 5-аас ихгүй байна.",
+			"message": "Захиалга 5-аас ихгүй байна.",
 		})
 	}
 
@@ -34,15 +34,16 @@ func AddCartSet(c *fiber.Ctx) error {
 			"message": "Таньд сагсалсан хоол байна.",
 			"data":    checkCart.SetName,
 		})
-	} else {
-		DB.DB.Create(&setCart)
-
-		return c.Status(http.StatusOK).JSON(map[string]interface{}{
-			"status":  "success",
-			"message": "Сагсанд нэмэгдлээ",
-			"data":    checkCart.SetName,
-		})
 	}
+
+	DB.DB.Create(&setCart)
+
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+		"status":  "success",
+		"message": "Сагсанд нэмэгдлээ",
+		"data":    checkCart.SetName,
+	})
+
 }
 
 func UpdateCartSet(c *fiber.Ctx) error {

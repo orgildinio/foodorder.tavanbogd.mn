@@ -1,79 +1,76 @@
 package models
 
 import (
-	"github.com/lambda-platform/lambda/DB"
 	"gorm.io/gorm"
 	"time"
 )
 
 type Orders struct {
-	MenuID      int    `gorm:"column:menu_id" json:"menu_id"`
-	OrderStatus string `gorm:"column:order_status" json:"order_status"`
-	GtBranch    string `gorm:"column:gt_branch" json:"gt_branch"`
-	UserID      int    `gorm:"column:user_id" json:"user_id"`
-	//OrderNumber string `gorm:"column:order_number" json:"order_number"`
-	//CancelledAt *time.Time     `gorm:"column:cancelled_at" json:"cancelled_at"`
-	//CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
-	//DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	//ID          int            `gorm:"column:id" json:"id"`
-	//PaymentAt   *time.Time     `gorm:"column:payment_at" json:"payment_at"`
-	//PaymentType *string        `gorm:"column:payment_type" json:"payment_type"`
-	//UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	//UserID      *int           `gorm:"column:user_id" json:"user_id"`
+	Qty       *int           `gorm:"column:qty" json:"qty"`
+	CartType  *string        `gorm:"column:cart_type" json:"cart_type"`
+	CreatedAt *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID        int            `gorm:"column:id" json:"id"`
+	KitchenID *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
+	MenuID    *int           `gorm:"column:menu_id" json:"menu_id"`
+	//OrderNumber *string        `gorm:"column:order_number" json:"order_number"`
+	OrderStatus *string    `gorm:"column:order_status" json:"order_status"`
+	PaymentAt   *time.Time `gorm:"column:payment_at" json:"payment_at"`
+	PaymentType *string    `gorm:"column:payment_type" json:"payment_type"`
+	UpdatedAt   *time.Time `gorm:"column:updated_at" json:"updated_at"`
+	UserID      int        `gorm:"column:user_id" json:"user_id"`
+	CartID      *int       `gorm:"column:cart_id" json:"cart_id"`
+	//InvoiceId   string         `gorm:"column:invoice_id" json:"invoice_id"`
 }
 
 func (o *Orders) TableName() string {
 	return "orders"
 }
 
-type ActiveOrder struct {
-	CancelledAt       time.Time      `gorm:"column:cancelled_at" json:"cancelled_at"`
-	CreatedAt         *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt         gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	GtBranch          *string        `gorm:"column:gt_branch" json:"gt_branch"`
-	ID                *int           `gorm:"column:id" json:"id"`
-	MenuID            *int           `gorm:"column:menu_id" json:"menu_id"`
-	MorningOrderEnd   *string        `gorm:"column:morning_order_end" json:"morning_order_end"`
-	MorningOrderStart *string        `gorm:"column:morning_order_start" json:"morning_order_start"`
-	OrderCancelTime   *string        `gorm:"column:order_cancel_time" json:"order_cancel_time"`
-	OrderNumber       *string        `gorm:"column:order_number" json:"order_number"`
-	OrderRuleID       *int           `gorm:"column:order_rule_id" json:"order_rule_id"`
-	OrderStatus       *string        `gorm:"column:order_status" json:"order_status"`
-	PaymentAt         *time.Time     `gorm:"column:payment_at" json:"payment_at"`
-	PaymentType       *string        `gorm:"column:payment_type" json:"payment_type"`
-	SetDate           DB.Date        `gorm:"column:set_date" json:"set_date"`
-	UpdatedAt         *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	UserID            *int           `gorm:"column:user_id" json:"user_id"`
+type ViewOrders struct {
+	InvoiceID      *string        `gorm:"column:Invoice_id" json:"Invoice_id"`
+	CancelledAt    *time.Time     `gorm:"column:cancelled_at" json:"cancelled_at"`
+	CartID         *int           `gorm:"column:cart_id" json:"cart_id"`
+	CartType       *string        `gorm:"column:cart_type" json:"cart_type"`
+	CreatedAt      *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt      gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	FoodBalanceQty *int           `gorm:"column:food_balance_qty" json:"food_balance_qty"`
+	FoodID         *int           `gorm:"column:food_id" json:"food_id"`
+	ID             *int           `gorm:"column:id" json:"id"`
+	KitchenID      *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
+	MenuID         *int           `gorm:"column:menu_id" json:"menu_id"`
+	OrderNumber    string         `gorm:"column:order_number" json:"order_number"`
+	OrderQty       *int           `gorm:"column:order_qty" json:"order_qty"`
+	OrderStatus    *string        `gorm:"column:order_status" json:"order_status"`
+	PaymentAt      *time.Time     `gorm:"column:payment_at" json:"payment_at"`
+	PaymentStatus  *string        `gorm:"column:payment_status" json:"payment_status"`
+	PaymentType    *string        `gorm:"column:payment_type" json:"payment_type"`
+	TotalPrice     *int           `gorm:"column:total_price" json:"total_price"`
+	UpdatedAt      *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID         *int           `gorm:"column:user_id" json:"user_id"`
 }
 
-func (a *ActiveOrder) TableName() string {
-	return "active_order"
+func (v *ViewOrders) TableName() string {
+	return "view_orders"
 }
 
-type AcitiveMenu struct {
-	FoodName          *string  `gorm:"column:food_name" json:"food_name"`
-	ID                int      `gorm:"column:id" json:"id"`
-	MorningOrderEnd   *string  `gorm:"column:morning_order_end" json:"morning_order_end"`
-	MorningOrderStart *string  `gorm:"column:morning_order_start" json:"morning_order_start"`
-	OrderCancelTime   *string  `gorm:"column:order_cancel_time" json:"order_cancel_time"`
-	QuantityGtNeg     *float32 `gorm:"column:quantity_gt_neg" json:"quantity_gt_neg"`
-	SetDate           DB.Date  `gorm:"column:set_date" json:"set_date"`
+type CheckOrders struct {
+	CartType    *string        `gorm:"column:cart_type" json:"cart_type"`
+	CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID          int            `gorm:"column:id" json:"id"`
+	KitchenID   *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
+	MenuID      *int           `gorm:"column:menu_id" json:"menu_id"`
+	OrderNumber *string        `gorm:"column:order_number" json:"order_number"`
+	OrderStatus *string        `gorm:"column:order_status" json:"order_status"`
+	PaymentAt   *time.Time     `gorm:"column:payment_at" json:"payment_at"`
+	PaymentType *string        `gorm:"column:payment_type" json:"payment_type"`
+	UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID      int            `gorm:"column:user_id" json:"user_id"`
+	CartID      *int           `gorm:"column:cart_id" json:"cart_id"`
+	//InvoiceId   string         `gorm:"column:invoice_id" json:"invoice_id"`
 }
 
-func (a *AcitiveMenu) TableName() string {
-	return "acitive_menu"
-}
-
-type TblOrderRule struct {
-	CanecelingTime    string  `gorm:"column:caneceling_time" json:"caneceling_time"`
-	FoodOrderTimeName *string `gorm:"column:food_order_time_name" json:"food_order_time_name"`
-	ID                int     `gorm:"column:id" json:"id"`
-	MorningOrderEnd   *string `gorm:"column:morning_order_end" json:"morning_order_end"`
-	MorningOrderStart *string `gorm:"column:morning_order_start" json:"morning_order_start"`
-
-	UserID *int `gorm:"column:user_id" json:"user_id"`
-}
-
-func (t *TblOrderRule) TableName() string {
-	return "tbl_order_rule"
+func (o *CheckOrders) TableName() string {
+	return "orders"
 }
