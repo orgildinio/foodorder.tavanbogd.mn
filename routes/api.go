@@ -12,10 +12,6 @@ func Api(e *fiber.App) {
 	a.Post("/food-type", controllers.FoodType)
 	//a.Get("/read-icons", controllers.ReadIcons)
 
-	/* Order */
-	a.Post("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
-	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
-
 	//Register
 	a.Post("/user-register", controllers.UserRegistration)
 
@@ -28,6 +24,13 @@ func Api(e *fiber.App) {
 	a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)
 	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.UpdateCartSet)
 	a.Delete("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartSet)
+
+	/* Order Zahialgat */
+	a.Post("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
+	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
+
+	/* Order Set */
+	a.Post("/create-order-set", agentMW.IsLoggedIn(), controllers.CreateOrderSet)
 
 	//QPAY
 	//a.Post("/qpay/invoice", controllers.QPayInvoice)

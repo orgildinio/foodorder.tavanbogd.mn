@@ -7,7 +7,7 @@ import (
 
 type Orders struct {
 	Qty       *int           `gorm:"column:qty" json:"qty"`
-	CartType  *string        `gorm:"column:cart_type" json:"cart_type"`
+	CartType  string         `gorm:"column:cart_type" json:"cart_type"`
 	CreatedAt *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	ID        int            `gorm:"column:id" json:"id"`

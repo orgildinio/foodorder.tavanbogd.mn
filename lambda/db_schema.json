@@ -6,6 +6,8 @@
   "a_sum",
   "add_location",
   "cart_set",
+  "cart_sub_menu",
+  "cart_sub_menu_food",
   "cart_zahialgat",
   "food_balance",
   "food_order",
@@ -34,6 +36,7 @@
   "notification_user_tokens",
   "notifications",
   "order_detail",
+  "order_set",
   "orders",
   "password_resets",
   "roles",
@@ -88,6 +91,7 @@
   "view_kitchen",
   "view_material",
   "view_order_rule",
+  "view_orders",
   "view_set_food_menu",
   "view_set_food_sub_menu",
   "view_set_food_sub_menu_foods",
@@ -1098,6 +1102,70 @@
     "title": "food_id_uuh",
     "dbType": "int2",
     "table": "cart_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "cart_sub_menu": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "cart_sub_menu",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "menu_id",
+    "title": "menu_id",
+    "dbType": "int8",
+    "table": "cart_sub_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_type_id",
+    "title": "food_type_id",
+    "dbType": "int8",
+    "table": "cart_sub_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "cart_sub_menu_food": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "cart_sub_menu_food",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "sub_menu_id",
+    "title": "sub_menu_id",
+    "dbType": "int8",
+    "table": "cart_sub_menu_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_id",
+    "title": "food_id",
+    "dbType": "int8",
+    "table": "cart_sub_menu_food",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -3074,6 +3142,108 @@
     "scale": ""
    }
   ],
+  "order_set": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "order_set",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int4",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "menu_id",
+    "title": "menu_id",
+    "dbType": "int8",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cancelled_at",
+    "title": "cancelled_at",
+    "dbType": "timestamp",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_type",
+    "title": "payment_type",
+    "dbType": "varchar",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cart_id",
+    "title": "cart_id",
+    "dbType": "int8",
+    "table": "order_set",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "orders": [
    {
     "model": "id",
@@ -4442,6 +4612,16 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int4",
+    "table": "tbl_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "tbl_menu_gt_neg": [
@@ -5742,8 +5922,38 @@
     "scale": ""
    },
    {
-    "model": "qty_zuush",
-    "title": "qty_zuush",
+    "model": "desert_balance_id",
+    "title": "desert_balance_id",
+    "dbType": "int8",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "desert_kitchen_id",
+    "title": "desert_kitchen_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "desert_food_id",
+    "title": "desert_food_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "desert_qty",
+    "title": "desert_qty",
     "dbType": "numeric",
     "table": "view_cart_set_food",
     "key": "",
@@ -5752,8 +5962,8 @@
     "scale": ""
    },
    {
-    "model": "name_zuush",
-    "title": "name_zuush",
+    "model": "desert_name",
+    "title": "desert_name",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5762,8 +5972,8 @@
     "scale": ""
    },
    {
-    "model": "type_zuush",
-    "title": "type_zuush",
+    "model": "desert_food_type",
+    "title": "desert_food_type",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5772,8 +5982,48 @@
     "scale": ""
    },
    {
-    "model": "qty_uuh",
-    "title": "qty_uuh",
+    "model": "desert_image",
+    "title": "desert_image",
+    "dbType": "text",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "hoer_balance_id",
+    "title": "hoer_balance_id",
+    "dbType": "int8",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "hoer_kitchen_id",
+    "title": "hoer_kitchen_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "hoer_food_id",
+    "title": "hoer_food_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "hoer_qty",
+    "title": "hoer_qty",
     "dbType": "numeric",
     "table": "view_cart_set_food",
     "key": "",
@@ -5782,8 +6032,8 @@
     "scale": ""
    },
    {
-    "model": "name_uuh",
-    "title": "name_uuh",
+    "model": "hoer_food_name",
+    "title": "hoer_food_name",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5792,8 +6042,8 @@
     "scale": ""
    },
    {
-    "model": "type_uhh",
-    "title": "type_uhh",
+    "model": "hoer_food_type",
+    "title": "hoer_food_type",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5802,8 +6052,48 @@
     "scale": ""
    },
    {
-    "model": "qty_neg",
-    "title": "qty_neg",
+    "model": "hoer_image",
+    "title": "hoer_image",
+    "dbType": "text",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "neg_balance_id",
+    "title": "neg_balance_id",
+    "dbType": "int8",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "neg_kitchen_id",
+    "title": "neg_kitchen_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "neg_food_id",
+    "title": "neg_food_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "neg_qty",
+    "title": "neg_qty",
     "dbType": "numeric",
     "table": "view_cart_set_food",
     "key": "",
@@ -5812,8 +6102,8 @@
     "scale": ""
    },
    {
-    "model": "name_neg",
-    "title": "name_neg",
+    "model": "neg_food_name",
+    "title": "neg_food_name",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5822,8 +6112,8 @@
     "scale": ""
    },
    {
-    "model": "type_neg",
-    "title": "type_neg",
+    "model": "neg_food_type",
+    "title": "neg_food_type",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5832,8 +6122,48 @@
     "scale": ""
    },
    {
-    "model": "qty_hoer",
-    "title": "qty_hoer",
+    "model": "neg_food_image",
+    "title": "neg_food_image",
+    "dbType": "text",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "zuush_balance_id",
+    "title": "zuush_balance_id",
+    "dbType": "int8",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "zuush_kitchen_id",
+    "title": "zuush_kitchen_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "zuush_food_id",
+    "title": "zuush_food_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "zuush_qty",
+    "title": "zuush_qty",
     "dbType": "numeric",
     "table": "view_cart_set_food",
     "key": "",
@@ -5842,8 +6172,8 @@
     "scale": ""
    },
    {
-    "model": "name_hoer",
-    "title": "name_hoer",
+    "model": "zuush_food_name",
+    "title": "zuush_food_name",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5852,8 +6182,8 @@
     "scale": ""
    },
    {
-    "model": "type_hoer",
-    "title": "type_hoer",
+    "model": "zuush_food_type",
+    "title": "zuush_food_type",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5862,8 +6192,48 @@
     "scale": ""
    },
    {
-    "model": "qty_desrt",
-    "title": "qty_desrt",
+    "model": "zuush_image",
+    "title": "zuush_image",
+    "dbType": "text",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "uuh_balance_id",
+    "title": "uuh_balance_id",
+    "dbType": "int8",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "uuh_kitchen_id",
+    "title": "uuh_kitchen_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "uuh_food_id",
+    "title": "uuh_food_id",
+    "dbType": "int2",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "uuh_qty",
+    "title": "uuh_qty",
     "dbType": "numeric",
     "table": "view_cart_set_food",
     "key": "",
@@ -5872,8 +6242,8 @@
     "scale": ""
    },
    {
-    "model": "name_desert",
-    "title": "name_desert",
+    "model": "uuh_food_name",
+    "title": "uuh_food_name",
     "dbType": "varchar",
     "table": "view_cart_set_food",
     "key": "",
@@ -5882,9 +6252,39 @@
     "scale": ""
    },
    {
-    "model": "type_desert",
-    "title": "type_desert",
+    "model": "uuh_food_type",
+    "title": "uuh_food_type",
     "dbType": "varchar",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "uuh_image",
+    "title": "uuh_image",
+    "dbType": "text",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "packet_price",
+    "title": "packet_price",
+    "dbType": "numeric",
+    "table": "view_cart_set_food",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "rule_images",
+    "title": "rule_images",
+    "dbType": "text",
     "table": "view_cart_set_food",
     "key": "",
     "extra": "",
@@ -6592,8 +6992,8 @@
   ],
   "view_food_balance_desert": [
    {
-    "model": "id",
-    "title": "id",
+    "model": "desert_balance_id",
+    "title": "desert_balance_id",
     "dbType": "int8",
     "table": "view_food_balance_desert",
     "key": "",
@@ -6602,8 +7002,8 @@
     "scale": ""
    },
    {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
+    "model": "desert_kitchen_id",
+    "title": "desert_kitchen_id",
     "dbType": "int2",
     "table": "view_food_balance_desert",
     "key": "",
@@ -6612,8 +7012,8 @@
     "scale": ""
    },
    {
-    "model": "food_id",
-    "title": "food_id",
+    "model": "desert_food_id",
+    "title": "desert_food_id",
     "dbType": "int2",
     "table": "view_food_balance_desert",
     "key": "",
@@ -6622,8 +7022,8 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
+    "model": "desert_qty",
+    "title": "desert_qty",
     "dbType": "numeric",
     "table": "view_food_balance_desert",
     "key": "",
@@ -6632,8 +7032,8 @@
     "scale": ""
    },
    {
-    "model": "food_name",
-    "title": "food_name",
+    "model": "desert_name",
+    "title": "desert_name",
     "dbType": "varchar",
     "table": "view_food_balance_desert",
     "key": "",
@@ -6642,9 +7042,19 @@
     "scale": ""
    },
    {
-    "model": "food_type",
-    "title": "food_type",
+    "model": "desert_food_type",
+    "title": "desert_food_type",
     "dbType": "varchar",
+    "table": "view_food_balance_desert",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "desert_image",
+    "title": "desert_image",
+    "dbType": "text",
     "table": "view_food_balance_desert",
     "key": "",
     "extra": "",
@@ -6654,8 +7064,8 @@
   ],
   "view_food_balance_hoer": [
    {
-    "model": "id",
-    "title": "id",
+    "model": "hoer_balance_id",
+    "title": "hoer_balance_id",
     "dbType": "int8",
     "table": "view_food_balance_hoer",
     "key": "",
@@ -6664,8 +7074,8 @@
     "scale": ""
    },
    {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
+    "model": "hoer_kitchen_id",
+    "title": "hoer_kitchen_id",
     "dbType": "int2",
     "table": "view_food_balance_hoer",
     "key": "",
@@ -6674,8 +7084,8 @@
     "scale": ""
    },
    {
-    "model": "food_id",
-    "title": "food_id",
+    "model": "hoer_food_id",
+    "title": "hoer_food_id",
     "dbType": "int2",
     "table": "view_food_balance_hoer",
     "key": "",
@@ -6684,8 +7094,8 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
+    "model": "hoer_qty",
+    "title": "hoer_qty",
     "dbType": "numeric",
     "table": "view_food_balance_hoer",
     "key": "",
@@ -6694,8 +7104,8 @@
     "scale": ""
    },
    {
-    "model": "food_name",
-    "title": "food_name",
+    "model": "hoer_food_name",
+    "title": "hoer_food_name",
     "dbType": "varchar",
     "table": "view_food_balance_hoer",
     "key": "",
@@ -6704,9 +7114,19 @@
     "scale": ""
    },
    {
-    "model": "food_type",
-    "title": "food_type",
+    "model": "hoer_food_type",
+    "title": "hoer_food_type",
     "dbType": "varchar",
+    "table": "view_food_balance_hoer",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "hoer_image",
+    "title": "hoer_image",
+    "dbType": "text",
     "table": "view_food_balance_hoer",
     "key": "",
     "extra": "",
@@ -6716,8 +7136,8 @@
   ],
   "view_food_balance_neg": [
    {
-    "model": "id",
-    "title": "id",
+    "model": "neg_balance_id",
+    "title": "neg_balance_id",
     "dbType": "int8",
     "table": "view_food_balance_neg",
     "key": "",
@@ -6726,8 +7146,8 @@
     "scale": ""
    },
    {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
+    "model": "neg_kitchen_id",
+    "title": "neg_kitchen_id",
     "dbType": "int2",
     "table": "view_food_balance_neg",
     "key": "",
@@ -6736,8 +7156,8 @@
     "scale": ""
    },
    {
-    "model": "food_id",
-    "title": "food_id",
+    "model": "neg_food_id",
+    "title": "neg_food_id",
     "dbType": "int2",
     "table": "view_food_balance_neg",
     "key": "",
@@ -6746,8 +7166,8 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
+    "model": "neg_qty",
+    "title": "neg_qty",
     "dbType": "numeric",
     "table": "view_food_balance_neg",
     "key": "",
@@ -6756,8 +7176,8 @@
     "scale": ""
    },
    {
-    "model": "food_name",
-    "title": "food_name",
+    "model": "neg_food_name",
+    "title": "neg_food_name",
     "dbType": "varchar",
     "table": "view_food_balance_neg",
     "key": "",
@@ -6766,9 +7186,19 @@
     "scale": ""
    },
    {
-    "model": "food_type",
-    "title": "food_type",
+    "model": "neg_food_type",
+    "title": "neg_food_type",
     "dbType": "varchar",
+    "table": "view_food_balance_neg",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "neg_food_image",
+    "title": "neg_food_image",
+    "dbType": "text",
     "table": "view_food_balance_neg",
     "key": "",
     "extra": "",
@@ -6778,8 +7208,8 @@
   ],
   "view_food_balance_uug": [
    {
-    "model": "id",
-    "title": "id",
+    "model": "uuh_balance_id",
+    "title": "uuh_balance_id",
     "dbType": "int8",
     "table": "view_food_balance_uug",
     "key": "",
@@ -6788,8 +7218,8 @@
     "scale": ""
    },
    {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
+    "model": "uuh_kitchen_id",
+    "title": "uuh_kitchen_id",
     "dbType": "int2",
     "table": "view_food_balance_uug",
     "key": "",
@@ -6798,8 +7228,8 @@
     "scale": ""
    },
    {
-    "model": "food_id",
-    "title": "food_id",
+    "model": "uuh_food_id",
+    "title": "uuh_food_id",
     "dbType": "int2",
     "table": "view_food_balance_uug",
     "key": "",
@@ -6808,8 +7238,8 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
+    "model": "uuh_qty",
+    "title": "uuh_qty",
     "dbType": "numeric",
     "table": "view_food_balance_uug",
     "key": "",
@@ -6818,8 +7248,8 @@
     "scale": ""
    },
    {
-    "model": "food_name",
-    "title": "food_name",
+    "model": "uuh_food_name",
+    "title": "uuh_food_name",
     "dbType": "varchar",
     "table": "view_food_balance_uug",
     "key": "",
@@ -6828,9 +7258,19 @@
     "scale": ""
    },
    {
-    "model": "food_type",
-    "title": "food_type",
+    "model": "uuh_food_type",
+    "title": "uuh_food_type",
     "dbType": "varchar",
+    "table": "view_food_balance_uug",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "uuh_image",
+    "title": "uuh_image",
+    "dbType": "text",
     "table": "view_food_balance_uug",
     "key": "",
     "extra": "",
@@ -6840,8 +7280,8 @@
   ],
   "view_food_balance_zuush": [
    {
-    "model": "id",
-    "title": "id",
+    "model": "zuush_balance_id",
+    "title": "zuush_balance_id",
     "dbType": "int8",
     "table": "view_food_balance_zuush",
     "key": "",
@@ -6850,8 +7290,8 @@
     "scale": ""
    },
    {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
+    "model": "zuush_kitchen_id",
+    "title": "zuush_kitchen_id",
     "dbType": "int2",
     "table": "view_food_balance_zuush",
     "key": "",
@@ -6860,8 +7300,8 @@
     "scale": ""
    },
    {
-    "model": "food_id",
-    "title": "food_id",
+    "model": "zuush_food_id",
+    "title": "zuush_food_id",
     "dbType": "int2",
     "table": "view_food_balance_zuush",
     "key": "",
@@ -6870,8 +7310,8 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
+    "model": "zuush_qty",
+    "title": "zuush_qty",
     "dbType": "numeric",
     "table": "view_food_balance_zuush",
     "key": "",
@@ -6880,8 +7320,8 @@
     "scale": ""
    },
    {
-    "model": "food_name",
-    "title": "food_name",
+    "model": "zuush_food_name",
+    "title": "zuush_food_name",
     "dbType": "varchar",
     "table": "view_food_balance_zuush",
     "key": "",
@@ -6890,9 +7330,19 @@
     "scale": ""
    },
    {
-    "model": "food_type",
-    "title": "food_type",
+    "model": "zuush_food_type",
+    "title": "zuush_food_type",
     "dbType": "varchar",
+    "table": "view_food_balance_zuush",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "zuush_image",
+    "title": "zuush_image",
+    "dbType": "text",
     "table": "view_food_balance_zuush",
     "key": "",
     "extra": "",
@@ -7362,6 +7812,188 @@
     "scale": ""
    }
   ],
+  "view_orders": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "menu_id",
+    "title": "menu_id",
+    "dbType": "int8",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_at",
+    "title": "payment_at",
+    "dbType": "timestamp",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_type",
+    "title": "payment_type",
+    "dbType": "varchar",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cancelled_at",
+    "title": "cancelled_at",
+    "dbType": "timestamp",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_status",
+    "title": "order_status",
+    "dbType": "varchar",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitchen_id",
+    "title": "kitchen_id",
+    "dbType": "int2",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "Invoice_id",
+    "title": "Invoice_id",
+    "dbType": "varchar",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int4",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "total_price",
+    "title": "total_price",
+    "dbType": "int4",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_status",
+    "title": "payment_status",
+    "dbType": "varchar",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cart_type",
+    "title": "cart_type",
+    "dbType": "varchar",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cart_id",
+    "title": "cart_id",
+    "dbType": "int4",
+    "table": "view_orders",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "view_set_food_menu": [
    {
     "model": "order_rule_id",
@@ -7384,6 +8016,36 @@
     "scale": ""
    },
    {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "view_set_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "view_set_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "view_set_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
     "model": "id",
     "title": "id",
     "dbType": "int8",
@@ -7397,6 +8059,16 @@
     "model": "set_date",
     "title": "set_date",
     "dbType": "date",
+    "table": "view_set_food_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int4",
     "table": "view_set_food_menu",
     "key": "",
     "extra": "",

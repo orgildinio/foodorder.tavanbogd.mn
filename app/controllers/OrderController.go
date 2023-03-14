@@ -22,7 +22,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	order.UserID = int(orderUser["id"].(int64))
 
 	orderCheck := models.CheckOrders{}
-	DB.DB.Debug().Where("user_id = ? AND cart_id = ? AND menu_id = ? AND age(created_at) <= '15 minutes'", order.UserID, order.CartID, order.MenuID).Order("id DESC").Find(&orderCheck)
+	DB.DB.Debug().Where("user_id = ? AND cart_id = ? AND age(created_at) <= '15 minutes' AND order_status = 'pending'", order.UserID, order.CartID).Order("id DESC").Find(&orderCheck)
 
 	if orderCheck.ID >= 1 {
 		return c.JSON(map[string]string{
@@ -41,17 +41,24 @@ func CreateOrder(c *fiber.Ctx) error {
 	DB.DB.Where("food_id = ?", cartZahialga.FoodID).Find(&foodBalance)
 
 	fmt.Println("balansiin_id", foodBalance.FoodID)
-	foodBalance.Qty = foodBalance.Qty - cartZahialga.Qty
 
 	fmt.Println("too shirheg", foodBalance.Qty)
 
+	order.OrderStatus = GetStringPointer("pending")
+	foodBalance.Qty = foodBalance.Qty - cartZahialga.Qty
+
 	DB.DB.Debug().Save(&foodBalance)
+
+	//zahialgatStr := 'zahialgat'
+	//
+	//if order.CartType == 'zahialgat' {
+	//}
 
 	DB.DB.Create(&order)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": "Захиалга үүсгэлээ",
+		"message": "Захиалга үүсгэлээ.",
 	})
 }
 
