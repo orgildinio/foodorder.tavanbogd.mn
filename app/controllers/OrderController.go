@@ -42,10 +42,8 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	fmt.Println("balansiin_id", foodBalance.FoodID)
 
-	fmt.Println("too shirheg", foodBalance.Qty)
-
 	order.OrderStatus = GetStringPointer("pending")
-	foodBalance.Qty = foodBalance.Qty - cartZahialga.Qty
+	//foodBalance.Qty = foodBalance.Qty - cartZahialga.Qty
 
 	DB.DB.Debug().Save(&foodBalance)
 

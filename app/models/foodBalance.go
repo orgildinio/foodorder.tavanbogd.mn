@@ -6,14 +6,15 @@ import (
 )
 
 type FoodBalance struct {
-	CreatedAt *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	FoodID    int            `gorm:"column:food_id" json:"food_id"`
-	FoodPrice *float32       `gorm:"column:food_price" json:"food_price"`
-	ID        int            `gorm:"column:id" json:"id"`
-	KitchenID int            `gorm:"column:kitchen_id" json:"kitchen_id"`
-	Qty       int            `gorm:"column:qty" json:"qty"`
-	UpdatedAt *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	CreatedAt  *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	FoodID     int            `gorm:"column:food_id" json:"food_id"`
+	FoodTypeID *int           `gorm:"column:food_type_id" json:"food_type_id"`
+	FoodUne    *int           `gorm:"column:food_une" json:"food_une"`
+	ID         int            `gorm:"column:id" json:"id"`
+	KitchenID  int            `gorm:"column:kitchen_id" json:"kitchen_id"`
+	Quantity   *int           `gorm:"column:quantity" json:"quantity"`
+	UpdatedAt  *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 }
 
 func (f *FoodBalance) TableName() string {

@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/DB"
+	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"net/http"
 )
 
-func CreateOrderSet(c *fiber.Ctx) error {
-	orderSet := models.OrderSet{}
+func AddToCartSet(c *fiber.Ctx) error {
+	orderSet := models.CartMenu{}
 	err := c.BodyParser(&orderSet)
 
 	if err != nil {
@@ -17,59 +18,136 @@ func CreateOrderSet(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
-	setMenu := models.ViewCartSetFood{}
-	DB.DB.Where("menu_id = ? AND id = ?", orderSet.MenuID, orderSet.CartID).Find(&setMenu)
+	setHoolTooCartRequestData := models.SetHoolTooCartRequestData{}
+	errSet := c.BodyParser(&setHoolTooCartRequestData)
 
-	if setMenu.ID < 1 {
+	if errSet != nil {
+		fmt.Println(errSet.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
+
+	cartUser := agentUtils.AuthUserObject(c)
+	orderSet.UserID = int(cartUser["id"].(int64))
+
+	checkCart := models.CartMenuCheck{}
+	DB.DB.Where("user_id = ? AND order_rule_id = ? AND age(now(), created_at) < '15 minute'", orderSet.UserID, setHoolTooCartRequestData.OrderRuleID).Order("id DESC").Find(&checkCart)
+
+	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]interface{}{
-			"status":  "success",
-			"message": "Сагсалсан хоол олдсонгүй",
+			"status":  "warning",
+			"message": "Тоо ширхэг 5-с ихгүй сонгоно уу.",
 		})
 	}
 
-	orderSet.MenuID = setMenu.MenuID
-	orderSet.CartID = setMenu.ID
-	orderSet.UserID = setMenu.UserID
-	orderSet.OrderStatus = GetStringPointer("pending")
+	//if checkCart.ID > 1 {
+	//	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+	//		"status":  "warning",
+	//		"message": "Таньд сагсалсан хоол байна",
+	//	})
+	//}
 
-	subMenus := []models.ViewSetFoodSubMenu{}
-	for _, subMenu := range subMenus {
-		cartSubMenus := models.CartSubMenu{}
-		//DB.DB.Find(&cartSubMenus)
+	//1 save set hool
+	//setHoolTooCartRequestData.MenuID
 
-		cartSubMenus.MenuID = subMenu.MenuID
-		cartSubMenus.FoodTypeID = subMenu.FoodTypeID
+	orderSet.MenuID = setHoolTooCartRequestData.MenuID
+	orderSet.OrderRuleID = setHoolTooCartRequestData.OrderRuleID
 
-		DB.DB.Create(&cartSubMenus)
+	DB.DB.Debug().Create(&orderSet)
 
-		subMenuFoods := []models.ViewSetFoodSubMenuFoods{}
-		for _, subMenuFood := range subMenuFoods {
+	//2 save set subs
+	for _, subMenuData := range setHoolTooCartRequestData.Items {
+		cartSubMenu := models.CartSubMenu{}
+
+		cartSubMenu.MenuID = orderSet.ID
+		cartSubMenu.FoodTypeID = subMenuData.FoodTypeID
+
+		DB.DB.Create(&cartSubMenu)
+
+		for _, subMenuFoodData := range subMenuData.SubItems {
 			cartSubMenuFood := models.CartSubMenuFood{}
-			//DB.DB.Find(&cartSubMenuFood)
 
-			cartSubMenuFood.SubMenuID = subMenuFood.SubMenuID
-			cartSubMenuFood.FoodID = subMenuFood.FoodID
+			cartSubMenuFood.FoodID = subMenuFoodData.FoodID
+			cartSubMenuFood.SubMenuID = cartSubMenu.ID
 
-			DB.DB.Create(cartSubMenuFood)
+			fmt.Println("Cart balance", setHoolTooCartRequestData.Qty)
+
+			balance := models.FoodBalance{}
+			DB.DB.Where("food_id = ? AND kitchen_id = ?", subMenuFoodData.FoodID, setHoolTooCartRequestData.KitchenID).Find(&balance)
+
+			//if *balance.Quantity == 0 {
+			//    return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			//        "status":  "warning",
+			//        "message": "Хоолны үлдэгдэл хүрэглцэхгүй байна ",
+			//    })
+			//}
+
+			*balance.Quantity = *balance.Quantity - setHoolTooCartRequestData.Qty
+
+			fmt.Println("food_id", balance.FoodID)
+			fmt.Println("food_qty", *balance.Quantity)
+
+			DB.DB.Save(&balance)
+
+			DB.DB.Create(&cartSubMenuFood)
 
 		}
 	}
 
-	orderCheck := models.OrderSetCheck{}
-	DB.DB.Where("user_id = ? AND menu_id = ? AND cart_id = ? AND age(created_at) <= '15 minutes' AND order_status = 'pending'", orderSet.UserID, orderSet.MenuID, orderSet.CartID).Order("id DESC").Find(&orderCheck)
-
-	if orderCheck.ID >= 1 {
-		return c.JSON(map[string]string{
-			"status":      "warning",
-			"orderNumber": "Таньд " + *orderCheck.OrderNumber + " дугаартай захиалга үүссэн байна.",
-			"status_mn":   "Анхааруулга",
-		})
-	}
-
-	DB.DB.Create(&orderSet)
-
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": "Захиалга үүсгэлээ.",
+		"message": "Сонгосон хоол сагсанд нэмэгдлээ",
 	})
+}
+
+func EditCartItem(c *fiber.Ctx) error {
+	cartMenu := models.CartMenu{}
+	id := c.Params("id")
+
+	cartUser := agentUtils.AuthUserObject(c)
+	cartMenu.UserID = int(cartUser["id"].(int64))
+
+	DB.DB.Where("id = ? AND user_id = ?", id, cartMenu.UserID).Find(&cartMenu)
+
+	setHoolTooCartRequestData := models.SetHoolTooCartRequestData{}
+	errSet := c.BodyParser(&setHoolTooCartRequestData)
+
+	if errSet != nil {
+		fmt.Println(errSet.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
+	fmt.Println(setHoolTooCartRequestData.Qty)
+
+	*cartMenu.Qty = setHoolTooCartRequestData.Qty
+
+	DB.DB.Save(cartMenu)
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"status":  "success",
+		"message": "Update success",
+	})
+}
+
+func DeleteCartItem(c *fiber.Ctx) error {
+	cartMenu := models.CartMenu{}
+	id := c.Params("id")
+
+	if id != "" {
+		DB.DB.Where("id = ?", id).Delete(&cartMenu)
+	}
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"status":  "success",
+		"message": "Сагснаас хасагдлаа",
+	})
+}
+
+func CheckFoodBalance(c *fiber.Ctx) error {
+
+	setHool := []models.SetHoolTooCartRequestData{}
+	fmt.Println(setHool)
+
+	balance := []models.FoodBalance{}
+	DB.DB.Where("id = ?", 25).Find(&balance)
+
+	return c.JSON(setHool)
 }

@@ -35,9 +35,9 @@ func CreateKitchensMenu(menu *formModels.TblMenu157, subMenus []models.SubMenu, 
 
 		branchKitchen.KitchenID = kitchen.ID
 		branchKitchen.MainMenuID = menu.ID
-		branchKitchen.OrderRuleID = menu.OrderRuleID
+		//branchKitchen.OrderRuleID = menu.OrderRuleID
 		branchKitchen.SetName = menu.SetName
-		branchKitchen.SetDate = menu.SetDate
+		//branchKitchen.SetDate = menu.SetDate
 
 		DB.DB.Create(&branchKitchen)
 
@@ -45,7 +45,7 @@ func CreateKitchensMenu(menu *formModels.TblMenu157, subMenus []models.SubMenu, 
 			branchKitchenSubMenu := models.SubMenuGtNeg{}
 			DB.DB.Where("id = ? AND menu_id = ?", branchKitchen.ID, branchKitchenSubMenu.MenuID).Find(&branchKitchenSubMenu)
 
-			branchKitchenSubMenu.FoodTypeID = submenu.FoodTypeID
+			*branchKitchenSubMenu.FoodTypeID = submenu.FoodTypeID
 			branchKitchenSubMenu.MenuID = branchKitchen.ID
 
 			DB.DB.Save(&branchKitchenSubMenu)
@@ -58,7 +58,7 @@ func CreateKitchensMenu(menu *formModels.TblMenu157, subMenus []models.SubMenu, 
 				branchKitchenSubMenuFood := models.SubMenuFoodsGtNeg{}
 				DB.DB.Where("id = ? AND food_id = ?", branchKitchenSubMenuFood.ID, subMenuFood.FoodID).Find(&branchKitchenSubMenuFood)
 
-				branchKitchenSubMenuFood.FoodID = subMenuFood.FoodID
+				//branchKitchenSubMenuFood.FoodID = subMenuFood.FoodID
 				branchKitchenSubMenuFood.SubMenuID = branchKitchenSubMenu.ID
 
 				DB.DB.Debug().Create(&branchKitchenSubMenuFood)
