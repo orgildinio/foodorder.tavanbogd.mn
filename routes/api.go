@@ -25,7 +25,7 @@ func Api(e *fiber.App) {
 	/* NOT USED */
 	a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)
 	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.UpdateCartSet)
-	a.Delete("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartSet)
+	//a.Delete("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartSet)
 	/* NOT USED */
 
 	/* Order Zahialgat */
@@ -34,8 +34,8 @@ func Api(e *fiber.App) {
 
 	/* Cart Set */
 	a.Post("/cart/create-set", agentMW.IsLoggedIn(), controllers.AddToCartSet)
-	a.Put("/cart/edit-set/:id", agentMW.IsLoggedIn(), controllers.EditCartItem)
-	a.Delete("/cart/delete/:id", agentMW.IsLoggedIn(), controllers.DeleteCartItem)
+	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.EditCartItem)
+	a.Post("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartItem)
 
 	//QPAY
 	//a.Post("/qpay/invoice", controllers.QPayInvoice)

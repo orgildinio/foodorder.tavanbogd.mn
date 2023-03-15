@@ -135,6 +135,7 @@ func (v *ViewSetFoodSubMenuFoods) TableName() string {
 }
 
 type SetHoolTooCartRequestData struct {
+	ID          int `gorm:"column:id" json:"id"`
 	MenuID      int `json:"menu_id"`
 	OrderRuleID int `json:"order_rule_id"`
 	Qty         int `json:"qty"`

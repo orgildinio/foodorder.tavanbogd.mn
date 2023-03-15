@@ -101,12 +101,18 @@ func AddToCartSet(c *fiber.Ctx) error {
 
 func EditCartItem(c *fiber.Ctx) error {
 	cartMenu := models.CartMenu{}
-	id := c.Params("id")
+	err := c.BodyParser(&cartMenu)
+	if err != nil {
+		fmt.Errorf(err.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
 
 	cartUser := agentUtils.AuthUserObject(c)
 	cartMenu.UserID = int(cartUser["id"].(int64))
 
-	DB.DB.Where("id = ? AND user_id = ?", id, cartMenu.UserID).Find(&cartMenu)
+	editCart := models.CartMenu{}
+
+	DB.DB.Where("id = ? AND user_id = ?", cartMenu.ID, cartMenu.UserID).Find(&editCart)
 
 	setHoolTooCartRequestData := models.SetHoolTooCartRequestData{}
 	errSet := c.BodyParser(&setHoolTooCartRequestData)
@@ -115,11 +121,10 @@ func EditCartItem(c *fiber.Ctx) error {
 		fmt.Println(errSet.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
-	fmt.Println(setHoolTooCartRequestData.Qty)
 
-	*cartMenu.Qty = setHoolTooCartRequestData.Qty
+	*editCart.Qty = setHoolTooCartRequestData.Qty
 
-	DB.DB.Save(cartMenu)
+	DB.DB.Save(editCart)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
@@ -129,11 +134,17 @@ func EditCartItem(c *fiber.Ctx) error {
 
 func DeleteCartItem(c *fiber.Ctx) error {
 	cartMenu := models.CartMenu{}
-	id := c.Params("id")
+	err := c.BodyParser(&cartMenu)
 
-	if id != "" {
-		DB.DB.Where("id = ?", id).Delete(&cartMenu)
+	if err != nil {
+		fmt.Println(err.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
+
+	delCart := models.CartMenu{}
+	DB.DB.Where("id = ?", cartMenu.ID).Delete(&delCart)
+
+	//DB.DB.Delete(cartMenu)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
