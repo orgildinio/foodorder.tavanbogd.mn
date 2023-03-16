@@ -23,8 +23,8 @@ func Api(e *fiber.App) {
 
 	//CART bagts hool
 	/* NOT USED */
-	a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)
-	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.UpdateCartSet)
+	//a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)
+	//a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.UpdateCartSet)
 	//a.Delete("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartSet)
 	/* NOT USED */
 

@@ -16,7 +16,7 @@ type CartMenu struct {
 	OrderRuleID int        `gorm:"column:order_rule_id" json:"order_rule_id"`
 	OrderStatus *string    `gorm:"column:order_status" json:"order_status"`
 	PaymentType *string    `gorm:"column:payment_type" json:"payment_type"`
-	Qty         *int       `gorm:"column:qty" json:"qty"`
+	Qty         int        `gorm:"column:qty" json:"qty"`
 	UpdatedAt   *time.Time `gorm:"column:updated_at" json:"updated_at"`
 	UserID      int        `gorm:"column:user_id" json:"user_id"`
 }

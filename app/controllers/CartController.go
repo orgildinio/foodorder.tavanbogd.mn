@@ -41,9 +41,18 @@ func UpdateCart(c *fiber.Ctx) error {
 	editCart := models.CartZahialgat{}
 	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Find(&editCart)
 
-	editCart.Qty = editCart.Qty + cartReqData.Qty
+	//if editCart.ID == 0 {
+	//	return c.Status(http.StatusOK).JSON(map[string]string{
+	//		"status":  "warning",
+	//		"message": "Food not found",
+	//	})
+	//}
 
-	if (editCart.Qty + cartReqData.Qty) >= 5 {
+	editCart.Qty = cartReqData.Qty
+
+	fmt.Println(editCart.Qty)
+
+	if cartReqData.Qty >= 6 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",
@@ -55,7 +64,7 @@ func UpdateCart(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
-		"message": "Сагсалсан хоол засагдлаа",
+		"message": "Update success",
 	})
 }
 
@@ -70,9 +79,16 @@ func DeleteCart(c *fiber.Ctx) error {
 	cartUser := agentUtils.AuthUserObject(c)
 
 	editCart := models.CartZahialgat{}
-	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Delete(&editCart)
+	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Find(&editCart)
 
-	//DB.DB.Debug().Delete(&editCart)
+	//if editCart.ID == 0 {
+	//	return c.Status(http.StatusOK).JSON(map[string]string{
+	//		"status":  "warning",
+	//		"message": "Food not found",
+	//	})
+	//}
+
+	DB.DB.Delete(&editCart)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",

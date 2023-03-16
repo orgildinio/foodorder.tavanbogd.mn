@@ -41,7 +41,7 @@ func (s *SetFoodForCart) TableName() string {
 }
 
 type CartSet struct {
-	CreatedAt     *time.Time     `gorm:"column:created_at" json:"created_at"`
+	//CreatedAt     *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	FoodID        *int           `gorm:"column:food_id" json:"food_id"`
 	FoodIDDesert  *int           `gorm:"column:food_id_desert" json:"food_id_desert"`
