@@ -51,6 +51,17 @@ func AddToCartSet(c *fiber.Ctx) error {
 
 	orderSet.MenuID = setHoolTooCartRequestData.MenuID
 	orderSet.OrderRuleID = setHoolTooCartRequestData.OrderRuleID
+	orderSet.Qty = setHoolTooCartRequestData.Qty
+
+	fmt.Println(orderSet.Qty)
+
+	if setHoolTooCartRequestData.Qty > 5 {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "5-аас ихгүй сонгоно уу",
+		})
+	}
 
 	DB.DB.Debug().Create(&orderSet)
 
@@ -83,9 +94,6 @@ func AddToCartSet(c *fiber.Ctx) error {
 
 			*balance.Quantity = *balance.Quantity - setHoolTooCartRequestData.Qty
 
-			fmt.Println("food_id", balance.FoodID)
-			fmt.Println("food_qty", *balance.Quantity)
-
 			DB.DB.Save(&balance)
 
 			DB.DB.Create(&cartSubMenuFood)
@@ -93,9 +101,13 @@ func AddToCartSet(c *fiber.Ctx) error {
 		}
 	}
 
+	cartMenu := models.ViewCartMenu{}
+	DB.DB.Order("id DESC").Find(&cartMenu)
+
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
 		"message": "Сонгосон хоол сагсанд нэмэгдлээ",
+		"cart_id": *cartMenu.ID,
 	})
 }
 
@@ -129,7 +141,15 @@ func EditCartItem(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
-	editCart.Qty = setHoolTooCartRequestData.Qty
+	editCart.Qty = editCart.Qty + setHoolTooCartRequestData.Qty
+
+	if setHoolTooCartRequestData.Qty > 5 {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "5-аас ихгүй сонгоно уу",
+		})
+	}
 
 	DB.DB.Save(&editCart)
 

@@ -20,10 +20,35 @@ func AddToCart(c *fiber.Ctx) error {
 	cartUser := agentUtils.AuthUserObject(c)
 	cart.UserID = int(cartUser["id"].(int64))
 
+	cartFood := models.OrderFoodCarting{}
+	errSet := c.BodyParser(&cartFood)
+	if errSet != nil {
+		fmt.Println(errSet.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
+
+	cart.FoodID = cartFood.FoodID
+	cart.Qty = cartFood.Qty
+
+	fmt.Println(cartFood.Qty)
+
+	if cartFood.Qty > 5 {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "5 аас ихгүй сонгоно уу",
+		})
+	}
+
 	DB.DB.Create(&cart)
+
+	cartZahialga := models.ViewCartZahialga{}
+	DB.DB.Order("id DESC").Find(&cartZahialga)
+
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
 		"message": "Сагсанд нэмэгдлээ",
+		"cart_id": *cartZahialga.ID,
 	})
 
 }
@@ -41,26 +66,28 @@ func UpdateCart(c *fiber.Ctx) error {
 	editCart := models.CartZahialgat{}
 	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Find(&editCart)
 
-	//if editCart.ID == 0 {
-	//	return c.Status(http.StatusOK).JSON(map[string]string{
-	//		"status":  "warning",
-	//		"message": "Food not found",
-	//	})
-	//}
+	if editCart.ID == 0 {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":  "warning",
+			"message": "Food not found",
+		})
+	}
 
-	editCart.Qty = cartReqData.Qty
+	fmt.Println(cartReqData.Qty)
 
-	fmt.Println(editCart.Qty)
+	editCart.Qty = editCart.Qty + cartReqData.Qty
 
-	if cartReqData.Qty >= 6 {
+	if cartReqData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",
-			"message":   "5 хоол захиалах боломжтой",
+			"message":   "5 аас ихгүй сонгоно уу",
 		})
 	}
 
 	DB.DB.Debug().Save(&editCart)
+
+	fmt.Println(editCart.Qty)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
@@ -81,12 +108,12 @@ func DeleteCart(c *fiber.Ctx) error {
 	editCart := models.CartZahialgat{}
 	DB.DB.Debug().Where("id = ? AND user_id = ?", cartReqData.ID, cartUser["id"]).Find(&editCart)
 
-	//if editCart.ID == 0 {
-	//	return c.Status(http.StatusOK).JSON(map[string]string{
-	//		"status":  "warning",
-	//		"message": "Food not found",
-	//	})
-	//}
+	if editCart.ID == 0 {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":  "warning",
+			"message": "Food not found",
+		})
+	}
 
 	DB.DB.Delete(&editCart)
 

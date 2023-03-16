@@ -7,7 +7,7 @@ import (
 func main() {
 
 	lambda := bootstrap.Set()
-	//DBSchema.GetStruct("food_balance")
+	//DBSchema.GetStruct("view_cart_zahialga")
 	//DBSchema.GetStruct("cart_sub_menu_food")
 	//DBSchema.GetStruct("sub_menu_foods_gt_neg")
 

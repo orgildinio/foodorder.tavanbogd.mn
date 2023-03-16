@@ -118,3 +118,8 @@ type ViewCartZahialga struct {
 func (v *ViewCartZahialga) TableName() string {
 	return "view_cart_zahialga"
 }
+
+type OrderFoodCarting struct {
+	FoodID int `json:"food_id"`
+	Qty    int `json:"qty"`
+}
