@@ -21,26 +21,26 @@ func Api(e *fiber.App) {
 	a.Post("/cart/edit", agentMW.IsLoggedIn(), controllers.UpdateCart)
 	a.Post("/cart/delete", agentMW.IsLoggedIn(), controllers.DeleteCart)
 
+	/* Cart Set */
+	a.Post("/cart/create-set", agentMW.IsLoggedIn(), controllers.AddToCartSet)
+	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.EditCartItem)
+	a.Post("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartItem)
+
+	/* Order Zahialgat */
+	a.Get("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
+	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
+
+	//QPAY
+	//a.Post("/qpay/invoice", controllers.QPayInvoice)
+	//a.Post("/qpay/check", controllers.QPayPaymentCheck)
+	//a.Get("/qpay/callback/:invoice_id", controllers.QPayCallBack)
+
 	//CART bagts hool
 	/* NOT USED */
 	//a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)
 	//a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.UpdateCartSet)
 	//a.Delete("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartSet)
 	/* NOT USED */
-
-	/* Order Zahialgat */
-	a.Post("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
-	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
-
-	/* Cart Set */
-	a.Post("/cart/create-set", agentMW.IsLoggedIn(), controllers.AddToCartSet)
-	a.Post("/cart/edit-set", agentMW.IsLoggedIn(), controllers.EditCartItem)
-	a.Post("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartItem)
-
-	//QPAY
-	//a.Post("/qpay/invoice", controllers.QPayInvoice)
-	//a.Post("/qpay/check", controllers.QPayPaymentCheck)
-	//a.Get("/qpay/callback/:invoice_id", controllers.QPayCallBack)
 
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)

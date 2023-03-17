@@ -32,11 +32,14 @@ func AddToCart(c *fiber.Ctx) error {
 
 	fmt.Println(cartFood.Qty)
 
+	checkCart := models.ViewCartZahialga{}
+	DB.DB.Where("food_id = ? AND user_id = ? AND age(now(), created_at) < '30 minute'", checkCart.FoodID, cart.UserID).Find(&checkCart)
+
 	if cartFood.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",
-			"message":   "5 аас ихгүй сонгоно уу",
+			"message":   "5-с ихгүй сонгоно уу",
 		})
 	}
 
@@ -57,7 +60,7 @@ func UpdateCart(c *fiber.Ctx) error {
 	cartReqData := new(models.CartZahialgat)
 	err := c.BodyParser(&cartReqData)
 	if err != nil {
-		fmt.Errorf(err.Error())
+		fmt.Println(err.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
@@ -99,7 +102,7 @@ func DeleteCart(c *fiber.Ctx) error {
 	cartReqData := new(models.CartZahialgat)
 	err := c.BodyParser(&cartReqData)
 	if err != nil {
-		fmt.Errorf(err.Error())
+		fmt.Println(err.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 

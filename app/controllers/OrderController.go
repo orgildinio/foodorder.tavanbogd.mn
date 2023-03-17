@@ -10,81 +10,84 @@ import (
 )
 
 func CreateOrder(c *fiber.Ctx) error {
-	order := new(models.Orders)
-	err := c.BodyParser(&order)
-
-	if err != nil {
-		fmt.Println(err.Error())
-		return c.Status(http.StatusInternalServerError).JSON("server error")
-	}
-
 	orderUser := agentUtils.AuthUserObject(c)
-	order.UserID = int(orderUser["id"].(int64))
 
-	orderCheck := models.CheckOrders{}
-	DB.DB.Debug().Where("user_id = ? AND cart_id = ? AND age(created_at) <= '15 minutes' AND order_status = 'pending'", order.UserID, order.CartID).Order("id DESC").Find(&orderCheck)
+	var cartZahialga []models.ViewCartZahialga
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartZahialga)
 
-	if orderCheck.ID >= 1 {
-		return c.JSON(map[string]string{
-			"status":      "warning",
-			"orderNumber": "Таньд " + *orderCheck.OrderNumber + " дугаартай захиалга үүссэн байна.",
-			"status_mn":   "Анхааруулга",
-		})
+	var totalPrice = 0
+
+	for _, cartPrice := range cartZahialga {
+		fmt.Println(cartPrice.Price)
+
+		totalPrice = totalPrice + cartPrice.Price
+
+	}
+	fmt.Println("total", totalPrice)
+
+	newOrder := new(models.Orders)
+
+	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+	newOrder.PaymentType = GetStringPointer("")
+	newOrder.Price = totalPrice
+
+	DB.DB.Create(&newOrder)
+
+	for _, cartDetail := range cartZahialga {
+		orderDetail := models.OrderDetail{}
+
+		orderDetail.OrderID = newOrder.ID
+		orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+		orderDetail.FoodID = cartDetail.FoodID
+		orderDetail.CartID = cartDetail.ID
+		orderDetail.Price = cartDetail.Price
+
+		DB.DB.Create(&orderDetail)
+
 	}
 
-	cartZahialga := models.CartZahialgat{}
-	DB.DB.Debug().Where("id = ?", order.CartID).Find(&cartZahialga)
+	return c.JSON(newOrder)
 
-	fmt.Println("zahialsan_id", cartZahialga.FoodID)
-
-	foodBalance := models.FoodBalance{}
-	DB.DB.Where("food_id = ?", cartZahialga.FoodID).Find(&foodBalance)
-
-	fmt.Println("balansiin_id", foodBalance.FoodID)
-
-	order.OrderStatus = GetStringPointer("pending")
-	//foodBalance.Qty = foodBalance.Qty - cartZahialga.Qty
-
-	DB.DB.Debug().Save(&foodBalance)
-
-	//zahialgatStr := 'zahialgat'
-	//
-	//if order.CartType == 'zahialgat' {
-	//}
-
-	DB.DB.Create(&order)
-
-	return c.Status(http.StatusOK).JSON(map[string]interface{}{
-		"status":  "success",
-		"message": "Захиалга үүсгэлээ.",
-	})
 }
 
 func CancelOrder(c *fiber.Ctx) error {
-	order := new(models.Orders)
-	err := c.BodyParser(&order)
+	order := new(models.OrdersStatus)
 
-	if err != nil {
-		fmt.Println(err.Error())
+	orderCancelReq := models.OrderRequest{}
+	errReq := c.BodyParser(&orderCancelReq)
+	if errReq != nil {
+		fmt.Println(errReq.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
+	fmt.Println(orderCancelReq.ID)
+
 	orderUser := agentUtils.AuthUserObject(c)
-	order.UserID = int(orderUser["id"].(int64))
 
-	checkOrder := models.ViewOrders{}
-	DB.DB.Debug().Where("id = ?", order.ID).Order("id DESC").Find(&checkOrder)
+	order.PaymentStatus = "canceled"
+	DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Find(&order)
 
-	order.OrderStatus = GetStringPointer("cancel")
+	if order.ID == 0 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "Not found order",
+		})
+	}
+
+	order.PaymentStatus = "canceled"
 
 	DB.DB.Save(&order)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": checkOrder.OrderNumber + " дугаартай захиалга цуцлагдлаа",
+		"message": "Захиалга цуцлгадлаа",
 	})
 }
 
-func GetStringPointer(value string) *string {
-	return &value
+func GetIntegerPointer(value int) int {
+	return value
+}
+
+func GetStringPointer(value string) string {
+	return value
 }

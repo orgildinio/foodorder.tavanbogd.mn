@@ -101,3 +101,17 @@ type ViewCartMenu struct {
 func (v *ViewCartMenu) TableName() string {
 	return "view_cart_menu"
 }
+
+type OrderSetFood struct {
+	CartID      int            `gorm:"column:cart_id" json:"cart_id"`
+	CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID          int            `gorm:"column:id" json:"id"`
+	OrderNumber string         `gorm:"column:order_number" json:"order_number"`
+	UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID      int            `gorm:"column:user_id" json:"user_id"`
+}
+
+func (o *OrderSetFood) TableName() string {
+	return "order_set_food"
+}

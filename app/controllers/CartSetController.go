@@ -30,7 +30,7 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.UserID = int(cartUser["id"].(int64))
 
 	checkCart := models.CartMenuCheck{}
-	DB.DB.Where("user_id = ? AND order_rule_id = ? AND age(now(), created_at) < '15 minute'", orderSet.UserID, setHoolTooCartRequestData.OrderRuleID).Order("id DESC").Find(&checkCart)
+	DB.DB.Where("user_id = ? AND order_rule_id = ? AND age(now(), created_at) < '30 minute'", orderSet.UserID, setHoolTooCartRequestData.OrderRuleID).Order("id DESC").Find(&checkCart)
 
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]interface{}{
@@ -39,12 +39,12 @@ func AddToCartSet(c *fiber.Ctx) error {
 		})
 	}
 
-	//if checkCart.ID > 1 {
-	//	return c.Status(http.StatusOK).JSON(map[string]interface{}{
-	//		"status":  "warning",
-	//		"message": "Таньд сагсалсан хоол байна",
-	//	})
-	//}
+	if checkCart.ID > 1 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "Таньд сагсалсан хоол байна",
+		})
+	}
 
 	//1 save set hool
 	//setHoolTooCartRequestData.MenuID
@@ -85,12 +85,12 @@ func AddToCartSet(c *fiber.Ctx) error {
 			balance := models.FoodBalance{}
 			DB.DB.Where("food_id = ? AND kitchen_id = ?", subMenuFoodData.FoodID, setHoolTooCartRequestData.KitchenID).Find(&balance)
 
-			//if *balance.Quantity == 0 {
-			//    return c.Status(http.StatusOK).JSON(map[string]interface{}{
-			//        "status":  "warning",
-			//        "message": "Хоолны үлдэгдэл хүрэглцэхгүй байна ",
-			//    })
-			//}
+			if *balance.Quantity == 0 {
+				return c.Status(http.StatusOK).JSON(map[string]interface{}{
+					"status":  "warning",
+					"message": "Хоолны үлдэгдэл хүрэглцэхгүй байна ",
+				})
+			}
 
 			*balance.Quantity = *balance.Quantity - setHoolTooCartRequestData.Qty
 
@@ -115,7 +115,7 @@ func EditCartItem(c *fiber.Ctx) error {
 	cartMenu := models.CartMenu{}
 	err := c.BodyParser(&cartMenu)
 	if err != nil {
-		fmt.Errorf(err.Error())
+		fmt.Println(err.Error())
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 

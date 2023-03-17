@@ -109,7 +109,7 @@ type ViewCartZahialga struct {
 	KitckenName     *string        `gorm:"column:kitcken_name" json:"kitcken_name"`
 	LastName        *string        `gorm:"column:last_name" json:"last_name"`
 	Ognoo           *time.Time     `gorm:"column:ognoo" json:"ognoo"`
-	Price           *int           `gorm:"column:price" json:"price"`
+	Price           int            `gorm:"column:price" json:"price"`
 	Qty             *int           `gorm:"column:qty" json:"qty"`
 	UpdatedAt       *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 	UserID          *int           `gorm:"column:user_id" json:"user_id"`

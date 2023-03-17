@@ -74,7 +74,6 @@
   "gal_togoo_neg_sub_menu",
   "gal_togoo_neg_sub_menu_foods",
   "set_food_for_cart",
-  "user_order",
   "view_cart_menu",
   "view_cart_set",
   "view_cart_set_food",
@@ -95,7 +94,6 @@
   "view_kitchen",
   "view_material",
   "view_order_rule",
-  "view_orders",
   "view_set_food_menu",
   "view_set_food_sub_menu",
   "view_set_food_sub_menu_foods",
@@ -1106,16 +1104,6 @@
    {
     "model": "updated_at",
     "title": "updated_at",
-    "dbType": "timestamp",
-    "table": "cart_set",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "deleted_at",
-    "title": "deleted_at",
     "dbType": "timestamp",
     "table": "cart_set",
     "key": "",
@@ -3382,33 +3370,33 @@
     "scale": ""
    },
    {
-    "model": "user_id",
-    "title": "user_id",
-    "dbType": "int8",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "menu_id",
-    "title": "menu_id",
-    "dbType": "int8",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "order_number",
     "title": "order_number",
     "dbType": "varchar",
     "table": "orders",
     "key": "",
     "extra": "",
-    "nullable": "YES",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "orders",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "cart_id",
+    "title": "cart_id",
+    "dbType": "int8",
+    "table": "orders",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
     "scale": ""
    },
    {
@@ -3432,36 +3420,6 @@
     "scale": ""
    },
    {
-    "model": "payment_at",
-    "title": "payment_at",
-    "dbType": "timestamp",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "payment_type",
-    "title": "payment_type",
-    "dbType": "varchar",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "cancelled_at",
-    "title": "cancelled_at",
-    "dbType": "timestamp",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "deleted_at",
     "title": "deleted_at",
     "dbType": "timestamp",
@@ -3472,83 +3430,23 @@
     "scale": ""
    },
    {
+    "model": "invoice_id",
+    "title": "invoice_id",
+    "dbType": "int8",
+    "table": "orders",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
     "model": "order_status",
     "title": "order_status",
     "dbType": "varchar",
     "table": "orders",
     "key": "",
     "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
-    "dbType": "int2",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "Invoice_id",
-    "title": "Invoice_id",
-    "dbType": "varchar",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qty",
-    "title": "qty",
-    "dbType": "int4",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "total_price",
-    "title": "total_price",
-    "dbType": "int4",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "payment_status",
-    "title": "payment_status",
-    "dbType": "varchar",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "cart_type",
-    "title": "cart_type",
-    "dbType": "varchar",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "cart_id",
-    "title": "cart_id",
-    "dbType": "int4",
-    "table": "orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
+    "nullable": "NO",
     "scale": ""
    }
   ],
@@ -5256,88 +5154,6 @@
     "scale": ""
    }
   ],
-  "user_order": [
-   {
-    "model": "order_rule_id",
-    "title": "order_rule_id",
-    "dbType": "int8",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "set_name",
-    "title": "set_name",
-    "dbType": "varchar",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "user_id",
-    "title": "user_id",
-    "dbType": "int8",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "created_at",
-    "title": "created_at",
-    "dbType": "timestamp",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "updated_at",
-    "title": "updated_at",
-    "dbType": "timestamp",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "deleted_at",
-    "title": "deleted_at",
-    "dbType": "timestamp",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "id",
-    "title": "id",
-    "dbType": "int8",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "set_date",
-    "title": "set_date",
-    "dbType": "date",
-    "table": "user_order",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   }
-  ],
   "users": [
    {
     "model": "id",
@@ -5746,16 +5562,6 @@
     "scale": ""
    },
    {
-    "model": "cart_id",
-    "title": "cart_id",
-    "dbType": "int8",
-    "table": "view_cart_menu",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "qty",
     "title": "qty",
     "dbType": "int4",
@@ -5834,6 +5640,16 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "packet_price",
+    "title": "packet_price",
+    "dbType": "numeric",
+    "table": "view_cart_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "view_cart_set": [
@@ -5880,16 +5696,6 @@
    {
     "model": "updated_at",
     "title": "updated_at",
-    "dbType": "timestamp",
-    "table": "view_cart_set",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "deleted_at",
-    "title": "deleted_at",
     "dbType": "timestamp",
     "table": "view_cart_set",
     "key": "",
@@ -8148,188 +7954,6 @@
     "title": "set_date",
     "dbType": "date",
     "table": "view_order_rule",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   }
-  ],
-  "view_orders": [
-   {
-    "model": "id",
-    "title": "id",
-    "dbType": "int8",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "user_id",
-    "title": "user_id",
-    "dbType": "int8",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "menu_id",
-    "title": "menu_id",
-    "dbType": "int8",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "order_number",
-    "title": "order_number",
-    "dbType": "varchar",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "created_at",
-    "title": "created_at",
-    "dbType": "timestamp",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "updated_at",
-    "title": "updated_at",
-    "dbType": "timestamp",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "payment_at",
-    "title": "payment_at",
-    "dbType": "timestamp",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "payment_type",
-    "title": "payment_type",
-    "dbType": "varchar",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "cancelled_at",
-    "title": "cancelled_at",
-    "dbType": "timestamp",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "deleted_at",
-    "title": "deleted_at",
-    "dbType": "timestamp",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "order_status",
-    "title": "order_status",
-    "dbType": "varchar",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "kitchen_id",
-    "title": "kitchen_id",
-    "dbType": "int2",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "Invoice_id",
-    "title": "Invoice_id",
-    "dbType": "varchar",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qty",
-    "title": "qty",
-    "dbType": "int4",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "total_price",
-    "title": "total_price",
-    "dbType": "int4",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "payment_status",
-    "title": "payment_status",
-    "dbType": "varchar",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "cart_type",
-    "title": "cart_type",
-    "dbType": "varchar",
-    "table": "view_orders",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "cart_id",
-    "title": "cart_id",
-    "dbType": "int4",
-    "table": "view_orders",
     "key": "",
     "extra": "",
     "nullable": "YES",
