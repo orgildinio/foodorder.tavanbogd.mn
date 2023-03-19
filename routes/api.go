@@ -30,6 +30,9 @@ func Api(e *fiber.App) {
 	a.Get("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
 	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
 
+	/* Order Zahialgat */
+	a.Get("/create-order-set", agentMW.IsLoggedIn(), controllers.CreateOrderSet)
+
 	//QPAY
 	//a.Post("/qpay/invoice", controllers.QPayInvoice)
 	//a.Post("/qpay/check", controllers.QPayPaymentCheck)

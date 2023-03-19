@@ -16,20 +16,24 @@ func CreateOrder(c *fiber.Ctx) error {
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartZahialga)
 
 	var totalPrice = 0
+	var totalQty = 0
 
 	for _, cartPrice := range cartZahialga {
 		fmt.Println(cartPrice.Price)
 
 		totalPrice = totalPrice + cartPrice.Price
+		totalQty = totalQty + cartPrice.Qty
 
 	}
-	fmt.Println("total", totalPrice)
+
+	fmt.Println(totalQty)
 
 	newOrder := new(models.Orders)
-
 	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
 	newOrder.PaymentType = GetStringPointer("")
 	newOrder.Price = totalPrice
+	newOrder.OrderQuantity = totalQty
+	newOrder.OrderType = GetStringPointer("zahialgat")
 
 	DB.DB.Create(&newOrder)
 
@@ -41,12 +45,16 @@ func CreateOrder(c *fiber.Ctx) error {
 		orderDetail.FoodID = cartDetail.FoodID
 		orderDetail.CartID = cartDetail.ID
 		orderDetail.Price = cartDetail.Price
+		orderDetail.Qty = cartDetail.Qty
 
 		DB.DB.Create(&orderDetail)
 
 	}
 
-	return c.JSON(newOrder)
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+		"status":  "success",
+		"message": "Захиалга үүсгэлээ",
+	})
 
 }
 
@@ -80,7 +88,36 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": "Захиалга цуцлгадлаа",
+		"message": order.OrderNumber + " дугаартай захиалга цуцлгадлаа",
+	})
+}
+
+func CreateOrderSet(c *fiber.Ctx) error {
+	orderUser := agentUtils.AuthUserObject(c)
+
+	var viewCartMenu []models.ViewCartMenu
+	DB.DB.Where("user_id = ?", orderUser["id"]).Find(&viewCartMenu)
+
+	totalQty := 0
+	var totalPrice float32
+
+	for _, cartDetail := range viewCartMenu {
+		totalQty = totalQty + cartDetail.Qty
+		totalPrice = totalPrice + cartDetail.PacketPrice
+	}
+
+	newOrder := new(models.Orders)
+
+	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+	newOrder.OrderQuantity = totalQty
+	newOrder.Price = int(totalPrice)
+	newOrder.OrderType = GetStringPointer("bagts")
+
+	DB.DB.Create(&newOrder)
+
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+		"status":  "success",
+		"message": "Захиалга үүсгэлээ",
 	})
 }
 
