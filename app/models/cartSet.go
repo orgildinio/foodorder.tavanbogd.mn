@@ -115,3 +115,26 @@ type OrderSetFood struct {
 func (o *OrderSetFood) TableName() string {
 	return "order_set_food"
 }
+
+type ViewCartSubMenu struct {
+	FoodType   *string `gorm:"column:food_type" json:"food_type"`
+	FoodTypeID *int    `gorm:"column:food_type_id" json:"food_type_id"`
+	ID         *int    `gorm:"column:id" json:"id"`
+	MenuID     *int    `gorm:"column:menu_id" json:"menu_id"`
+}
+
+func (v *ViewCartSubMenu) TableName() string {
+	return "view_cart_sub_menu"
+}
+
+type ViewCartSubMenuFood struct {
+	FoodIamge *string `gorm:"column:food_iamge" json:"food_iamge"`
+	FoodID    *int    `gorm:"column:food_id" json:"food_id"`
+	FoodName  *string `gorm:"column:food_name" json:"food_name"`
+	ID        *int    `gorm:"column:id" json:"id"`
+	SubMenuID *int    `gorm:"column:sub_menu_id" json:"sub_menu_id"`
+}
+
+func (v *ViewCartSubMenuFood) TableName() string {
+	return "view_cart_sub_menu_food"
+}

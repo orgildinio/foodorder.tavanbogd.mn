@@ -29,6 +29,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	fmt.Println(totalQty)
 
 	newOrder := new(models.Orders)
+
 	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
 	newOrder.PaymentType = GetStringPointer("")
 	newOrder.Price = totalPrice
@@ -68,8 +69,6 @@ func CancelOrder(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
-	fmt.Println(orderCancelReq.ID)
-
 	orderUser := agentUtils.AuthUserObject(c)
 
 	order.PaymentStatus = "canceled"
@@ -96,21 +95,29 @@ func CreateOrderSet(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
 
 	var viewCartMenu []models.ViewCartMenu
-	DB.DB.Where("user_id = ?", orderUser["id"]).Find(&viewCartMenu)
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&viewCartMenu)
 
+	if len(viewCartMenu) == 0 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "User not found",
+		})
+	}
 	totalQty := 0
 	var totalPrice float32
 
 	for _, cartDetail := range viewCartMenu {
 		totalQty = totalQty + cartDetail.Qty
 		totalPrice = totalPrice + cartDetail.PacketPrice
+
 	}
 
 	newOrder := new(models.Orders)
 
 	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-	newOrder.OrderQuantity = totalQty
+	newOrder.PaymentType = GetStringPointer("")
 	newOrder.Price = int(totalPrice)
+	newOrder.OrderQuantity = totalQty
 	newOrder.OrderType = GetStringPointer("bagts")
 
 	DB.DB.Create(&newOrder)
