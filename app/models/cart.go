@@ -8,7 +8,6 @@ import (
 
 type CartZahialgat struct {
 	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
-	//DeletedAt gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	FoodID    int        `gorm:"column:food_id" json:"food_id"`
 	ID        int        `gorm:"column:id" json:"id"`
 	KitchenID *int       `gorm:"column:kitchen_id" json:"kitchen_id"`

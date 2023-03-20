@@ -16,7 +16,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartZahialga)
 
 	var checkOldOrders []models.Orders
-	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&checkOldOrders)
+	DB.DB.Where("user_id = ? AND payment_status = 'pending' AND age(created_at) < '15 minute'", orderUser["id"]).Order("id DESC").Find(&checkOldOrders)
 
 	for _, checkOldOrder := range checkOldOrders {
 		checkOldOrder.PaymentStatus = "canceled"
@@ -34,8 +34,6 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	}
 
-	fmt.Println(totalQty)
-
 	newOrder := new(models.Orders)
 
 	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
@@ -43,6 +41,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	newOrder.Price = totalPrice
 	newOrder.OrderQuantity = totalQty
 	newOrder.OrderType = GetStringPointer("zahialgat")
+	newOrder.PaymentStatus = GetStringPointer("pending")
 
 	DB.DB.Create(&newOrder)
 
@@ -58,9 +57,10 @@ func CreateOrder(c *fiber.Ctx) error {
 
 		DB.DB.Create(&orderDetail)
 
-		DB.DB.Where("id = ?", cartDetail.ID).Delete(&cartDetail)
-
 	}
+	cartMenu := models.CartZahialgat{}
+	DB.DB.Where("user_id = ?", orderUser["id"]).Delete(&cartMenu)
+	fmt.Println("Cart ID -======>", cartMenu.ID)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
@@ -82,6 +82,7 @@ func CancelOrder(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
 
 	order.PaymentStatus = "canceled"
+
 	DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Find(&order)
 
 	if order.ID == 0 {
@@ -116,31 +117,28 @@ func CreateOrderSet(c *fiber.Ctx) error {
 	totalQty := 0
 	var totalPrice float32
 
-	cartID := 0
-
 	for _, cartDetail := range viewCartMenu {
 
 		totalQty = totalQty + cartDetail.Qty
-		totalPrice = totalPrice + cartDetail.PacketPrice
-		cartID = cartDetail.ID
-
+		totalPrice = float32(totalQty) * cartDetail.PacketPrice
 	}
+	for _, viewCartMenus := range viewCartMenu {
+		newOrder := new(models.Orders)
 
-	newOrder := new(models.Orders)
+		newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+		newOrder.PaymentType = GetStringPointer("")
+		newOrder.Price = int(totalPrice)
+		newOrder.OrderQuantity = totalQty
+		newOrder.OrderType = GetStringPointer("bagts")
+		newOrder.PaymentStatus = GetStringPointer("pending")
+		newOrder.CartID = viewCartMenus.ID
 
-	newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-	newOrder.PaymentType = GetStringPointer("")
-	newOrder.Price = int(totalPrice)
-	newOrder.OrderQuantity = totalQty
-	newOrder.OrderType = GetStringPointer("bagts")
+		DB.DB.Create(&newOrder)
 
-	DB.DB.Create(&newOrder)
-
-	cartMenu := models.CartMenu{}
-
-	fmt.Println("Cart ID", cartID)
-
-	DB.DB.Where("id = ? AND user_id = ?", cartID, orderUser["id"]).Delete(&cartMenu)
+		cartMenu := models.CartMenu{}
+		DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenu)
+		DB.DB.Delete(&cartMenu)
+	}
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",

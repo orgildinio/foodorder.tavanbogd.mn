@@ -17,6 +17,7 @@ type Orders struct {
 	UpdatedAt     *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 	UserID        int            `gorm:"column:user_id" json:"user_id"`
 	OrderType     string         `gorm:"column:order_type" json:"order_type"`
+	CartID        int            `gorm:"column:cart_id" json:"cart_id"`
 }
 
 func (o *Orders) TableName() string {

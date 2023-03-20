@@ -53,8 +53,6 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.OrderRuleID = setHoolTooCartRequestData.OrderRuleID
 	orderSet.Qty = setHoolTooCartRequestData.Qty
 
-	fmt.Println(orderSet.Qty)
-
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
@@ -80,19 +78,19 @@ func AddToCartSet(c *fiber.Ctx) error {
 			cartSubMenuFood.FoodID = subMenuFoodData.FoodID
 			cartSubMenuFood.SubMenuID = cartSubMenu.ID
 
-			balance := models.FoodBalance{}
-			DB.DB.Where("food_id = ? AND kitchen_id = ?", subMenuFoodData.FoodID, setHoolTooCartRequestData.KitchenID).Find(&balance)
+			//balance := models.FoodBalance{}
+			//DB.DB.Where("food_id = ? AND kitchen_id = ?", subMenuFoodData.FoodID, setHoolTooCartRequestData.KitchenID).Find(&balance)
+			//
+			//if *balance.Quantity == 0 {
+			//	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			//		"status":  "warning",
+			//		"message": "Хоолны үлдэгдэл хүрэглцэхгүй байна ",
+			//	})
+			//}
 
-			if *balance.Quantity == 0 {
-				return c.Status(http.StatusOK).JSON(map[string]interface{}{
-					"status":  "warning",
-					"message": "Хоолны үлдэгдэл хүрэглцэхгүй байна ",
-				})
-			}
-
-			*balance.Quantity = *balance.Quantity - setHoolTooCartRequestData.Qty
-
-			DB.DB.Save(&balance)
+			//*balance.Quantity = *balance.Quantity - setHoolTooCartRequestData.Qty
+			//
+			//DB.DB.Save(&balance)
 
 			DB.DB.Create(&cartSubMenuFood)
 
