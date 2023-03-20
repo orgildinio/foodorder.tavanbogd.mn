@@ -85,7 +85,7 @@ func (c *CartMenuCheck) TableName() string {
 
 type ViewCartMenu struct {
 	FoodOrderTimeName *string    `gorm:"column:food_order_time_name" json:"food_order_time_name"`
-	ID                *int       `gorm:"column:id" json:"id"`
+	ID                int        `gorm:"column:id" json:"id"`
 	MenuID            *int       `gorm:"column:menu_id" json:"menu_id"`
 	MorningOrderEnd   *string    `gorm:"column:morning_order_end" json:"morning_order_end"`
 	MorningOrderStart *string    `gorm:"column:morning_order_start" json:"morning_order_start"`

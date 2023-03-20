@@ -80,8 +80,6 @@ func AddToCartSet(c *fiber.Ctx) error {
 			cartSubMenuFood.FoodID = subMenuFoodData.FoodID
 			cartSubMenuFood.SubMenuID = cartSubMenu.ID
 
-			fmt.Println("Cart balance", setHoolTooCartRequestData.Qty)
-
 			balance := models.FoodBalance{}
 			DB.DB.Where("food_id = ? AND kitchen_id = ?", subMenuFoodData.FoodID, setHoolTooCartRequestData.KitchenID).Find(&balance)
 
@@ -107,7 +105,7 @@ func AddToCartSet(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
 		"message": "Сонгосон хоол сагсанд нэмэгдлээ",
-		"cart_id": *cartMenu.ID,
+		"cart_id": cartMenu.ID,
 	})
 }
 

@@ -12,6 +12,7 @@ type Orders struct {
 	InvoiceID     int            `gorm:"column:invoice_id" json:"invoice_id"`
 	OrderQuantity int            `gorm:"column:order_quantity" json:"order_quantity"`
 	PaymentType   string         `gorm:"column:payment_type" json:"payment_type"`
+	PaymentStatus string         `gorm:"column:payment_status" json:"payment_status"`
 	Price         int            `gorm:"column:price" json:"price"`
 	UpdatedAt     *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 	UserID        int            `gorm:"column:user_id" json:"user_id"`

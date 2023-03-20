@@ -15,6 +15,14 @@ func CreateOrder(c *fiber.Ctx) error {
 	var cartZahialga []models.ViewCartZahialga
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartZahialga)
 
+	var checkOldOrders []models.Orders
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&checkOldOrders)
+
+	for _, checkOldOrder := range checkOldOrders {
+		checkOldOrder.PaymentStatus = "canceled"
+		DB.DB.Save(&checkOldOrder)
+	}
+
 	var totalPrice = 0
 	var totalQty = 0
 
@@ -49,6 +57,8 @@ func CreateOrder(c *fiber.Ctx) error {
 		orderDetail.Qty = cartDetail.Qty
 
 		DB.DB.Create(&orderDetail)
+
+		DB.DB.Where("id = ?", cartDetail.ID).Delete(&cartDetail)
 
 	}
 
@@ -106,9 +116,13 @@ func CreateOrderSet(c *fiber.Ctx) error {
 	totalQty := 0
 	var totalPrice float32
 
+	cartID := 0
+
 	for _, cartDetail := range viewCartMenu {
+
 		totalQty = totalQty + cartDetail.Qty
 		totalPrice = totalPrice + cartDetail.PacketPrice
+		cartID = cartDetail.ID
 
 	}
 
@@ -121,6 +135,12 @@ func CreateOrderSet(c *fiber.Ctx) error {
 	newOrder.OrderType = GetStringPointer("bagts")
 
 	DB.DB.Create(&newOrder)
+
+	cartMenu := models.CartMenu{}
+
+	fmt.Println("Cart ID", cartID)
+
+	DB.DB.Where("id = ? AND user_id = ?", cartID, orderUser["id"]).Delete(&cartMenu)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
