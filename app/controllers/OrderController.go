@@ -20,9 +20,6 @@ func CreateOrder(c *fiber.Ctx) error {
 	var cartMenu []models.ViewCartMenu
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenu)
 
-	//totalQty := cartMenu.Qty + cartZahialga.Qty
-	//totalPrice := int(cartZahialga.Price) + int(cartMenu.PacketPrice)
-
 	if len(cartMenu) >= 1 || len(cartZahialga) >= 1 {
 
 		totalQtyMenu := 0
@@ -49,17 +46,53 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.OrderQuantity = totalQty
 		orders.Price = totalPrice
 
-		//DB.DB.Create(&orders)
+		DB.DB.Create(&orders)
 
-		//for _,
-		//
-		//orderDetail := models.OrderDetail{}
+		for _, cartZahialgas := range cartZahialga {
+			//for i := 1; i <= cartZahialgas.Qty; i++ {
+			orderDetail := models.OrderDetail{}
+
+			orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+			orderDetail.OrderID = orders.ID
+			orderDetail.FoodID = cartZahialgas.FoodID
+			orderDetail.KitchenID = cartZahialgas.KitchenID
+			orderDetail.CartID = cartZahialgas.ID
+			orderDetail.Qty = cartZahialgas.Qty
+			orderDetail.Price = cartZahialgas.Price
+
+			DB.DB.Create(&orderDetail)
+			//}
+
+			zahialgatData := models.CartZahialgat{}
+			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&zahialgatData)
+			DB.DB.Delete(zahialgatData)
+		}
+
+		for _, cartMenus := range cartMenu {
+			//for j := 1; j <= cartMenus.Qty; j++ {
+			orderDetail := models.OrderDetail{}
+
+			orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+			orderDetail.OrderID = orders.ID
+			orderDetail.MenuID = cartMenus.MenuID
+			orderDetail.KitchenID = cartMenus.KitchenID
+			orderDetail.Qty = cartMenus.Qty
+			orderDetail.Price = int(cartMenus.PacketPrice)
+			orderDetail.CartID = cartMenus.ID
+
+			DB.DB.Create(&orderDetail)
+			//}
+
+			cartBagts := models.CartMenu{}
+			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartBagts)
+			DB.DB.Delete(cartBagts)
+		}
 
 	}
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
-		"message": "Order created",
+		"message": "Захиалга үүсгэлээ",
 	})
 
 }

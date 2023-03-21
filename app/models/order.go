@@ -18,6 +18,7 @@ type Orders struct {
 	UserID        int            `gorm:"column:user_id" json:"user_id"`
 	OrderType     string         `gorm:"column:order_type" json:"order_type"`
 	CartID        int            `gorm:"column:cart_id" json:"cart_id"`
+	KitchenID     int            `gorm:"column:kitchen_id" json:"kitchen_id"`
 }
 
 func (o *Orders) TableName() string {
@@ -33,7 +34,7 @@ type OrderRequest struct {
 type OrderDetail struct {
 	CartID    *int       `gorm:"column:cart_id" json:"cart_id"`
 	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
-	FoodID    *int       `gorm:"column:food_id" json:"food_id"`
+	FoodID    int        `gorm:"column:food_id" json:"food_id"`
 	ID        int        `gorm:"column:id" json:"id"`
 	KitchenID int        `gorm:"column:kitchen_id" json:"kitchen_id"`
 	Price     int        `gorm:"column:price" json:"price"`
@@ -41,6 +42,7 @@ type OrderDetail struct {
 	UserID    int        `gorm:"column:user_id" json:"user_id"`
 	OrderID   int        `gorm:"column:order_id" json:"order_id"`
 	Qty       int        `gorm:"column:qty" json:"qty"`
+	MenuID    int        `gorm:"column:menu_id" json:"menu_id"`
 }
 
 func (o *OrderDetail) TableName() string {
@@ -50,7 +52,7 @@ func (o *OrderDetail) TableName() string {
 type OrdersStatus struct {
 	ID            int    `gorm:"column:id" json:"id"`
 	PaymentStatus string `gorm:"column:payment_status" json:"payment_status"`
-	OrderNumber   string `gorm:"column:order_number"json:"order_number"`
+	OrderNumber   string `gorm:"column:order_number" json:"order_number"`
 }
 
 func (o *OrdersStatus) TableName() string {
