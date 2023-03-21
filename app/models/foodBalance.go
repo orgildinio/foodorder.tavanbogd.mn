@@ -13,7 +13,7 @@ type FoodBalance struct {
 	FoodUne    *int           `gorm:"column:food_une" json:"food_une"`
 	ID         int            `gorm:"column:id" json:"id"`
 	KitchenID  int            `gorm:"column:kitchen_id" json:"kitchen_id"`
-	Quantity   *int           `gorm:"column:quantity" json:"quantity"`
+	Quantity   int            `gorm:"column:quantity" json:"quantity"`
 	UpdatedAt  *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 }
 

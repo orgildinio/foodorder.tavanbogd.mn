@@ -50,7 +50,7 @@ func AddToCart(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": "Сагсанд нэмэгдлээ",
+		"message": "Сонгосон хоол сагсан нэмэгдлээ",
 		"cart_id": *cartZahialga.ID,
 	})
 
@@ -75,8 +75,6 @@ func UpdateCart(c *fiber.Ctx) error {
 			"message": "Food not found",
 		})
 	}
-
-	fmt.Println(cartReqData.Qty)
 
 	editCart.Qty = editCart.Qty + cartReqData.Qty
 

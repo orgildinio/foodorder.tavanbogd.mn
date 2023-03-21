@@ -7,15 +7,18 @@ import (
 )
 
 type CartZahialgat struct {
-	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
-	FoodID    int        `gorm:"column:food_id" json:"food_id"`
-	ID        int        `gorm:"column:id" json:"id"`
-	KitchenID *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
-	Ognoo     *time.Time `gorm:"column:ognoo" json:"ognoo"`
-	Price     *int       `gorm:"column:price" json:"price"`
-	Qty       int        `gorm:"column:qty" json:"qty"`
-	UpdatedAt *time.Time `gorm:"column:updated_at" json:"updated_at"`
-	UserID    int        `gorm:"column:user_id" json:"user_id"`
+	CartOrderNumber *string        `gorm:"column:cart_order_number" json:"cart_order_number"`
+	CreatedAt       *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt       gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	FoodID          int            `gorm:"column:food_id" json:"food_id"`
+	ID              int            `gorm:"column:id" json:"id"`
+	KitchenID       *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
+	MenuID          int            `gorm:"column:menu_id" json:"menu_id"`
+	Ognoo           *time.Time     `gorm:"column:ognoo" json:"ognoo"`
+	Price           *int           `gorm:"column:price" json:"price"`
+	Qty             int            `gorm:"column:qty" json:"qty"`
+	UpdatedAt       *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID          int            `gorm:"column:user_id" json:"user_id"`
 }
 
 func (c *CartZahialgat) TableName() string {
@@ -91,27 +94,27 @@ func (v *ViewCartSet) TableName() string {
 }
 
 type ViewCartZahialga struct {
-	CreatedAt       *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt       gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	FirstName       *string        `gorm:"column:first_name" json:"first_name"`
-	FoodBalanceQty  *float32       `gorm:"column:food_balance_qty" json:"food_balance_qty"`
-	FoodCalorie     *float32       `gorm:"column:food_calorie" json:"food_calorie"`
-	FoodDetail      *string        `gorm:"column:food_detail" json:"food_detail"`
-	FoodIamge       *string        `gorm:"column:food_iamge" json:"food_iamge"`
-	FoodID          *int           `gorm:"column:food_id" json:"food_id"`
-	FoodIngredients *string        `gorm:"column:food_ingredients" json:"food_ingredients"`
-	FoodName        *string        `gorm:"column:food_name" json:"food_name"`
-	FoodPrice       *float32       `gorm:"column:food_price" json:"food_price"`
-	ID              *int           `gorm:"column:id" json:"id"`
-	KitchenID       *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
-	KitchenImage    *string        `gorm:"column:kitchen_image" json:"kitchen_image"`
-	KitckenName     *string        `gorm:"column:kitcken_name" json:"kitcken_name"`
-	LastName        *string        `gorm:"column:last_name" json:"last_name"`
-	Ognoo           *time.Time     `gorm:"column:ognoo" json:"ognoo"`
-	Price           int            `gorm:"column:price" json:"price"`
-	Qty             int            `gorm:"column:qty" json:"qty"`
-	UpdatedAt       *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	UserID          *int           `gorm:"column:user_id" json:"user_id"`
+	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
+	//DeletedAt       gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	FirstName       *string    `gorm:"column:first_name" json:"first_name"`
+	FoodCalorie     *float32   `gorm:"column:food_calorie" json:"food_calorie"`
+	FoodDetail      *string    `gorm:"column:food_detail" json:"food_detail"`
+	FoodIamge       *string    `gorm:"column:food_iamge" json:"food_iamge"`
+	FoodID          *int       `gorm:"column:food_id" json:"food_id"`
+	FoodIngredients *string    `gorm:"column:food_ingredients" json:"food_ingredients"`
+	FoodName        *string    `gorm:"column:food_name" json:"food_name"`
+	FoodPrice       *float32   `gorm:"column:food_price" json:"food_price"`
+	ID              *int       `gorm:"column:id" json:"id"`
+	KitchenID       *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
+	KitchenImage    *string    `gorm:"column:kitchen_image" json:"kitchen_image"`
+	KitckenName     *string    `gorm:"column:kitcken_name" json:"kitcken_name"`
+	LastName        *string    `gorm:"column:last_name" json:"last_name"`
+	MenuID          *int       `gorm:"column:menu_id" json:"menu_id"`
+	Ognoo           *time.Time `gorm:"column:ognoo" json:"ognoo"`
+	Price           int        `gorm:"column:price" json:"price"`
+	Qty             int        `gorm:"column:qty" json:"qty"`
+	UpdatedAt       *time.Time `gorm:"column:updated_at" json:"updated_at"`
+	UserID          int        `gorm:"column:user_id" json:"user_id"`
 }
 
 func (v *ViewCartZahialga) TableName() string {
@@ -121,4 +124,17 @@ func (v *ViewCartZahialga) TableName() string {
 type OrderFoodCarting struct {
 	FoodID int `json:"food_id"`
 	Qty    int `json:"qty"`
+	MenuID int `json:"menu_id"`
+}
+
+type FoodRequestData struct {
+	MenuID int `json:"menu_id"`
+	Qty    int `json:"qty"`
+	FoodID int `json:"food_id"`
+	Items  []struct {
+		FoodTypeID int `json:"food_type_id"`
+		SubItems   []struct {
+			FoodID int `json:"food_id"`
+		} `json:"subItems"`
+	} `json:"items"`
 }

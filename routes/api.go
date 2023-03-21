@@ -31,7 +31,7 @@ func Api(e *fiber.App) {
 	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
 
 	/* Order Zahialgat */
-	a.Get("/create-order-set", agentMW.IsLoggedIn(), controllers.CreateOrderSet)
+	//a.Get("/create-order-set", agentMW.IsLoggedIn(), controllers.CreateOrderSet)
 
 	//QPAY
 	//a.Post("/qpay/invoice", controllers.QPayInvoice)
@@ -48,8 +48,6 @@ func Api(e *fiber.App) {
 	agent := e.Group("/auth")
 	//a.Get("/", handlers.LoginPage)
 	agent.Post("/login", controllers.Login)
-
-	a.Post("/some-shit", controllers.CheckFoodBalance)
 
 }
 
