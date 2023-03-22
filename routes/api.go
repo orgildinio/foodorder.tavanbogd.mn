@@ -34,9 +34,12 @@ func Api(e *fiber.App) {
 	//a.Get("/create-order-set", agentMW.IsLoggedIn(), controllers.CreateOrderSet)
 
 	//QPAY
-	//a.Post("/qpay/invoice", controllers.QPayInvoice)
-	//a.Post("/qpay/check", controllers.QPayPaymentCheck)
-	//a.Get("/qpay/callback/:invoice_id", controllers.QPayCallBack)
+	a.Post("/qpay/invoice", controllers.QPayInvoice)
+	a.Post("/qpay/check", controllers.QPayPaymentCheck)
+	a.Get("/qpay/callback/:invoice_id", controllers.QPayCallBack)
+
+	//Latest Payment
+	a.Get("/payment/latest-payment", agentMW.IsLoggedIn(), controllers.LaterPay)
 
 	//CART bagts hool
 	/* NOT USED */

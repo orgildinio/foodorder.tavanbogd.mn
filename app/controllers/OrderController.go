@@ -20,6 +20,17 @@ func CreateOrder(c *fiber.Ctx) error {
 	var cartMenu []models.ViewCartMenu
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenu)
 
+	viewOrder := []models.ViewOrder{}
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&viewOrder)
+
+	if len(viewOrder) >= 1 {
+
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "Таньд идэвхтэй захиалга байна",
+		})
+	}
+
 	if len(cartMenu) >= 1 || len(cartZahialga) >= 1 {
 
 		totalQtyMenu := 0
@@ -85,14 +96,18 @@ func CreateOrder(c *fiber.Ctx) error {
 
 			cartBagts := models.CartMenu{}
 			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartBagts)
-			DB.DB.Delete(cartBagts)
+			DB.DB.Delete(&cartBagts)
 		}
 
 	}
 
-	return c.Status(http.StatusOK).JSON(map[string]string{
+	ordersResponse := models.ViewOrder{}
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&ordersResponse)
+
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
 		"message": "Захиалга үүсгэлээ",
+		"data":    ordersResponse,
 	})
 
 }
@@ -120,7 +135,7 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	order.PaymentStatus = "canceled"
 
-	DB.DB.Save(&order)
+	//DB.DB.Save(&order)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
@@ -128,55 +143,20 @@ func CancelOrder(c *fiber.Ctx) error {
 	})
 }
 
-//func CreateOrderSet(c *fiber.Ctx) error {
-//    orderUser := agentUtils.AuthUserObject(c)
-//
-//    var viewCartMenu []models.ViewCartMenu
-//    DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&viewCartMenu)
-//
-//    if len(viewCartMenu) == 0 {
-//        return c.Status(http.StatusOK).JSON(map[string]interface{}{
-//            "status":  "warning",
-//            "message": "User not found",
-//        })
-//    }
-//    totalQty := 0
-//    var totalPrice float32
-//
-//    for _, cartDetail := range viewCartMenu {
-//
-//        totalQty = totalQty + cartDetail.Qty
-//        totalPrice = float32(totalQty) * cartDetail.PacketPrice
-//    }
-//
-//    newOrder := new(models.Orders)
-//
-//    newOrder.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-//    newOrder.PaymentType = GetStringPointer("")
-//    newOrder.Price = int(totalPrice)
-//    newOrder.OrderQuantity = totalQty
-//    newOrder.OrderType = GetStringPointer("bagts")
-//    newOrder.PaymentStatus = GetStringPointer("pending")
-//
-//    DB.DB.Create(&newOrder)
-//
-//    for _, viewCartMenus := range viewCartMenu {
-//        orderDetail := models.OrderDetail{}
-//
-//        orderDetail.OrderID = newOrder.ID
-//        orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-//        orderDetail.CartID = viewCartMenus.ID
-//    }
-//
-//    cartMenu := models.CartMenu{}
-//    DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenu)
-//    DB.DB.Delete(&cartMenu)
-//
-//    return c.Status(http.StatusOK).JSON(map[string]interface{}{
-//        "status":  "success",
-//        "message": "Захиалга үүсгэлээ",
-//    })
-//}
+func UpdateStatus(OrderNumber string, PaymentType string, EbarimtType int, OrgRegisterNumber *int) {
+	editOrder := models.Orders{}
+	var orderDetail []models.OrderDetail
+
+	DB.DB.Where("order_number = ?", OrderNumber).Find(&editOrder)
+	DB.DB.Table("order_detail").Where("order_id = ?", editOrder.ID).Find(&orderDetail)
+
+	status := "success"
+	editOrder.PaymentType = PaymentType
+	editOrder.PaymentStatus = status
+	editOrder.OrgRegisterNumber = OrgRegisterNumber
+
+	DB.DB.Save(&editOrder)
+}
 
 func GetIntegerPointer(value int) int {
 	return value

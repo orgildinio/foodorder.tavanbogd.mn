@@ -10,7 +10,7 @@ type QpayRequest struct {
 type QpayCheck struct {
 	ObjectType        string `json:"object_type"`
 	ObjectId          string `json:"object_id"`
-	OrderNumber       int    `json:"order_number"`
+	OrderNumber       string `json:"order_number"`
 	EbarimtType       int    `json:"ebarimt_type"`
 	OrgRegisterNumber int    `json:"org_register_number"`
 }
