@@ -9,7 +9,7 @@ type Orders struct {
 	CreatedAt         *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt         gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	ID                int            `gorm:"column:id" json:"id"`
-	InvoiceID         int            `gorm:"column:invoice_id" json:"invoice_id"`
+	InvoiceID         string         `gorm:"column:invoice_id" json:"invoice_id"`
 	OrderQuantity     int            `gorm:"column:order_quantity" json:"order_quantity"`
 	PaymentType       string         `gorm:"column:payment_type" json:"payment_type"`
 	PaymentStatus     string         `gorm:"column:payment_status" json:"payment_status"`
@@ -20,6 +20,7 @@ type Orders struct {
 	CartID            int            `gorm:"column:cart_id" json:"cart_id"`
 	KitchenID         int            `gorm:"column:kitchen_id" json:"kitchen_id"`
 	OrgRegisterNumber *int           `gorm:"column:org_register_number" json:"org_register_number"`
+	SuccessTime       string         `gorm:"column:success_time" json:"success_time"`
 }
 
 func (o *Orders) TableName() string {
@@ -71,7 +72,7 @@ type ViewOrder struct {
 	OrderQuantity int            `gorm:"column:order_quantity" json:"order_quantity"`
 	OrderType     *string        `gorm:"column:order_type" json:"order_type"`
 	PaymentStatus *string        `gorm:"column:payment_status" json:"payment_status"`
-	PaymentType   *string        `gorm:"column:payment_type" json:"payment_type"`
+	PaymentType   string         `gorm:"column:payment_type" json:"payment_type"`
 	Price         int            `gorm:"column:price" json:"price"`
 	UpdatedAt     *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 	UserID        int            `gorm:"column:user_id" json:"user_id"`

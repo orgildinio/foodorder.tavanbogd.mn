@@ -7,6 +7,7 @@ import (
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"net/http"
+	"time"
 )
 
 func CreateOrder(c *fiber.Ctx) error {
@@ -133,9 +134,7 @@ func CancelOrder(c *fiber.Ctx) error {
 		})
 	}
 
-	order.PaymentStatus = "canceled"
-
-	//DB.DB.Save(&order)
+	DB.DB.Delete(&order)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
@@ -143,19 +142,102 @@ func CancelOrder(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateStatus(OrderNumber string, PaymentType string, EbarimtType int, OrgRegisterNumber *int) {
+func UpdateStatus(OrderNumber string, PaymentType string, PaymentStatus string) {
 	editOrder := models.Orders{}
-	var orderDetail []models.OrderDetail
+	var orderDetails []models.OrderDetail
 
 	DB.DB.Where("order_number = ?", OrderNumber).Find(&editOrder)
-	DB.DB.Table("order_detail").Where("order_id = ?", editOrder.ID).Find(&orderDetail)
+	DB.DB.Where("order_id = ?", editOrder.ID).Find(&orderDetails)
 
-	status := "success"
+	now := time.Now()
+
+	editOrder.PaymentStatus = PaymentStatus
 	editOrder.PaymentType = PaymentType
-	editOrder.PaymentStatus = status
-	editOrder.OrgRegisterNumber = OrgRegisterNumber
+	editOrder.SuccessTime = now.Format("2006-02-01 15:04:05")
 
-	DB.DB.Save(&editOrder)
+	fmt.Println("Status", editOrder.ID)
+
+	UpdateBalance(editOrder.ID)
+
+	//DB.DB.Save(&editOrder)
+}
+
+func UpdateBalance(OrderID int) {
+
+	var orderDetails []models.OrderDetail
+
+	DB.DB.Where("order_id = ?", OrderID).Find(&orderDetails)
+
+	for _, items := range orderDetails {
+		foodBalance := models.FoodBalance{}
+		DB.DB.Where("food_id = ? AND kitchen_id = ?", items.FoodID, items.KitchenID).Find(&foodBalance)
+
+		fmt.Println("kitchen ID", items.KitchenID)
+		fmt.Println("food ID", items.FoodID)
+		fmt.Println("Balance food ID", *foodBalance.FoodUne)
+
+		foodBalance.Quantity = foodBalance.Quantity - items.Qty
+
+		DB.DB.Save(foodBalance)
+	}
+
+}
+
+func FunctionBolgojSalgana(c *fiber.Ctx) error {
+	orderUser := agentUtils.AuthUserObject(c)
+	//orderStatus := models.OrdersStatus{}
+
+	orders := models.ViewOrder{}
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&orders)
+
+	if orders.UserID == 0 {
+
+		//return c.Status(http.StatusOK).JSON(map[string]string{
+		//	"status":  "warning",
+		//	"message": "Order not found",
+		//})
+	}
+
+	//if qpayResponse.Count >= 1 {
+
+	//}
+
+	orderLaterPay := models.OrderLaterPay{}
+
+	orderLaterPay.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+	orderLaterPay.OrderNumber = orders.OrderNumber
+	orderLaterPay.OrderID = orders.ID
+	orderLaterPay.Qty = orders.OrderQuantity
+	orderLaterPay.Price = orders.Price
+	orderLaterPay.PaymentStatus = GetStringPointer("success")
+
+	oldOrders := models.Orders{}
+
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
+	fmt.Println(oldOrders.ID)
+
+	if oldOrders.ID >= 1 {
+
+		oldOrders.PaymentStatus = GetStringPointer("success")
+		oldOrders.PaymentType = GetStringPointer("mmk")
+		DB.DB.Save(&oldOrders)
+
+	} else {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":  "warning",
+			"message": "Идэвхтэй захиалга олдсонгүй",
+		})
+	}
+
+	//DB.DB.Create(&orderLaterPay)
+
+	fmt.Println(orderLaterPay.OrderNumber)
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"status":  "success",
+		"message": orderLaterPay.OrderNumber + " дугаартай захиалга",
+	})
+
 }
 
 func GetIntegerPointer(value int) int {

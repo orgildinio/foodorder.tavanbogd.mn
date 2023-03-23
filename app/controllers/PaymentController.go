@@ -50,11 +50,10 @@ func QPayInvoice(c *fiber.Ctx) error {
 
 	json.NewDecoder(response.Body).Decode(&res)
 
-	//sender_invoice_no
-	//updateOrder := models.Orders{}
-	//DB.DB.Where("order_number = ?", qpayRequest.SenderInvoiceNo).First(&updateOrder)
-	//updateOrder.InvoiceId = fmt.Sprintf("%s", res["invoice_id"])
-	//DB.DB.Save(&updateOrder)
+	updateOrder := models.Orders{}
+	DB.DB.Where("order_number = ?", qpayRequest.SenderInvoiceNo).First(&updateOrder)
+	updateOrder.InvoiceID = fmt.Sprintf("%s", res["invoice_id"])
+	DB.DB.Save(&updateOrder)
 
 	return c.JSON(res)
 }
@@ -63,7 +62,7 @@ func QPayPaymentCheck(c *fiber.Ctx) error {
 	qpayCheck := &models.QpayCheck{}
 	err := c.BodyParser(&qpayCheck)
 	request, _ := http.NewRequest("POST", "https://merchant.qpay.mn/v2/auth/token", nil)
-	request.Header.Set("Authorization", "Basic Q0lSQ0xFX1BBUks6Wjl1NVhwb3A=")
+	request.Header.Set("Authorization", "Basic Rk9PRE9SREVSOnBCeDVYdVZU")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -95,14 +94,14 @@ func QPayPaymentCheck(c *fiber.Ctx) error {
 	json.NewDecoder(response.Body).Decode(&qpayResponse)
 
 	if qpayResponse.Count >= 1 {
-		UpdateStatus(qpayCheck.OrderNumber, "qPay", qpayCheck.EbarimtType, &qpayCheck.OrgRegisterNumber)
+		//UpdateStatus(qpayCheck.OrderNumber, "qPay", qpayCheck.EbarimtType, &qpayCheck.OrgRegisterNumber)
 	}
 	return c.JSON(qpayResponse)
 }
 
 func QpayCallBackCheck(invoiceId string) int {
 	request, _ := http.NewRequest("POST", "https://merchant.qpay.mn/v2/auth/token", nil)
-	request.Header.Set("Authorization", "Basic Q0lSQ0xFX1BBUks6Wjl1NVhwb3A=")
+	request.Header.Set("Authorization", "Basic QPayPaymentCheck")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -142,8 +141,8 @@ func QPayCallBack(c *fiber.Ctx) error {
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
 
-	if QpayCallBackCheck(string(checkOrder.InvoiceID)) > 0 {
-		// ene ued tuhain order payment status = success
+	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
+		//Odoo hiij bgaa
 		return c.Status(http.StatusOK).JSON("SUCCESS")
 	}
 
@@ -152,52 +151,17 @@ func QPayCallBack(c *fiber.Ctx) error {
 
 func LaterPay(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
-	//orderStatus := models.OrdersStatus{}
-
+	orderStatus := models.OrdersStatus{}
 	orders := models.ViewOrder{}
-	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&orders)
 
-	if orders.UserID == 0 {
-		return c.Status(http.StatusOK).JSON(map[string]string{
-			"status":  "warning",
-			"message": "Order not found",
-		})
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&orders)
+	DB.DB.Where("id = ?", orders.ID).Find(&orderStatus)
+
+	if orders.ID == 0 {
+		return c.Status(http.StatusOK).JSON("Not found active order")
 	}
 
-	orderLaterPay := models.OrderLaterPay{}
+	UpdateStatus(orderStatus.OrderNumber, "mmk", "success")
 
-	orderLaterPay.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-	orderLaterPay.OrderNumber = orders.OrderNumber
-	orderLaterPay.OrderID = orders.ID
-	orderLaterPay.Qty = orders.OrderQuantity
-	orderLaterPay.Price = orders.Price
-	orderLaterPay.PaymentStatus = GetStringPointer("success")
-
-	oldOrders := models.Orders{}
-
-	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
-	fmt.Println(oldOrders.ID)
-
-	if oldOrders.ID >= 1 {
-
-		oldOrders.PaymentStatus = GetStringPointer("success")
-		oldOrders.PaymentType = GetStringPointer("mmk")
-		DB.DB.Save(&oldOrders)
-
-	} else {
-		return c.Status(http.StatusOK).JSON(map[string]string{
-			"status":  "warning",
-			"message": "Идэвхтэй захиалга олдсонгүй",
-		})
-	}
-
-	DB.DB.Create(&orderLaterPay)
-
-	fmt.Println(orderLaterPay.OrderNumber)
-
-	return c.Status(http.StatusOK).JSON(map[string]string{
-		"status":  "success",
-		"message": orderLaterPay.OrderNumber + " дугаартай захиалга",
-	})
-
+	return c.Status(http.StatusOK).JSON("success")
 }
