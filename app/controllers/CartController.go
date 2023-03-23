@@ -18,7 +18,6 @@ func AddToCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 	cartUser := agentUtils.AuthUserObject(c)
-	cart.UserID = int(cartUser["id"].(int64))
 
 	cartFood := models.OrderFoodCarting{}
 	errSet := c.BodyParser(&cartFood)
@@ -27,6 +26,7 @@ func AddToCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
+	cart.UserID = int(cartUser["id"].(int64))
 	cart.FoodID = cartFood.FoodID
 	cart.Qty = cartFood.Qty
 

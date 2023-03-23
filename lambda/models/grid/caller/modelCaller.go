@@ -121,6 +121,9 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 	case "195":
 		return grid.OrdersView195Datagrid
 
+	case "278":
+		return grid.Users278Datagrid
+
 	}
 	return datagrid.Datagrid{}
 

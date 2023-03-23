@@ -52,6 +52,7 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.MenuID = setHoolTooCartRequestData.MenuID
 	orderSet.OrderRuleID = setHoolTooCartRequestData.OrderRuleID
 	orderSet.Qty = setHoolTooCartRequestData.Qty
+	orderSet.KitchenID = setHoolTooCartRequestData.KitchenID
 
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{

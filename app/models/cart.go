@@ -122,9 +122,10 @@ func (v *ViewCartZahialga) TableName() string {
 }
 
 type OrderFoodCarting struct {
-	FoodID int `json:"food_id"`
-	Qty    int `json:"qty"`
-	MenuID int `json:"menu_id"`
+	FoodID    int `json:"food_id"`
+	Qty       int `json:"qty"`
+	MenuID    int `json:"menu_id"`
+	FoodPrice int `json:"food_price"`
 }
 
 type FoodRequestData struct {

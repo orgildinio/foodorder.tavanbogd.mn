@@ -142,101 +142,46 @@ func CancelOrder(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateStatus(OrderNumber string, PaymentType string, PaymentStatus string) {
+func UpdateStatus(OrderID int, PaymentType string, PaymentStatus string) {
+
 	editOrder := models.Orders{}
-	var orderDetails []models.OrderDetail
+	DB.DB.Where("id = ?", OrderID).Find(&editOrder)
 
-	DB.DB.Where("order_number = ?", OrderNumber).Find(&editOrder)
-	DB.DB.Where("order_id = ?", editOrder.ID).Find(&orderDetails)
+	if OrderID > 0 {
 
-	now := time.Now()
+		now := time.Now()
 
-	editOrder.PaymentStatus = PaymentStatus
-	editOrder.PaymentType = PaymentType
-	editOrder.SuccessTime = now.Format("2006-02-01 15:04:05")
+		editOrder.PaymentStatus = PaymentStatus
+		editOrder.PaymentType = PaymentType
+		editOrder.SuccessTime = now.Format("2006-02-01 15:04:05")
 
-	fmt.Println("Status", editOrder.ID)
+		DB.DB.Save(&editOrder)
 
-	UpdateBalance(editOrder.ID)
+		UpdateBalance(OrderID)
+	} else {
+		panic("Not found order")
+	}
 
-	//DB.DB.Save(&editOrder)
 }
 
 func UpdateBalance(OrderID int) {
 
 	var orderDetails []models.OrderDetail
-
 	DB.DB.Where("order_id = ?", OrderID).Find(&orderDetails)
 
-	for _, items := range orderDetails {
-		foodBalance := models.FoodBalance{}
-		DB.DB.Where("food_id = ? AND kitchen_id = ?", items.FoodID, items.KitchenID).Find(&foodBalance)
+	if OrderID > 0 {
 
-		fmt.Println("kitchen ID", items.KitchenID)
-		fmt.Println("food ID", items.FoodID)
-		fmt.Println("Balance food ID", *foodBalance.FoodUne)
+		for _, items := range orderDetails {
+			foodBalance := models.FoodBalance{}
+			DB.DB.Where("food_id = ? AND kitchen_id = ?", items.FoodID, items.KitchenID).Find(&foodBalance)
 
-		foodBalance.Quantity = foodBalance.Quantity - items.Qty
+			foodBalance.Quantity = foodBalance.Quantity - items.Qty
 
-		DB.DB.Save(foodBalance)
-	}
-
-}
-
-func FunctionBolgojSalgana(c *fiber.Ctx) error {
-	orderUser := agentUtils.AuthUserObject(c)
-	//orderStatus := models.OrdersStatus{}
-
-	orders := models.ViewOrder{}
-	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&orders)
-
-	if orders.UserID == 0 {
-
-		//return c.Status(http.StatusOK).JSON(map[string]string{
-		//	"status":  "warning",
-		//	"message": "Order not found",
-		//})
-	}
-
-	//if qpayResponse.Count >= 1 {
-
-	//}
-
-	orderLaterPay := models.OrderLaterPay{}
-
-	orderLaterPay.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-	orderLaterPay.OrderNumber = orders.OrderNumber
-	orderLaterPay.OrderID = orders.ID
-	orderLaterPay.Qty = orders.OrderQuantity
-	orderLaterPay.Price = orders.Price
-	orderLaterPay.PaymentStatus = GetStringPointer("success")
-
-	oldOrders := models.Orders{}
-
-	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
-	fmt.Println(oldOrders.ID)
-
-	if oldOrders.ID >= 1 {
-
-		oldOrders.PaymentStatus = GetStringPointer("success")
-		oldOrders.PaymentType = GetStringPointer("mmk")
-		DB.DB.Save(&oldOrders)
-
+			DB.DB.Save(&foodBalance)
+		}
 	} else {
-		return c.Status(http.StatusOK).JSON(map[string]string{
-			"status":  "warning",
-			"message": "Идэвхтэй захиалга олдсонгүй",
-		})
+		panic("Not found Order ID")
 	}
-
-	//DB.DB.Create(&orderLaterPay)
-
-	fmt.Println(orderLaterPay.OrderNumber)
-
-	return c.Status(http.StatusOK).JSON(map[string]string{
-		"status":  "success",
-		"message": orderLaterPay.OrderNumber + " дугаартай захиалга",
-	})
 
 }
 

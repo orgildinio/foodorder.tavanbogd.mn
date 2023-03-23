@@ -101,7 +101,7 @@ func QPayPaymentCheck(c *fiber.Ctx) error {
 
 func QpayCallBackCheck(invoiceId string) int {
 	request, _ := http.NewRequest("POST", "https://merchant.qpay.mn/v2/auth/token", nil)
-	request.Header.Set("Authorization", "Basic QPayPaymentCheck")
+	request.Header.Set("Authorization", "Basic Rk9PRE9SREVSOnBCeDVYdVZU")
 
 	client := &http.Client{}
 	response, err := client.Do(request)
@@ -119,6 +119,7 @@ func QpayCallBackCheck(invoiceId string) int {
 		"object_type": "INVOICE",
 		"object_id":   invoiceId,
 	}
+
 	jsonValue, _ := json.Marshal(jsonData)
 
 	request, _ = http.NewRequest("POST", "https://merchant.qpay.mn/v2/payment/check", bytes.NewBuffer(jsonValue))
@@ -136,17 +137,26 @@ func QpayCallBackCheck(invoiceId string) int {
 }
 
 func QPayCallBack(c *fiber.Ctx) error {
+	//orderUser := agentUtils.AuthUserObject(c)
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
 
 	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
-		//Odoo hiij bgaa
+
+		//orderStatus := models.OrdersStatus{}
+		//orders := models.ViewOrder{}
+		//
+		//DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&orders)
+		//DB.DB.Where("id = ?", orders.ID).Find(&orderStatus)
+
+		UpdateStatus(checkOrder.ID, "qpay", "success")
+
 		return c.Status(http.StatusOK).JSON("SUCCESS")
 	}
 
-	return c.Status(http.StatusOK).JSON("SUCCESS")
+	return c.Status(http.StatusOK).JSON("FAILED")
 }
 
 func LaterPay(c *fiber.Ctx) error {
@@ -161,7 +171,38 @@ func LaterPay(c *fiber.Ctx) error {
 		return c.Status(http.StatusOK).JSON("Not found active order")
 	}
 
-	UpdateStatus(orderStatus.OrderNumber, "mmk", "success")
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&orders)
 
-	return c.Status(http.StatusOK).JSON("success")
+	orderLaterPay := models.OrderLaterPay{}
+
+	orderLaterPay.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+	orderLaterPay.OrderNumber = orders.OrderNumber
+	orderLaterPay.OrderID = orders.ID
+	orderLaterPay.Qty = orders.OrderQuantity
+	orderLaterPay.Price = orders.Price
+	orderLaterPay.PaymentStatus = GetStringPointer("success")
+
+	oldOrders := models.Orders{}
+
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
+
+	if oldOrders.ID >= 1 {
+
+		UpdateStatus(oldOrders.ID, "mmk", "success")
+
+	} else {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":  "warning",
+			"message": "Идэвхтэй захиалга олдсонгүй",
+		})
+	}
+
+	DB.DB.Create(&orderLaterPay)
+
+	fmt.Println(orderLaterPay.OrderNumber)
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"status":  "success",
+		"message": orderLaterPay.OrderNumber + " дугаартай захиалга амжилттай",
+	})
 }
