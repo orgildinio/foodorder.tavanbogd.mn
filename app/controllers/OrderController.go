@@ -24,6 +24,14 @@ func CreateOrder(c *fiber.Ctx) error {
 	viewOrder := []models.ViewOrder{}
 	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&viewOrder)
 
+	//if len(cartZahialga) == 0 || len(cartMenu) == 0 {
+	//
+	//	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+	//		"status":  "warning",
+	//		"message": "Not Found Carting Items",
+	//	})
+	//}
+
 	if len(viewOrder) >= 1 {
 
 		return c.Status(http.StatusOK).JSON(map[string]interface{}{
@@ -48,6 +56,8 @@ func CreateOrder(c *fiber.Ctx) error {
 		for _, cartZahialgaQty := range cartZahialga {
 			totalQtyZahialga = totalQtyZahialga + cartZahialgaQty.Qty
 			totalPriceZahialge = totalPriceZahialge + cartZahialgaQty.Price
+
+			fmt.Println(cartZahialgaQty.Price)
 		}
 
 		totalQty := totalQtyMenu + totalQtyZahialga
@@ -57,23 +67,24 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.PaymentStatus = GetStringPointer("pending")
 		orders.OrderQuantity = totalQty
 		orders.Price = totalPrice
+		orders.IsSelled = GetStringPointer("olgoogui")
 
 		DB.DB.Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
-			//for i := 1; i <= cartZahialgas.Qty; i++ {
-			orderDetail := models.OrderDetail{}
+			for i := 1; i <= cartZahialgas.Qty; i++ {
+				orderDetail := models.OrderDetail{}
 
-			orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-			orderDetail.OrderID = orders.ID
-			orderDetail.FoodID = cartZahialgas.FoodID
-			orderDetail.KitchenID = cartZahialgas.KitchenID
-			orderDetail.CartID = cartZahialgas.ID
-			orderDetail.Qty = cartZahialgas.Qty
-			orderDetail.Price = cartZahialgas.Price
+				orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+				orderDetail.OrderID = orders.ID
+				orderDetail.FoodID = cartZahialgas.FoodID
+				orderDetail.KitchenID = cartZahialgas.KitchenID
+				orderDetail.CartID = cartZahialgas.ID
+				orderDetail.Qty = cartZahialgas.Qty
+				orderDetail.Price = cartZahialgas.Price
 
-			DB.DB.Create(&orderDetail)
-			//}
+				DB.DB.Create(&orderDetail)
+			}
 
 			zahialgatData := models.CartZahialgat{}
 			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&zahialgatData)
@@ -142,10 +153,10 @@ func CancelOrder(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateStatus(OrderID int, PaymentType string, PaymentStatus string) {
+func UpdateStatus(UserID interface{}, OrderID int, PaymentType string, PaymentStatus string) {
 
 	editOrder := models.Orders{}
-	DB.DB.Where("id = ?", OrderID).Find(&editOrder)
+	DB.DB.Where("id = ? AND user_id = ?", OrderID, UserID).Find(&editOrder)
 
 	if OrderID > 0 {
 
@@ -157,17 +168,17 @@ func UpdateStatus(OrderID int, PaymentType string, PaymentStatus string) {
 
 		DB.DB.Save(&editOrder)
 
-		UpdateBalance(OrderID)
+		UpdateBalance(UserID, OrderID)
 	} else {
 		panic("Not found order")
 	}
 
 }
 
-func UpdateBalance(OrderID int) {
+func UpdateBalance(UserID interface{}, OrderID int) {
 
 	var orderDetails []models.OrderDetail
-	DB.DB.Where("order_id = ?", OrderID).Find(&orderDetails)
+	DB.DB.Where("user_id = ? AND order_id = ?", UserID, OrderID).Find(&orderDetails)
 
 	if OrderID > 0 {
 
@@ -183,6 +194,34 @@ func UpdateBalance(OrderID int) {
 		panic("Not found Order ID")
 	}
 
+}
+
+func RecepcionRequest(c *fiber.Ctx) error {
+	receptionRequestData := models.ReceptionRequestData{}
+	err := c.BodyParser(&receptionRequestData)
+	if err != nil {
+		fmt.Println(err.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
+
+	order := models.Orders{}
+	DB.DB.Where("id = ? AND is_selled = 'olgoogui'", receptionRequestData.ID).Find(&order)
+
+	if order.ID == 0 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "Order not found",
+		})
+	}
+
+	order.IsSelled = receptionRequestData.PaymentStatus
+
+	DB.DB.Save(&order)
+
+	return c.Status(http.StatusOK).JSON(map[string]interface{}{
+		"status":  "success",
+		"message": "Хоол хүлээлгэн өгсөн",
+	})
 }
 
 func GetIntegerPointer(value int) int {

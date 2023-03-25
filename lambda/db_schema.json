@@ -96,6 +96,7 @@
   "view_material",
   "view_order",
   "view_order_detail",
+  "view_order_detail_success",
   "view_order_rule",
   "view_orders_bagts",
   "view_orders_zahialgat",
@@ -103,6 +104,7 @@
   "view_set_food_sub_menu",
   "view_set_food_sub_menu_foods",
   "view_sub_kitchen_branches",
+  "view_success_order",
   "view_tbl_menu_gt_neg",
   "view_user",
   "view_zahialgat_hool",
@@ -1058,6 +1060,16 @@
     "model": "qty",
     "title": "qty",
     "dbType": "int4",
+    "table": "cart_menu",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitchen_id",
+    "title": "kitchen_id",
+    "dbType": "int2",
     "table": "cart_menu",
     "key": "",
     "extra": "",
@@ -3416,6 +3428,16 @@
     "model": "payment_status",
     "title": "payment_status",
     "dbType": "varchar",
+    "table": "order_later_pay",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitchen_id",
+    "title": "kitchen_id",
+    "dbType": "int4",
     "table": "order_later_pay",
     "key": "",
     "extra": "",
@@ -7285,16 +7307,6 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
-    "dbType": "numeric",
-    "table": "view_food_balance",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "created_at",
     "title": "created_at",
     "dbType": "timestamp",
@@ -7368,6 +7380,16 @@
     "model": "food_type",
     "title": "food_type",
     "dbType": "varchar",
+    "table": "view_food_balance",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "quantity",
+    "title": "quantity",
+    "dbType": "int4",
     "table": "view_food_balance",
     "key": "",
     "extra": "",
@@ -8379,6 +8401,198 @@
     "scale": ""
    }
   ],
+  "view_order_detail_success": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cart_id",
+    "title": "cart_id",
+    "dbType": "int8",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_id",
+    "title": "food_id",
+    "dbType": "int8",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitchen_id",
+    "title": "kitchen_id",
+    "dbType": "int8",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_id",
+    "title": "order_id",
+    "dbType": "int8",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int2",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "menu_id",
+    "title": "menu_id",
+    "dbType": "int2",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitcken_name",
+    "title": "kitcken_name",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_name",
+    "title": "set_name",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_status",
+    "title": "payment_status",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_type",
+    "title": "payment_type",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "success_time",
+    "title": "success_time",
+    "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "view_order_rule": [
    {
     "model": "order_rule_id",
@@ -9093,6 +9307,208 @@
     "scale": ""
    }
   ],
+  "view_success_order": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "cart_id",
+    "title": "cart_id",
+    "dbType": "int8",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamp",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamp",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "invoice_id",
+    "title": "invoice_id",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_status",
+    "title": "payment_status",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "payment_type",
+    "title": "payment_type",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_quantity",
+    "title": "order_quantity",
+    "dbType": "int4",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_type",
+    "title": "order_type",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitchen_id",
+    "title": "kitchen_id",
+    "dbType": "int2",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "org_register_number",
+    "title": "org_register_number",
+    "dbType": "int2",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "success_time",
+    "title": "success_time",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "first_name",
+    "title": "first_name",
+    "dbType": "text",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "last_name",
+    "title": "last_name",
+    "dbType": "text",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "kitcken_name",
+    "title": "kitcken_name",
+    "dbType": "varchar",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
+    "table": "view_success_order",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "view_tbl_menu_gt_neg": [
    {
     "model": "order_rule_id",
@@ -9499,16 +9915,6 @@
     "scale": ""
    },
    {
-    "model": "qty",
-    "title": "qty",
-    "dbType": "numeric",
-    "table": "view_zahialgat_hool",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "created_at",
     "title": "created_at",
     "dbType": "timestamp",
@@ -9549,18 +9955,8 @@
     "scale": ";scale:2"
    },
    {
-    "model": "quantity",
-    "title": "quantity",
-    "dbType": "int4",
-    "table": "view_zahialgat_hool",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "food_une",
-    "title": "food_une",
+    "model": "qty",
+    "title": "qty",
     "dbType": "int4",
     "table": "view_zahialgat_hool",
     "key": "",

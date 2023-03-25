@@ -137,7 +137,8 @@ func QpayCallBackCheck(invoiceId string) int {
 }
 
 func QPayCallBack(c *fiber.Ctx) error {
-	//orderUser := agentUtils.AuthUserObject(c)
+	orderUser := agentUtils.AuthUserObject(c)
+	UserID := orderUser["id"]
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
@@ -145,13 +146,7 @@ func QPayCallBack(c *fiber.Ctx) error {
 
 	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
 
-		//orderStatus := models.OrdersStatus{}
-		//orders := models.ViewOrder{}
-		//
-		//DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&orders)
-		//DB.DB.Where("id = ?", orders.ID).Find(&orderStatus)
-
-		UpdateStatus(checkOrder.ID, "qpay", "success")
+		UpdateStatus(UserID, checkOrder.ID, "qpay", "success")
 
 		return c.Status(http.StatusOK).JSON("SUCCESS")
 	}
@@ -188,7 +183,7 @@ func LaterPay(c *fiber.Ctx) error {
 
 	if oldOrders.ID >= 1 {
 
-		UpdateStatus(oldOrders.ID, "mmk", "success")
+		UpdateStatus(orderUser["id"], oldOrders.ID, "mmk", "success")
 
 	} else {
 		return c.Status(http.StatusOK).JSON(map[string]string{
@@ -198,8 +193,6 @@ func LaterPay(c *fiber.Ctx) error {
 	}
 
 	DB.DB.Create(&orderLaterPay)
-
-	fmt.Println(orderLaterPay.OrderNumber)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",

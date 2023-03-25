@@ -41,6 +41,9 @@ func Api(e *fiber.App) {
 	//Latest Payment
 	a.Get("/payment/latest-payment", agentMW.IsLoggedIn(), controllers.LaterPay)
 
+	//Reception
+	a.Post("/reception", agentMW.IsLoggedIn(), controllers.RecepcionRequest)
+
 	//CART bagts hool
 	/* NOT USED */
 	//a.Post("/cart/add-set", agentMW.IsLoggedIn(), controllers.AddCartSet)

@@ -40,6 +40,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "86":
 		return form.FoodOrder86Dataform()
 
+	case "281":
+		return form.FoodBalance281Dataform()
+
 	case "82":
 		return form.FoodOrder82Dataform()
 
@@ -73,6 +76,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "102":
 		return form.FoodOrderInBasket102Dataform()
 
+	case "292":
+		return form.LutPacketPrice292Dataform()
+
 	case "17":
 		return form.Users17Dataform()
 
@@ -93,6 +99,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 
 	case "114":
 		return form.Users114Dataform()
+
+	case "279":
+		return form.FoodBalance279Dataform()
 
 	case "236":
 		return form.SubMenuGtNeg236Dataform()
@@ -127,6 +136,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "265":
 		return form.LutPacketPrice265Dataform()
 
+	case "283":
+		return form.Orders283Dataform()
+
 	case "63":
 		return form.LutKitchenType63Dataform()
 
@@ -150,6 +162,12 @@ func GetMODEL(schema_id string) dataform.Dataform {
 
 	case "229":
 		return form.TblMenuGtNeg229Dataform()
+
+	case "286":
+		return form.Orders286Dataform()
+
+	case "288":
+		return form.Orders288Dataform()
 
 	}
 	return dataform.Dataform{}

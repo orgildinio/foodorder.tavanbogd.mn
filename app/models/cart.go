@@ -15,7 +15,7 @@ type CartZahialgat struct {
 	KitchenID *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
 	MenuID    int        `gorm:"column:menu_id" json:"menu_id"`
 	Ognoo     *time.Time `gorm:"column:ognoo" json:"ognoo"`
-	Price     *int       `gorm:"column:price" json:"price"`
+	Price     int        `gorm:"column:price" json:"price"`
 	Qty       int        `gorm:"column:qty" json:"qty"`
 	UpdatedAt *time.Time `gorm:"column:updated_at" json:"updated_at"`
 	UserID    int        `gorm:"column:user_id" json:"user_id"`

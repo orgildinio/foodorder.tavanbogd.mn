@@ -9,6 +9,7 @@ type Orders struct {
 	CreatedAt         *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt         gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	ID                int            `gorm:"column:id" json:"id"`
+	IsSelled          string         `gorm:"column:is_selled" json:"is_selled"`
 	InvoiceID         string         `gorm:"column:invoice_id" json:"invoice_id"`
 	OrderQuantity     int            `gorm:"column:order_quantity" json:"order_quantity"`
 	PaymentType       string         `gorm:"column:payment_type" json:"payment_type"`
@@ -52,9 +53,10 @@ func (o *OrderDetail) TableName() string {
 }
 
 type OrdersStatus struct {
-	ID            int    `gorm:"column:id" json:"id"`
-	PaymentStatus string `gorm:"column:payment_status" json:"payment_status"`
-	OrderNumber   string `gorm:"column:order_number" json:"order_number"`
+	ID            int            `gorm:"column:id" json:"id"`
+	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	PaymentStatus string         `gorm:"column:payment_status" json:"payment_status"`
+	OrderNumber   string         `gorm:"column:order_number" json:"order_number"`
 }
 
 func (o *OrdersStatus) TableName() string {
@@ -80,4 +82,10 @@ type ViewOrder struct {
 
 func (v *ViewOrder) TableName() string {
 	return "view_order"
+}
+
+type ReceptionRequestData struct {
+	ID            *int   `json:"id"`
+	UserID        *int   `json:"user_id"`
+	PaymentStatus string `json:"payment_status"`
 }

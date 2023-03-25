@@ -26,11 +26,21 @@ func AddToCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
+	foodBalance := models.FoodBalance{}
+	DB.DB.Where("food_id = ?", cartFood.FoodID).Find(&foodBalance)
+
+	fmt.Println("=====================>")
+	fmt.Println("=====================>", foodBalance.FoodPrice)
+	fmt.Println("=====================>")
+
+	foodPrice := int(foodBalance.FoodPrice)
+
+	totalPrice := foodPrice * cartFood.Qty
+
 	cart.UserID = int(cartUser["id"].(int64))
 	cart.FoodID = cartFood.FoodID
+	cart.Price = totalPrice
 	cart.Qty = cartFood.Qty
-
-	fmt.Println(cartFood.Qty)
 
 	checkCart := models.ViewCartZahialga{}
 	DB.DB.Where("food_id = ? AND user_id = ? AND age(now(), created_at) < '30 minute'", checkCart.FoodID, cart.UserID).Find(&checkCart)
