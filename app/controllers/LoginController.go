@@ -77,7 +77,6 @@ type LoginRes struct {
 }
 
 func Login(c *fiber.Ctx) error {
-	fmt.Println("ERP LOGIN ========")
 	u := new(User)
 	if err := c.BodyParser(u); err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(models.Unauthorized{
@@ -278,9 +277,9 @@ func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
 	str := Loging
 	splited := strings.Split(str, `\`)
 
-	fmt.Println(Loging)
-	fmt.Println(Password)
-	fmt.Println(splited)
+	//fmt.Println(Loging)
+	//fmt.Println(Password)
+	//fmt.Println(splited)
 
 	if len(splited) >= 2 {
 
@@ -352,7 +351,7 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 	}
 	//fmt.Println(splited[1])
 	//fmt.Println(string(uDec))
-	fmt.Println(payload.EmpID)
+	//fmt.Println(payload.EmpID)
 
 	url := "http://202.21.112.3:8082/api/hrms/hr/employee/get?EmployeeID=" + payload.EmpID
 	fmt.Println(url)
@@ -376,9 +375,9 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 
 	} else {
 
-		fmt.Println(len(userInfo.Retdata))
-		fmt.Println(len(userInfo.Retdata))
-		fmt.Println(len(userInfo.Retdata))
+		//fmt.Println(len(userInfo.Retdata))
+		//fmt.Println(len(userInfo.Retdata))
+		//fmt.Println(len(userInfo.Retdata))
 		if len(userInfo.Retdata) >= 1 {
 
 			return erpKhorooByToken(c, userInfo, true)
@@ -420,6 +419,10 @@ func erpKhorooByToken(c *fiber.Ctx, userInfo appModel.UserInfo, isKhoroo bool) e
 			Status:         "1",
 			Gender:         "m",
 			EmpID:          int(userInfo.Retdata[0].Empid),
+			CompanyID:      userInfo.Retdata[0].Companyid,
+			CompanyName:    userInfo.Retdata[0].Companyname,
+			PosName:        userInfo.Retdata[0].Posname,
+			DepName:        userInfo.Retdata[0].Depname,
 		}
 
 		DB.DB.Create(&newUser)

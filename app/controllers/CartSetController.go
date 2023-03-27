@@ -6,6 +6,7 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
+	"log"
 	"net/http"
 )
 
@@ -46,6 +47,11 @@ func AddToCartSet(c *fiber.Ctx) error {
 		})
 	}
 
+	packePrice := models.LutPacketPrice{}
+	DB.DB.Find(&packePrice)
+
+	totalPrice := int(packePrice.PacketPrice) * setHoolTooCartRequestData.Qty
+
 	//1 save set hool
 	//setHoolTooCartRequestData.MenuID
 
@@ -53,6 +59,7 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.OrderRuleID = setHoolTooCartRequestData.OrderRuleID
 	orderSet.Qty = setHoolTooCartRequestData.Qty
 	orderSet.KitchenID = setHoolTooCartRequestData.KitchenID
+	orderSet.PacketPrice = totalPrice
 
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
@@ -62,7 +69,10 @@ func AddToCartSet(c *fiber.Ctx) error {
 		})
 	}
 
+	log.Println("HEEEEEEELLLLLOOOO")
+
 	DB.DB.Debug().Create(&orderSet)
+	log.Println("WOOOOOORRRRRLLLLLD ")
 
 	//2 save set subs
 	for _, subMenuData := range setHoolTooCartRequestData.Items {
@@ -78,20 +88,6 @@ func AddToCartSet(c *fiber.Ctx) error {
 
 			cartSubMenuFood.FoodID = subMenuFoodData.FoodID
 			cartSubMenuFood.SubMenuID = cartSubMenu.ID
-
-			//balance := models.FoodBalance{}
-			//DB.DB.Where("food_id = ? AND kitchen_id = ?", subMenuFoodData.FoodID, setHoolTooCartRequestData.KitchenID).Find(&balance)
-			//
-			//if *balance.Quantity == 0 {
-			//	return c.Status(http.StatusOK).JSON(map[string]interface{}{
-			//		"status":  "warning",
-			//		"message": "Хоолны үлдэгдэл хүрэглцэхгүй байна ",
-			//	})
-			//}
-
-			//*balance.Quantity = *balance.Quantity - setHoolTooCartRequestData.Qty
-			//
-			//DB.DB.Save(&balance)
 
 			DB.DB.Create(&cartSubMenuFood)
 
@@ -117,11 +113,10 @@ func EditCartItem(c *fiber.Ctx) error {
 	}
 
 	cartUser := agentUtils.AuthUserObject(c)
-	cartMenu.UserID = int(cartUser["id"].(int64))
 
 	editCart := models.CartMenu{}
 
-	DB.DB.Where("id = ? AND user_id = ?", cartMenu.ID, cartMenu.UserID).Find(&editCart)
+	DB.DB.Where("id = ? AND user_id = ?", cartMenu.ID, cartUser["id"]).Find(&editCart)
 
 	if editCart.ID == 0 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
@@ -138,9 +133,18 @@ func EditCartItem(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
-	editCart.Qty = editCart.Qty + setHoolTooCartRequestData.Qty
+	packePrice := models.LutPacketPrice{}
+	DB.DB.Find(&packePrice)
 
-	if setHoolTooCartRequestData.Qty > 5 {
+	editCart.Qty = editCart.Qty + setHoolTooCartRequestData.Qty
+	totalPrice := int(packePrice.PacketPrice) * editCart.Qty
+	editCart.PacketPrice = totalPrice
+
+	if 1 > editCart.Qty {
+		return nil
+	}
+
+	if editCart.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",

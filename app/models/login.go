@@ -159,10 +159,14 @@ type UserERP struct {
 	//OrgId          string     `gorm:"column:org_id" json:"org_id"`
 	//UnitId         string     `gorm:"column:unit_id" json:"unit_id"`
 	//PositionId     string     `gorm:"column:position_id" json:"position_id"`
-	Gender   string `gorm:"column:gender;type:ENUM('f','m')" json:"gender"`
-	Password string `gorm:"column:password" json:"password"`
-	FcmToken string `gorm:"column:fcm_token" json:"fcm_token"`
-	EmpID    int    `gorm:"column:emp_id" json:"emp_id"`
+	Gender      string `gorm:"column:gender;type:ENUM('f','m')" json:"gender"`
+	Password    string `gorm:"column:password" json:"password"`
+	FcmToken    string `gorm:"column:fcm_token" json:"fcm_token"`
+	EmpID       int    `gorm:"column:emp_id" json:"emp_id"`
+	CompanyID   string `gorm:"column:company_id" json:"company_id"`
+	CompanyName string `gorm:"column:company_name" json:"company_name"`
+	PosName     string `gorm:"column:pos_name" json:"pos_name"`
+	DepName     string `gorm:"column:dep_name" json:"dep_name"`
 }
 
 // TableName sets the insert table name for this struct type

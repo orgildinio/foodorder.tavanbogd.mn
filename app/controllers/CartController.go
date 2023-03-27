@@ -26,15 +26,26 @@ func AddToCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON("server error")
 	}
 
-	foodBalance := models.FoodBalance{}
-	DB.DB.Where("food_id = ?", cartFood.FoodID).Find(&foodBalance)
+	foodBalance := models.ViewFoodBalance{}
+	DB.DB.Where("food_id = ? AND kitchen_id = ?", cartFood.FoodID, cart.KitchenID).Find(&foodBalance)
 
-	fmt.Println("=====================>")
-	fmt.Println("=====================>", foodBalance.FoodPrice)
-	fmt.Println("=====================>")
+	if foodBalance.Quantity < cartFood.Qty {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
+		})
+	}
+
+	if 1 > cartFood.Qty {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "1ээс багагүй",
+		})
+	}
 
 	foodPrice := int(foodBalance.FoodPrice)
-
 	totalPrice := foodPrice * cartFood.Qty
 
 	cart.UserID = int(cartUser["id"].(int64))
@@ -61,7 +72,7 @@ func AddToCart(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
 		"message": "Сонгосон хоол сагсан нэмэгдлээ",
-		"cart_id": *cartZahialga.ID,
+		"cart_id": cartZahialga.ID,
 	})
 
 }
@@ -86,19 +97,37 @@ func UpdateCart(c *fiber.Ctx) error {
 		})
 	}
 
-	editCart.Qty = editCart.Qty + cartReqData.Qty
+	foodBalance := models.ViewFoodBalance{}
+	DB.DB.Where("food_id = ? AND kitchen_id = ?", editCart.FoodID, editCart.KitchenID).Find(&foodBalance)
 
-	if cartReqData.Qty > 5 {
+	editCart.Qty = editCart.Qty + cartReqData.Qty
+	editCart.Price = int(foodBalance.FoodPrice) * editCart.Qty
+
+	if foodBalance.Quantity < editCart.Qty {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",
-			"message":   "5 аас ихгүй сонгоно уу",
+			"message":   "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
 		})
 	}
 
-	DB.DB.Debug().Save(&editCart)
+	if 1 > editCart.Qty {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "1 - с багагүй байна",
+		})
+	}
 
-	fmt.Println(editCart.Qty)
+	if 5 < editCart.Qty {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":    "warning",
+			"status_mn": "Анхааруулга",
+			"message":   "5 - аас ихгүй сонгоно уу",
+		})
+	}
+
+	DB.DB.Save(&editCart)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",

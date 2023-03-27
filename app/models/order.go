@@ -35,7 +35,7 @@ type OrderRequest struct {
 }
 
 type OrderDetail struct {
-	CartID    *int       `gorm:"column:cart_id" json:"cart_id"`
+	CartID    int        `gorm:"column:cart_id" json:"cart_id"`
 	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
 	FoodID    int        `gorm:"column:food_id" json:"food_id"`
 	ID        int        `gorm:"column:id" json:"id"`
@@ -88,4 +88,13 @@ type ReceptionRequestData struct {
 	ID            *int   `json:"id"`
 	UserID        *int   `json:"user_id"`
 	PaymentStatus string `json:"payment_status"`
+}
+
+type LutPacketPrice struct {
+	ID          int     `gorm:"column:id" json:"id"`
+	PacketPrice float32 `gorm:"column:packet_price" json:"packet_price"`
+}
+
+func (l *LutPacketPrice) TableName() string {
+	return "lut_packet_price"
 }

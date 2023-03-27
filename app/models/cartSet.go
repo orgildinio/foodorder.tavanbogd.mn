@@ -7,7 +7,7 @@ import (
 
 type CartMenu struct {
 	CancelledAt *time.Time `gorm:"column:cancelled_at" json:"cancelled_at"`
-	CartID      *int       `gorm:"column:cart_id" json:"cart_id"`
+	CartID      int        `gorm:"column:cart_id" json:"cart_id"`
 	CreatedAt   *time.Time `gorm:"column:created_at" json:"created_at"`
 	//DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	ID          int        `gorm:"column:id" json:"id"`
@@ -20,6 +20,7 @@ type CartMenu struct {
 	UpdatedAt   *time.Time `gorm:"column:updated_at" json:"updated_at"`
 	UserID      int        `gorm:"column:user_id" json:"user_id"`
 	KitchenID   int        `gorm:"column:kitchen_id" json:"kitchen_id"`
+	PacketPrice int        `gorm:"column:packet_price" json:"packet_price"`
 }
 
 func (c *CartMenu) TableName() string {
@@ -86,7 +87,7 @@ func (c *CartMenuCheck) TableName() string {
 
 type ViewCartMenu struct {
 	FoodOrderTimeName *string    `gorm:"column:food_order_time_name" json:"food_order_time_name"`
-	ID                *int       `gorm:"column:id" json:"id"`
+	ID                int        `gorm:"column:id" json:"id"`
 	MenuID            int        `gorm:"column:menu_id" json:"menu_id"`
 	MorningOrderEnd   *string    `gorm:"column:morning_order_end" json:"morning_order_end"`
 	MorningOrderStart *string    `gorm:"column:morning_order_start" json:"morning_order_start"`
@@ -139,4 +140,23 @@ type ViewCartSubMenuFood struct {
 
 func (v *ViewCartSubMenuFood) TableName() string {
 	return "view_cart_sub_menu_food"
+}
+
+type ViewFoodBalance struct {
+	CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	FoodID      *int           `gorm:"column:food_id" json:"food_id"`
+	FoodName    *string        `gorm:"column:food_name" json:"food_name"`
+	FoodPrice   float32        `gorm:"column:food_price" json:"food_price"`
+	FoodType    *string        `gorm:"column:food_type" json:"food_type"`
+	FoodTypeID  *int           `gorm:"column:food_type_id" json:"food_type_id"`
+	ID          *int           `gorm:"column:id" json:"id"`
+	KitchenID   *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
+	KitckenName *string        `gorm:"column:kitcken_name" json:"kitcken_name"`
+	Quantity    int            `gorm:"column:quantity" json:"quantity"`
+	UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+}
+
+func (v *ViewFoodBalance) TableName() string {
+	return "view_food_balance"
 }

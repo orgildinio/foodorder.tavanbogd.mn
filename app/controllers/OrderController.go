@@ -12,35 +12,28 @@ import (
 
 func CreateOrder(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
-
 	orders := models.Orders{}
+
+	cartMenus := []models.CartMenu{}
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenus)
 
 	var cartZahialga []models.ViewCartZahialga
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartZahialga)
 
-	var cartMenu []models.ViewCartMenu
-	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenu)
-
-	viewOrder := []models.ViewOrder{}
+	var viewOrder []models.ViewOrder
 	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&viewOrder)
 
-	//if len(cartZahialga) == 0 || len(cartMenu) == 0 {
-	//
-	//	return c.Status(http.StatusOK).JSON(map[string]interface{}{
-	//		"status":  "warning",
-	//		"message": "Not Found Carting Items",
-	//	})
-	//}
+	packetPrice := models.LutPacketPrice{}
+	DB.DB.Find(&packetPrice)
 
 	if len(viewOrder) >= 1 {
-
 		return c.Status(http.StatusOK).JSON(map[string]interface{}{
 			"status":  "warning",
 			"message": "Таньд идэвхтэй захиалга байна",
 		})
 	}
 
-	if len(cartMenu) >= 1 || len(cartZahialga) >= 1 {
+	if len(cartMenus) >= 1 || len(cartZahialga) >= 1 {
 
 		totalQtyMenu := 0
 		totalQtyZahialga := 0
@@ -48,16 +41,14 @@ func CreateOrder(c *fiber.Ctx) error {
 		totalPriceMenu := 0
 		totalPriceZahialge := 0
 
-		for _, cartMenuQty := range cartMenu {
-			totalQtyMenu = totalQtyMenu + cartMenuQty.Qty
-			totalPriceMenu = totalPriceMenu + int(cartMenuQty.PacketPrice)
-		}
-
 		for _, cartZahialgaQty := range cartZahialga {
 			totalQtyZahialga = totalQtyZahialga + cartZahialgaQty.Qty
 			totalPriceZahialge = totalPriceZahialge + cartZahialgaQty.Price
+		}
 
-			fmt.Println(cartZahialgaQty.Price)
+		for _, cartMenu := range cartMenus {
+			totalQtyMenu = totalQtyMenu + cartMenu.Qty
+			totalPriceMenu = totalPriceMenu + cartMenu.PacketPrice
 		}
 
 		totalQty := totalQtyMenu + totalQtyZahialga
@@ -68,11 +59,13 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.OrderQuantity = totalQty
 		orders.Price = totalPrice
 		orders.IsSelled = GetStringPointer("olgoogui")
-
 		DB.DB.Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
 			for i := 1; i <= cartZahialgas.Qty; i++ {
+				foodBalance := models.FoodBalance{}
+				DB.DB.Where("food_id = ? AND kitchen_id = ?", cartZahialgas.FoodID, cartZahialgas.KitchenID).Find(&foodBalance)
+
 				orderDetail := models.OrderDetail{}
 
 				orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
@@ -80,10 +73,19 @@ func CreateOrder(c *fiber.Ctx) error {
 				orderDetail.FoodID = cartZahialgas.FoodID
 				orderDetail.KitchenID = cartZahialgas.KitchenID
 				orderDetail.CartID = cartZahialgas.ID
-				orderDetail.Qty = cartZahialgas.Qty
-				orderDetail.Price = cartZahialgas.Price
+				orderDetail.Qty = GetIntegerPointer(1)
+				orderDetail.Price = int(foodBalance.FoodPrice)
+
+				if foodBalance.Quantity < orderDetail.Qty {
+					return c.Status(http.StatusOK).JSON(map[string]string{
+						"status":    "warning",
+						"status_mn": "Анхааруулга",
+						"message":   "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
+					})
+				}
 
 				DB.DB.Create(&orderDetail)
+
 			}
 
 			zahialgatData := models.CartZahialgat{}
@@ -91,25 +93,42 @@ func CreateOrder(c *fiber.Ctx) error {
 			DB.DB.Delete(zahialgatData)
 		}
 
-		for _, cartMenus := range cartMenu {
-			//for j := 1; j <= cartMenus.Qty; j++ {
-			orderDetail := models.OrderDetail{}
+		for _, cartMenu := range cartMenus {
 
-			orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-			orderDetail.OrderID = orders.ID
-			orderDetail.MenuID = cartMenus.MenuID
-			orderDetail.KitchenID = cartMenus.KitchenID
-			orderDetail.Qty = cartMenus.Qty
-			orderDetail.Price = int(cartMenus.PacketPrice)
-			orderDetail.CartID = cartMenus.ID
+			var cartSubMenus []models.CartSubMenu
+			DB.DB.Where("menu_id = ?", cartMenu.ID).Find(&cartSubMenus)
 
-			DB.DB.Create(&orderDetail)
-			//}
+			for _, cartSubMenu := range cartSubMenus {
+				var cartSubMenuFoods []models.CartSubMenuFood
+				DB.DB.Where("sub_menu_id = ?", cartSubMenu.ID).Find(&cartSubMenuFoods)
 
-			cartBagts := models.CartMenu{}
-			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartBagts)
-			DB.DB.Delete(&cartBagts)
+				for _, cartSubMenuFood := range cartSubMenuFoods {
+					for i := 1; i <= cartMenu.Qty; i++ {
+
+						foodBalance := models.FoodBalance{}
+						DB.DB.Where("food_id = ? AND kitchen_id = ?", cartSubMenuFood.FoodID, cartMenu.KitchenID).Find(&foodBalance)
+
+					}
+				}
+			}
+			for i := 1; i <= cartMenu.Qty; i++ {
+				orderDetail := models.OrderDetail{}
+
+				orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+				orderDetail.OrderID = orders.ID
+				orderDetail.MenuID = cartMenu.MenuID
+				orderDetail.Qty = GetIntegerPointer(1)
+				orderDetail.Price = int(packetPrice.PacketPrice)
+				orderDetail.KitchenID = cartMenu.KitchenID
+				orderDetail.CartID = cartMenu.CartID
+
+				DB.DB.Save(&orderDetail)
+			}
+
 		}
+
+		cartBagts := models.CartMenu{}
+		DB.DB.Debug().Where("user_id = ?", orderUser["id"]).Order("id DESC").Delete(&cartBagts)
 
 	}
 
@@ -125,7 +144,6 @@ func CreateOrder(c *fiber.Ctx) error {
 }
 
 func CancelOrder(c *fiber.Ctx) error {
-	order := new(models.OrdersStatus)
 
 	orderCancelReq := models.OrderRequest{}
 	errReq := c.BodyParser(&orderCancelReq)
@@ -136,63 +154,46 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	orderUser := agentUtils.AuthUserObject(c)
 
-	DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Find(&order)
-
-	if order.ID == 0 {
-		return c.Status(http.StatusOK).JSON(map[string]interface{}{
-			"status":  "warning",
-			"message": "Not found order",
-		})
-	}
-
-	DB.DB.Delete(&order)
+	DB.DB.Model(models.OrdersStatus{}).Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Update("payment_status", "canceled")
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": order.OrderNumber + " дугаартай захиалга цуцлгадлаа",
+		"message": " Захиалга цуцлгадлаа",
 	})
 }
 
-func UpdateStatus(UserID interface{}, OrderID int, PaymentType string, PaymentStatus string) {
+func DeleteOrder() {
+	var orders []models.Orders
+	DB.DB.Debug().Where("age(created_at) < '15 minute' AND payment_status = 'pending'").Find(&orders)
 
-	editOrder := models.Orders{}
-	DB.DB.Where("id = ? AND user_id = ?", OrderID, UserID).Find(&editOrder)
-
-	if OrderID > 0 {
-
-		now := time.Now()
-
-		editOrder.PaymentStatus = PaymentStatus
-		editOrder.PaymentType = PaymentType
-		editOrder.SuccessTime = now.Format("2006-02-01 15:04:05")
-
-		DB.DB.Save(&editOrder)
-
-		UpdateBalance(UserID, OrderID)
-	} else {
-		panic("Not found order")
+	for _, order := range orders {
+		DB.DB.Debug().Delete(&order)
 	}
 
 }
 
-func UpdateBalance(UserID interface{}, OrderID int) {
+func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentStatus string) {
 
-	var orderDetails []models.OrderDetail
-	DB.DB.Where("user_id = ? AND order_id = ?", UserID, OrderID).Find(&orderDetails)
+	editOrder := models.Orders{}
+	DB.DB.Debug().Where("id = ? AND order_number = ?", OrderID, OrderNumber).Find(&editOrder)
 
-	if OrderID > 0 {
+	now := time.Now()
 
-		for _, items := range orderDetails {
-			foodBalance := models.FoodBalance{}
-			DB.DB.Where("food_id = ? AND kitchen_id = ?", items.FoodID, items.KitchenID).Find(&foodBalance)
+	editOrder.PaymentStatus = PaymentStatus
+	editOrder.PaymentType = PaymentType
+	editOrder.SuccessTime = now.Format("2006-02-01 15:04:05")
 
-			foodBalance.Quantity = foodBalance.Quantity - items.Qty
+	//DB.DB.Debug().Save(&editOrder)
 
-			DB.DB.Save(&foodBalance)
-		}
-	} else {
-		panic("Not found Order ID")
-	}
+}
+
+func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
+	foodBalance := models.FoodBalance{}
+	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
+
+	foodBalance.Quantity = foodBalance.Quantity - Quantity
+
+	DB.DB.Save(foodBalance)
 
 }
 

@@ -104,7 +104,7 @@ type ViewCartZahialga struct {
 	FoodIngredients *string    `gorm:"column:food_ingredients" json:"food_ingredients"`
 	FoodName        *string    `gorm:"column:food_name" json:"food_name"`
 	FoodPrice       *float32   `gorm:"column:food_price" json:"food_price"`
-	ID              *int       `gorm:"column:id" json:"id"`
+	ID              int        `gorm:"column:id" json:"id"`
 	KitchenID       int        `gorm:"column:kitchen_id" json:"kitchen_id"`
 	KitchenImage    *string    `gorm:"column:kitchen_image" json:"kitchen_image"`
 	KitckenName     *string    `gorm:"column:kitcken_name" json:"kitcken_name"`
