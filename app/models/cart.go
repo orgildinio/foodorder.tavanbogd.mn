@@ -9,16 +9,17 @@ import (
 type CartZahialgat struct {
 	CartOrderNumber *string    `gorm:"column:cart_order_number" json:"cart_order_number"`
 	CreatedAt       *time.Time `gorm:"column:created_at" json:"created_at"`
-	//DeletedAt       gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	FoodID    int        `gorm:"column:food_id" json:"food_id"`
-	ID        int        `gorm:"column:id" json:"id"`
-	KitchenID *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
-	MenuID    int        `gorm:"column:menu_id" json:"menu_id"`
-	Ognoo     *time.Time `gorm:"column:ognoo" json:"ognoo"`
-	Price     int        `gorm:"column:price" json:"price"`
-	Qty       int        `gorm:"column:qty" json:"qty"`
-	UpdatedAt *time.Time `gorm:"column:updated_at" json:"updated_at"`
-	UserID    int        `gorm:"column:user_id" json:"user_id"`
+	CompanyID       *int       `gorm:"column:company_id" json:"company_id"`
+	FoodID          int        `gorm:"column:food_id" json:"food_id"`
+	ID              int        `gorm:"column:id" json:"id"`
+	KitchenID       *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
+	MenuID          int        `gorm:"column:menu_id" json:"menu_id"`
+	Ognoo           *time.Time `gorm:"column:ognoo" json:"ognoo"`
+	Price           int        `gorm:"column:price" json:"price"`
+	Qty             int        `gorm:"column:qty" json:"qty"`
+	UpdatedAt       *time.Time `gorm:"column:updated_at" json:"updated_at"`
+	UserID          int        `gorm:"column:user_id" json:"user_id"`
+	IsDelivery      string     `gorm:"column:is_delivery" json:"is_delivery"`
 }
 
 func (c *CartZahialgat) TableName() string {
@@ -122,10 +123,12 @@ func (v *ViewCartZahialga) TableName() string {
 }
 
 type OrderFoodCarting struct {
-	FoodID    int `json:"food_id"`
-	Qty       int `json:"qty"`
-	MenuID    int `json:"menu_id"`
-	FoodPrice int `json:"food_price"`
+	FoodID     int    `json:"food_id"`
+	Qty        int    `json:"qty"`
+	MenuID     int    `json:"menu_id"`
+	FoodPrice  int    `json:"food_price"`
+	IsDelivery string `json:"is_delivery"`
+	CompanyID  *int   `json:"company_id"`
 }
 
 type FoodRequestData struct {

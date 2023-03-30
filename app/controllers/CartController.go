@@ -41,7 +41,7 @@ func AddToCart(c *fiber.Ctx) error {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
 			"status_mn": "Анхааруулга",
-			"message":   "1ээс багагүй",
+			"message":   "1-с багагүй сонгоно уу",
 		})
 	}
 
@@ -52,6 +52,8 @@ func AddToCart(c *fiber.Ctx) error {
 	cart.FoodID = cartFood.FoodID
 	cart.Price = totalPrice
 	cart.Qty = cartFood.Qty
+	cart.IsDelivery = cartFood.IsDelivery
+	cart.CompanyID = cartFood.CompanyID
 
 	checkCart := models.ViewCartZahialga{}
 	DB.DB.Where("food_id = ? AND user_id = ? AND age(now(), created_at) < '30 minute'", checkCart.FoodID, cart.UserID).Find(&checkCart)
@@ -64,7 +66,7 @@ func AddToCart(c *fiber.Ctx) error {
 		})
 	}
 
-	DB.DB.Create(&cart)
+	DB.DB.Debug().Create(&cart)
 
 	cartZahialga := models.ViewCartZahialga{}
 	DB.DB.Order("id DESC").Find(&cartZahialga)

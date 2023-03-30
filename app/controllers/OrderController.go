@@ -6,6 +6,7 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
+	"log"
 	"net/http"
 	"time"
 )
@@ -14,7 +15,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
 	orders := models.Orders{}
 
-	cartMenus := []models.CartMenu{}
+	var cartMenus []models.CartMenu
 	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&cartMenus)
 
 	var cartZahialga []models.ViewCartZahialga
@@ -41,9 +42,13 @@ func CreateOrder(c *fiber.Ctx) error {
 		totalPriceMenu := 0
 		totalPriceZahialge := 0
 
+		cartID := 0
+
 		for _, cartZahialgaQty := range cartZahialga {
 			totalQtyZahialga = totalQtyZahialga + cartZahialgaQty.Qty
 			totalPriceZahialge = totalPriceZahialge + cartZahialgaQty.Price
+			cartID = cartZahialgaQty.ID
+
 		}
 
 		for _, cartMenu := range cartMenus {
@@ -59,7 +64,8 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.OrderQuantity = totalQty
 		orders.Price = totalPrice
 		orders.IsSelled = GetStringPointer("olgoogui")
-		DB.DB.Create(&orders)
+		orders.CartID = cartID
+		DB.DB.Omit("is_delivery").Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
 			for i := 1; i <= cartZahialgas.Qty; i++ {
@@ -75,6 +81,7 @@ func CreateOrder(c *fiber.Ctx) error {
 				orderDetail.CartID = cartZahialgas.ID
 				orderDetail.Qty = GetIntegerPointer(1)
 				orderDetail.Price = int(foodBalance.FoodPrice)
+				orderDetail.OrderType = GetStringPointer("zahialgat")
 
 				if foodBalance.Quantity < orderDetail.Qty {
 					return c.Status(http.StatusOK).JSON(map[string]string{
@@ -104,9 +111,16 @@ func CreateOrder(c *fiber.Ctx) error {
 
 				for _, cartSubMenuFood := range cartSubMenuFoods {
 					for i := 1; i <= cartMenu.Qty; i++ {
+						orderDetailSet := models.OrderDetailSet{}
 
-						foodBalance := models.FoodBalance{}
-						DB.DB.Where("food_id = ? AND kitchen_id = ?", cartSubMenuFood.FoodID, cartMenu.KitchenID).Find(&foodBalance)
+						orderDetailSet.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
+						orderDetailSet.OrderID = orders.ID
+						orderDetailSet.FoodID = cartSubMenuFood.FoodID
+						orderDetailSet.CartID = cartMenu.ID
+						orderDetailSet.KitchenID = cartMenu.KitchenID
+						orderDetailSet.Quantity = GetIntegerPointer(1)
+
+						DB.DB.Create(&orderDetailSet)
 
 					}
 				}
@@ -121,8 +135,9 @@ func CreateOrder(c *fiber.Ctx) error {
 				orderDetail.Price = int(packetPrice.PacketPrice)
 				orderDetail.KitchenID = cartMenu.KitchenID
 				orderDetail.CartID = cartMenu.CartID
+				orderDetail.OrderType = GetStringPointer("bagts")
 
-				DB.DB.Save(&orderDetail)
+				DB.DB.Create(&orderDetail)
 			}
 
 		}
@@ -173,27 +188,23 @@ func DeleteOrder() {
 }
 
 func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentStatus string) {
-
-	editOrder := models.Orders{}
-	DB.DB.Debug().Where("id = ? AND order_number = ?", OrderID, OrderNumber).Find(&editOrder)
-
 	now := time.Now()
+	editOrder := models.Orders{}
 
-	editOrder.PaymentStatus = PaymentStatus
-	editOrder.PaymentType = PaymentType
-	editOrder.SuccessTime = now.Format("2006-02-01 15:04:05")
-
-	//DB.DB.Debug().Save(&editOrder)
+	DB.DB.Debug().Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006/01/02 15:04:05")})
 
 }
 
 func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
+
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
 
-	foodBalance.Quantity = foodBalance.Quantity - Quantity
+	balanceQty := foodBalance.Quantity - Quantity
 
-	DB.DB.Save(foodBalance)
+	log.Println("balanceQty", balanceQty)
+
+	DB.DB.Debug().Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
 
 }
 
@@ -217,7 +228,7 @@ func RecepcionRequest(c *fiber.Ctx) error {
 
 	order.IsSelled = receptionRequestData.PaymentStatus
 
-	DB.DB.Save(&order)
+	DB.DB.Debug().Omit("is_delivery").Save(&order)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",

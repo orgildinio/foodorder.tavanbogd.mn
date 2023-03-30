@@ -6,7 +6,6 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
-	"log"
 	"net/http"
 )
 
@@ -60,6 +59,8 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.Qty = setHoolTooCartRequestData.Qty
 	orderSet.KitchenID = setHoolTooCartRequestData.KitchenID
 	orderSet.PacketPrice = totalPrice
+	orderSet.IsDelivery = setHoolTooCartRequestData.IsDelivery
+	orderSet.CompanyID = setHoolTooCartRequestData.CompanyID
 
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
@@ -69,10 +70,7 @@ func AddToCartSet(c *fiber.Ctx) error {
 		})
 	}
 
-	log.Println("HEEEEEEELLLLLOOOO")
-
-	DB.DB.Debug().Create(&orderSet)
-	log.Println("WOOOOOORRRRRLLLLLD ")
+	DB.DB.Create(&orderSet)
 
 	//2 save set subs
 	for _, subMenuData := range setHoolTooCartRequestData.Items {

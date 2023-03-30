@@ -8,6 +8,7 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
+	"log"
 	"net/http"
 )
 
@@ -53,7 +54,7 @@ func QPayInvoice(c *fiber.Ctx) error {
 	updateOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", qpayRequest.SenderInvoiceNo).First(&updateOrder)
 	updateOrder.InvoiceID = fmt.Sprintf("%s", res["invoice_id"])
-	DB.DB.Save(&updateOrder)
+	DB.DB.Omit("is_delivery").Save(&updateOrder)
 
 	return c.JSON(res)
 }
@@ -138,11 +139,12 @@ func QpayCallBackCheck(invoiceId string) int {
 
 func QPayCallBack(c *fiber.Ctx) error {
 	//orderUser := agentUtils.AuthUserObject(c)
-	//UserID := orderUser["id"]
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
+
+	log.Println(checkOrder.InvoiceID)
 
 	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
 
@@ -150,8 +152,16 @@ func QPayCallBack(c *fiber.Ctx) error {
 
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetails)
+
 		for _, orderDetail := range orderDetails {
 			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+		}
+
+		var orderDetailSets []models.OrderDetailSet
+		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
+
+		for _, orderDetailSet := range orderDetailSets {
+			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
 		return c.Status(http.StatusOK).JSON("SUCCESS")
@@ -189,9 +199,17 @@ func LaterPay(c *fiber.Ctx) error {
 	if oldOrders.ID >= 1 {
 		UpdateStatus(orders.OrderNumber, oldOrders.ID, "mmk", "success")
 		var orderDetails []models.OrderDetail
-		DB.DB.Where("order_id = ?", orders.ID).Find(&orderDetails)
+		DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
+
 		for _, orderDetail := range orderDetails {
 			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+		}
+
+		var orderDetailSets []models.OrderDetailSet
+		DB.DB.Where("order_id = ?", oldOrders.ID).Find(&orderDetailSets)
+
+		for _, orderDetailSet := range orderDetailSets {
+			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
 	} else {

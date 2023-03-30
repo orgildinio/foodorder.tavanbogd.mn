@@ -106,6 +106,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "236":
 		return form.SubMenuGtNeg236Dataform()
 
+	case "300":
+		return form.Users300Dataform()
+
 	case "35":
 		return form.TblOrderRule35Dataform()
 

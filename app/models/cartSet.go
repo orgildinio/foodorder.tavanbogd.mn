@@ -21,6 +21,8 @@ type CartMenu struct {
 	UserID      int        `gorm:"column:user_id" json:"user_id"`
 	KitchenID   int        `gorm:"column:kitchen_id" json:"kitchen_id"`
 	PacketPrice int        `gorm:"column:packet_price" json:"packet_price"`
+	IsDelivery  string     `gorm:"column:is_delivery" json:"is_delivery"`
+	CompanyID   *int       `gorm:"column:company_id" json:"company_id"`
 }
 
 func (c *CartMenu) TableName() string {

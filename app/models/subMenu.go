@@ -135,11 +135,13 @@ func (v *ViewSetFoodSubMenuFoods) TableName() string {
 }
 
 type SetHoolTooCartRequestData struct {
-	ID          int `gorm:"column:id" json:"id"`
-	MenuID      int `json:"menu_id"`
-	OrderRuleID int `json:"order_rule_id"`
-	Qty         int `json:"qty"`
-	KitchenID   int `json:"kitchen_id"`
+	ID          int    `gorm:"column:id" json:"id"`
+	MenuID      int    `json:"menu_id"`
+	OrderRuleID int    `json:"order_rule_id"`
+	Qty         int    `json:"qty"`
+	KitchenID   int    `json:"kitchen_id"`
+	IsDelivery  string `json:"is_delivery"`
+	CompanyID   *int   `json:"company_id"`
 	Items       []struct {
 		MenuID     int `json:"menu_id"`
 		FoodTypeID int `json:"food_type_id"`

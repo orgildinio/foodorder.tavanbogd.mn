@@ -411,7 +411,7 @@ func erpKhorooByToken(c *fiber.Ctx, userInfo appModel.UserInfo, isKhoroo bool) e
 			Login:          userInfo.Retdata[0].Regno,
 			Email:          userInfo.Retdata[0].Email,
 			FirstName:      userInfo.Retdata[0].Firstname,
-			LastName:       userInfo.Retdata[0].Firstname,
+			LastName:       userInfo.Retdata[0].Lastname,
 			Phone:          userInfo.Retdata[0].Mobilephone,
 			RegisterNumber: userInfo.Retdata[0].Regno,
 			Role:           role,

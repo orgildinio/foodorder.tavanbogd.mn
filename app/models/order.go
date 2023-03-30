@@ -22,6 +22,8 @@ type Orders struct {
 	KitchenID         int            `gorm:"column:kitchen_id" json:"kitchen_id"`
 	OrgRegisterNumber *int           `gorm:"column:org_register_number" json:"org_register_number"`
 	SuccessTime       string         `gorm:"column:success_time" json:"success_time"`
+	IsDelivery        *string        `gorm:"column:is_delivery" json:"is_delivery"`
+	CompanyID         *int           `gorm:"column:company_id" json:"company_id"`
 }
 
 func (o *Orders) TableName() string {
@@ -46,6 +48,7 @@ type OrderDetail struct {
 	OrderID   int        `gorm:"column:order_id" json:"order_id"`
 	Qty       int        `gorm:"column:qty" json:"qty"`
 	MenuID    int        `gorm:"column:menu_id" json:"menu_id"`
+	OrderType string     `gorm:"column:order_type" json:"order_type"`
 }
 
 func (o *OrderDetail) TableName() string {
@@ -97,4 +100,18 @@ type LutPacketPrice struct {
 
 func (l *LutPacketPrice) TableName() string {
 	return "lut_packet_price"
+}
+
+type OrderDetailSet struct {
+	CartID    int `gorm:"column:cart_id" json:"cart_id"`
+	FoodID    int `gorm:"column:food_id" json:"food_id"`
+	ID        int `gorm:"column:id" json:"id"`
+	KitchenID int `gorm:"column:kitchen_id" json:"kitchen_id"`
+	OrderID   int `gorm:"column:order_id" json:"order_id"`
+	UserID    int `gorm:"column:user_id" json:"user_id"`
+	Quantity  int `gorm:"column:quantity" json:"quantity"`
+}
+
+func (o *OrderDetailSet) TableName() string {
+	return "order_detail_set"
 }
