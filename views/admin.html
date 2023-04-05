@@ -1,0 +1,71 @@
+{{define "meta"}}
+
+{{end}}
+{{define "styles"}}
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lambda/fonts/flaticons/flaticons.css">
+<link rel="stylesheet" href="/assets/lambda/fonts/themify/themify-icons.css">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/moqup.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/dataform.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/datagrid.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/chart.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/agent.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/lambda/css/krud.css"}}">
+<link rel="stylesheet" href="{{index .mix "/assets/admin/css/app.css"}}">
+{{end}}
+{{define "app"}}
+<div id="app" class="app-wrapper"></div>
+{{end}}
+{{define "scripts"}}
+<script>
+    window.lambda = {{.lambda_config}};
+    window.logo = {{ .logo }};
+    window.init = {
+        closeByBtn: true,
+        withoutHeader: true,
+        user: {{.User}},
+    data_form_custom_elements: {{.data_form_custom_elements}},
+    firebase_config: {{.firebase_config}},
+    permissions: {{.permissions}},
+    cruds: {{.cruds}},
+    menu: {{.menu}},
+    crud_mode: 'refresh',
+    };
+</script>
+
+<script src="/assets/knockout-latest.js"></script>
+<script src="/assets/survey.core.min.js"></script>
+<script src="/assets/survey-knockout-ui.min.js"></script>
+<link href="/assets/modern.min.css" type="text/css" rel="stylesheet"/>
+<script src="/assets/ace.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/assets/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/assets/jspdf.min.js"></script>
+<script type="text/javascript" src="/assets/jspdf.plugin.autotable.min.js"></script>
+<script type="text/javascript" src="/assets/xlsx.full.min.js"></script>
+<script type="text/javascript" src="/assets/tabulator.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/tabulator.min.css"/>
+<link href="/assets/survey.analytics.tabulator.min.css" rel="stylesheet"/>
+<script src="/assets/survey.analytics.tabulator.min.js"></script>
+<!-- Uncomment to enable Select2 <script src="https://unpkg.com/jquery"></script> <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> -->
+<!--<script src="https://unpkg.com/survey-creator-knockout@1.8.77-beta.1/survey-creator-knockout.min.js"></script>-->
+<link href="/assets/survey-creator-knockout.min.css" type="text/css" rel="stylesheet"/>
+<script src="/assets/survey-creator-knockout.mn.js"></script>
+<script src="/assets/surveyMn.js"></script>
+<script src="/assets/survey.js"></script>
+<script type="text/javascript" src="/vendor/ckeditor/ckeditor.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-messaging.js"></script>
+<script src="{{index .mix "/assets/lambda/js/moqup.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/dataform.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/datagrid-vendor.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/datagrid.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/chart.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/krud.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/agent.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/page.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/notification.js"}}"></script>
+<script src="{{index .mix "/assets/lambda/js/page-nav.js"}}"></script>
+<script src="{{index .mix "/assets/admin/js/app.js"}}"></script>
+
+{{end}}

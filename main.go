@@ -7,10 +7,10 @@ import (
 func main() {
 
 	lambda := bootstrap.Set()
-	//DBSchema.GetStruct("order_detail")
-	//DBSchema.GetStruct("cart_sub_menu_food")
-	//DBSchema.GetStruct("sub_menu_foods_gt_neg")
-
+	//DBSchema.GetStruct("tbl_menu_gt_guraw")
+	//DBSchema.GetStruct("sub_menu_uuhim_gt_neg")
+	//DBSchema.GetStruct("sub_menu_uuhim")
+	//DBSchema.GetStruct("VB_SCHEMAS_ADMIN")
 	lambda.Start()
 
 }

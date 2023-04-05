@@ -1,8 +1,21 @@
-sudo rm -R ./lambda
-echo "INIT START"
-sudo mkdir ./lambda
+sudo service mmk stop
 sudo chmod -R 777 ./lambda
+rm -R ./lambda
+
+echo "INIT START"
+
+mkdir ./lambda
+mkdir ./lambda/models
+mkdir ./lambda/graph
+mkdir ./lambda/schemas
+mkdir ./lambda/schemas/form
+mkdir ./lambda/models/form
+mkdir ./lambda/models/grid
+chmod -R 777 ./lambda
 go run ./bootstrap/init/init.go
-sudo chmod -R 755 ./lambda
+chmod -R 755 ./lambda
+
 echo "Ready"
-go run main.go
+go build main.go
+
+sudo service mmk start
