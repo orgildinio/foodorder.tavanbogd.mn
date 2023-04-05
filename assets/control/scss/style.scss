@@ -1,0 +1,116 @@
+@import "../../controlTemplate/scss/style.scss";
+
+@import "home";
+@import "cardstyle";
+//.subform-grid {
+//    table {
+//        tbody {
+//            tr {
+//                td {
+//                    .ivu-form-item-content {
+//                        height: 60px !important;
+//                        .ivu-upload {
+//                            height: 32px !important;
+//                            overflow: hidden;
+//                        }
+//                    }
+//                    .ivu-form-item{
+//                        .ivu-input{
+//                            height: 60px !important;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//}
+.zar-form{
+    .dataform-header{
+        display: none;
+    }
+}
+.form-preview-page{
+
+    .dataform-body {
+        padding: 15px
+    }
+    .dataform-header, .dataform-footer, .sub-form-add-btn, .subform-header, .clear-container, .leaflet-draw{
+        display: none;
+    }
+    .subform-grid{
+        .action{
+            display: none;
+        }
+    }
+    .ivu-input-inner-container, .multiselect{
+        pointer-events: none;
+    }
+    textarea{
+        max-height: 52px !important;
+    }
+    .ivu-form-item-label{
+        background: #ccc;
+        width: 100%;
+        padding: 7px 15px;
+        color: #333;
+        text-align: left;
+        font-weight: 500;
+    }
+    .ivu-input, .multiselect__tags{
+        border-radius: 0;
+    }
+    .with-info-caller {
+        width: calc(100% - 30px);
+        display: inline-block;
+    }
+    .info-caller{
+        width: 30px;
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 2px;
+        padding-left: 2px;
+        /*border-top: solid 1px #ccc;*/
+        height: 20px;
+        position: absolute;
+    }
+}
+.projectdesccont{
+    .ivu-modal-body{
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+    .dataform{
+        height: auto;
+    }
+    .dataform-header{
+        display: none;
+    }
+}
+//.col-f7pnslfv2{
+//    padding-bottom: 200px !important;
+//}
+
+.info-modal {
+    .ivu-drawer-wrap{
+        .ivu-drawer{
+            .ivu-drawer-content{
+                .ivu-drawer-body{
+                    padding-top: 47px !important;
+                    .form-preview-page{
+                        .dataform{
+                            .ivu-form{
+                                .dataform-body{
+                                    .ivu-row{
+                                        //padding-top: 18px !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

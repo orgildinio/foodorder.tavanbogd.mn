@@ -26,5 +26,4 @@ func InsertFoodBalance(foodPre interface{}) {
 		}
 
 	}
-
 }

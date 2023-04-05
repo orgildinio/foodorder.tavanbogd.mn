@@ -270,25 +270,18 @@ func createJwtToken(user UserData) (string, error) {
 }
 
 func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
-	fmt.Println("ERP")
 	url := "http://202.21.112.3:8082/api/auth-service/login"
 	method := "POST"
 
 	str := Loging
 	splited := strings.Split(str, `\`)
 
-	//fmt.Println(Loging)
-	//fmt.Println(Password)
-	//fmt.Println(splited)
-
 	if len(splited) >= 2 {
 
 		companyID := strings.ToUpper(splited[0])
 		userID := splited[1]
 
-		//fmt.Println(Loging)
-		//fmt.Println(Password)
-		fmt.Println("{\"password\": \"" + Password + "\",  \"userid\": \"" + userID + "\", \"companyid\": \"" + companyID + "\"}")
+		//fmt.Println("{\"password\": \"" + Password + "\",  \"userid\": \"" + userID + "\", \"companyid\": \"" + companyID + "\"}")
 
 		payload := strings.NewReader("{\"password\": \"" + Password + "\",  \"userid\": \"" + userID + "\", \"companyid\": \"" + companyID + "\"}")
 
@@ -311,6 +304,7 @@ func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
 			return c.Status(fiber.StatusUnauthorized).JSON(models.Unauthorized{
 				Error:  "User not found",
 				Status: false,
+				//    ==================================
 			})
 		} else {
 			return checkUserByToken(loginRES.AccessToken, c)
@@ -354,7 +348,7 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 	//fmt.Println(payload.EmpID)
 
 	url := "http://202.21.112.3:8082/api/hrms/hr/employee/get?EmployeeID=" + payload.EmpID
-	fmt.Println(url)
+	//fmt.Println(url)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json; charset=utf-8")
@@ -400,7 +394,7 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 func erpKhorooByToken(c *fiber.Ctx, userInfo appModel.UserInfo, isKhoroo bool) error {
 
 	foundUser := agentUtils.AuthUserObjectByLogin(userInfo.Retdata[0].Regno)
-	fmt.Println(len(foundUser))
+	//fmt.Println("==============>", len(foundUser))
 	if len(foundUser) == 0 {
 
 		// role changed
