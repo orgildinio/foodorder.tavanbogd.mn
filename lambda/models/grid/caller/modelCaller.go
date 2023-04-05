@@ -133,6 +133,15 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 	case "301":
 		return grid.OrderRuleNew301Datagrid
 
+	case "313":
+		return grid.ReportHoolHuraanguiTailan313Datagrid
+
+	case "314":
+		return grid.ReportHuraanguiTailan314Datagrid
+
+	case "312":
+		return grid.ReportHeregleghciinTailan312Datagrid
+
 	case "291":
 		return grid.ViewOrderDetailSuccess291Datagrid
 
@@ -147,6 +156,9 @@ func GetMODEL(schema_id string) datagrid.Datagrid {
 
 	case "278":
 		return grid.Users278Datagrid
+
+	case "311":
+		return grid.ReportDelegrenguiTailanZadargaa311Datagrid
 
 	}
 	return datagrid.Datagrid{}

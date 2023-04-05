@@ -22,6 +22,9 @@ func GetMODEL(schema_id string) dataform.Dataform {
 	case "user_profile":
 		return form.UserProfile()
 
+	case "user_profile_user":
+		return form.UserProfile()
+
 	case "user_password":
 		return form.UsersDataform()
 

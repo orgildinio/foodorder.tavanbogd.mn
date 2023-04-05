@@ -10,6 +10,7 @@
   "cart_sub_menu",
   "cart_sub_menu_food",
   "cart_zahialgat",
+  "companies",
   "food_balance",
   "food_order",
   "food_order_in_basket",
@@ -76,6 +77,11 @@
   "gal_togoo_neg_sub_menu",
   "gal_togoo_neg_sub_menu_foods",
   "order_rule_new",
+  "report_delegrengui_tailan_zadargaa",
+  "report_heregleghciin_tailan",
+  "report_hool_huraangui_tailan",
+  "report_huraangui_tailan",
+  "report_user",
   "set_food_for_cart",
   "view_cart_menu",
   "view_cart_set",
@@ -1544,6 +1550,38 @@
     "title": "company_id",
     "dbType": "int4",
     "table": "cart_zahialgat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "companies": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int4",
+    "table": "companies",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "varchar",
+    "table": "companies",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "companies",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -4054,6 +4092,616 @@
     "title": "created_at",
     "dbType": "timestamptz",
     "table": "password_resets",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_delegrengui_tailan_zadargaa": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int2",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "success_time",
+    "title": "success_time",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_name",
+    "title": "set_name",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "date",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_heregleghciin_tailan": [
+   {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "varchar",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "success_time",
+    "title": "success_time",
+    "dbType": "varchar",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int2",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_hool_huraangui_tailan": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_quantity",
+    "title": "order_quantity",
+    "dbType": "int4",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_huraangui_tailan": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "varchar",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_quantity",
+    "title": "order_quantity",
+    "dbType": "int8",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int8",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "success_time_max",
+    "title": "success_time_max",
+    "dbType": "text",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "success_time_min",
+    "title": "success_time_min",
+    "dbType": "text",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_user": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "role",
+    "title": "role",
+    "dbType": "int8",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "login",
+    "title": "login",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "email",
+    "title": "email",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "register_number",
+    "title": "register_number",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "avatar",
+    "title": "avatar",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "first_name",
+    "title": "first_name",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "last_name",
+    "title": "last_name",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "birthday",
+    "title": "birthday",
+    "dbType": "date",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "phone",
+    "title": "phone",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "gender",
+    "title": "gender",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamptz",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "updated_at",
+    "title": "updated_at",
+    "dbType": "timestamptz",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "deleted_at",
+    "title": "deleted_at",
+    "dbType": "timestamptz",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "corp_id",
+    "title": "corp_id",
+    "dbType": "int8",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "urag_owog",
+    "title": "urag_owog",
+    "dbType": "text",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "mmk_code",
+    "title": "mmk_code",
+    "dbType": "varchar",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "new_code",
+    "title": "new_code",
+    "dbType": "varchar",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "emp_id",
+    "title": "emp_id",
+    "dbType": "int8",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "varchar",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "dep_name",
+    "title": "dep_name",
+    "dbType": "varchar",
+    "table": "report_user",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "display_name",
+    "title": "display_name",
+    "dbType": "text",
+    "table": "report_user",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -8894,7 +9542,7 @@
    {
     "model": "price",
     "title": "price",
-    "dbType": "int4",
+    "dbType": "int8",
     "table": "view_order_detail",
     "key": "",
     "extra": "",
@@ -8924,7 +9572,7 @@
    {
     "model": "qty",
     "title": "qty",
-    "dbType": "int2",
+    "dbType": "int8",
     "table": "view_order_detail",
     "key": "",
     "extra": "",
@@ -8944,7 +9592,7 @@
    {
     "model": "food_name",
     "title": "food_name",
-    "dbType": "varchar",
+    "dbType": "text",
     "table": "view_order_detail",
     "key": "",
     "extra": "",
@@ -8974,7 +9622,7 @@
    {
     "model": "kitcken_name",
     "title": "kitcken_name",
-    "dbType": "varchar",
+    "dbType": "text",
     "table": "view_order_detail",
     "key": "",
     "extra": "",
@@ -8994,7 +9642,7 @@
    {
     "model": "set_name",
     "title": "set_name",
-    "dbType": "varchar",
+    "dbType": "text",
     "table": "view_order_detail",
     "key": "",
     "extra": "",
@@ -9004,7 +9652,7 @@
    {
     "model": "food_order_time_name",
     "title": "food_order_time_name",
-    "dbType": "varchar",
+    "dbType": "text",
     "table": "view_order_detail",
     "key": "",
     "extra": "",
@@ -9177,6 +9825,16 @@
     "model": "dep_name",
     "title": "dep_name",
     "dbType": "varchar",
+    "table": "view_order_detail_success",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "emp_id",
+    "title": "emp_id",
+    "dbType": "int8",
     "table": "view_order_detail_success",
     "key": "",
     "extra": "",

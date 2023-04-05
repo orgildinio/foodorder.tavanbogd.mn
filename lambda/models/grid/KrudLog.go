@@ -42,7 +42,7 @@ func (m *CrudLogMainTable) TableName() string {
 	return "ds_crud_log"
 }
 
-// TableName sets the insert table name for this struct type
+//  TableName sets the insert table name for this struct type
 func (d *CrudLog) TableName() string {
 	return "crud_log"
 }

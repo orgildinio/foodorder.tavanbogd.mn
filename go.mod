@@ -9,7 +9,7 @@ require (
 	github.com/gofiber/helmet/v2 v2.2.18
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/gorilla/websocket v1.5.0
-	github.com/lambda-platform/lambda v0.5.93
+	github.com/lambda-platform/lambda v0.6.6
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.26.0 // indirect
 	github.com/thedevsaddam/govalidator v1.9.10
@@ -22,6 +22,6 @@ require (
 //replace github.com/lambda-platform/lambda/puzzle v0.2.2 => ../../go/puzzle
 //replace github.com/lambda-platform/lambda/generator v0.0.1 => ../../go/generator
 //
-//replace github.com/lambda-platform/lambda v0.5.50 => ../../../lambda-fiber
+//replace github.com/lambda-platform/lambda v0.6.6 => ../../../LAMBDA/lambda-fiber
 
 //replace github.com/lambda-platform/arcGIS v0.0.1 => ./arcGIS
