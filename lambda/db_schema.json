@@ -4120,6 +4120,16 @@
     "scale": ""
    },
    {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "varchar",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
     "model": "pos_name",
     "title": "pos_name",
     "dbType": "varchar",
@@ -4162,7 +4172,7 @@
    {
     "model": "success_time",
     "title": "success_time",
-    "dbType": "varchar",
+    "dbType": "timestamptz",
     "table": "report_delegrengui_tailan_zadargaa",
     "key": "",
     "extra": "",
@@ -4232,9 +4242,9 @@
   ],
   "report_heregleghciin_tailan": [
    {
-    "model": "company_id",
-    "title": "company_id",
-    "dbType": "varchar",
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
     "table": "report_heregleghciin_tailan",
     "key": "",
     "extra": "",
@@ -4252,18 +4262,8 @@
     "scale": ""
    },
    {
-    "model": "pos_name",
-    "title": "pos_name",
-    "dbType": "varchar",
-    "table": "report_heregleghciin_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "success_time",
-    "title": "success_time",
+    "model": "company_id",
+    "title": "company_id",
     "dbType": "varchar",
     "table": "report_heregleghciin_tailan",
     "key": "",
@@ -4282,28 +4282,28 @@
     "scale": ""
    },
    {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "date",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_quantity",
+    "title": "order_quantity",
+    "dbType": "int8",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
     "model": "price",
     "title": "price",
-    "dbType": "int4",
-    "table": "report_heregleghciin_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "qty",
-    "title": "qty",
-    "dbType": "int2",
-    "table": "report_heregleghciin_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "id",
-    "title": "id",
     "dbType": "int8",
     "table": "report_heregleghciin_tailan",
     "key": "",
@@ -4324,8 +4324,8 @@
     "scale": ""
    },
    {
-    "model": "company_name",
-    "title": "company_name",
+    "model": "company_id",
+    "title": "company_id",
     "dbType": "varchar",
     "table": "report_hool_huraangui_tailan",
     "key": "",
@@ -4344,19 +4344,9 @@
     "scale": ""
    },
    {
-    "model": "order_number",
-    "title": "order_number",
-    "dbType": "varchar",
-    "table": "report_hool_huraangui_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "order_quantity",
     "title": "order_quantity",
-    "dbType": "int4",
+    "dbType": "int8",
     "table": "report_hool_huraangui_tailan",
     "key": "",
     "extra": "",
@@ -4366,7 +4356,7 @@
    {
     "model": "price",
     "title": "price",
-    "dbType": "int4",
+    "dbType": "int8",
     "table": "report_hool_huraangui_tailan",
     "key": "",
     "extra": "",
@@ -4382,6 +4372,16 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "report_huraangui_tailan": [
@@ -4389,6 +4389,16 @@
     "model": "id",
     "title": "id",
     "dbType": "int8",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
     "table": "report_huraangui_tailan",
     "key": "",
     "extra": "",
@@ -4416,39 +4426,9 @@
     "scale": ""
    },
    {
-    "model": "order_quantity",
-    "title": "order_quantity",
-    "dbType": "int8",
-    "table": "report_huraangui_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "price",
-    "title": "price",
-    "dbType": "int8",
-    "table": "report_huraangui_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "success_time_max",
-    "title": "success_time_max",
-    "dbType": "text",
-    "table": "report_huraangui_tailan",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
-    "model": "success_time_min",
-    "title": "success_time_min",
-    "dbType": "text",
+    "model": "success_time",
+    "title": "success_time",
+    "dbType": "varchar",
     "table": "report_huraangui_tailan",
     "key": "",
     "extra": "",
@@ -4459,6 +4439,46 @@
     "model": "food_order_time_name",
     "title": "food_order_time_name",
     "dbType": "varchar",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int2",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "date",
     "table": "report_huraangui_tailan",
     "key": "",
     "extra": "",

@@ -22,6 +22,6 @@ require (
 //replace github.com/lambda-platform/lambda/puzzle v0.2.2 => ../../go/puzzle
 //replace github.com/lambda-platform/lambda/generator v0.0.1 => ../../go/generator
 //
-//replace github.com/lambda-platform/lambda v0.6.6 => ../../../LAMBDA/lambda-fiber
+//replace github.com/lambda-platform/lambda v0.5.50 => ../../../lambda-fiber
 
 //replace github.com/lambda-platform/arcGIS v0.0.1 => ./arcGIS

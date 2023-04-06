@@ -204,7 +204,7 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 
 	log.Println("balanceQty", balanceQty)
 
-	DB.DB.Debug().Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
+	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
 
 }
 
