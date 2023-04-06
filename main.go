@@ -7,7 +7,7 @@ import (
 func main() {
 
 	lambda := bootstrap.Set()
-	//DBSchema.GetStruct("tbl_menu_gt_guraw")
+	//DBSchema.GetStruct("view_food_type_group_by")
 	//DBSchema.GetStruct("sub_menu_uuhim_gt_neg")
 	//DBSchema.GetStruct("sub_menu_uuhim")
 	//DBSchema.GetStruct("VB_SCHEMAS_ADMIN")

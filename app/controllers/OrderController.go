@@ -160,7 +160,7 @@ func CreateOrder(c *fiber.Ctx) error {
 
 func CancelOrder(c *fiber.Ctx) error {
 
-	orderCancelReq := models.OrderRequest{}
+	orderCancelReq := models.Orders{}
 	errReq := c.BodyParser(&orderCancelReq)
 	if errReq != nil {
 		fmt.Println(errReq.Error())
@@ -169,7 +169,11 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	orderUser := agentUtils.AuthUserObject(c)
 
-	DB.DB.Model(models.OrdersStatus{}).Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Update("payment_status", "canceled")
+	//DB.DB.Model(models.OrdersStatus{}).Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Update("payment_status", "canceled")
+
+	DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Find(&orderCancelReq)
+
+	DB.DB.Delete(&orderCancelReq)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
@@ -200,12 +204,14 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
 
+	if foodBalance.Quantity > 0 {
+
+		log.Println("======================>", foodBalance.Quantity)
+	}
+
 	balanceQty := foodBalance.Quantity - Quantity
 
-	log.Println("balanceQty", balanceQty)
-
 	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
-
 }
 
 func RecepcionRequest(c *fiber.Ctx) error {

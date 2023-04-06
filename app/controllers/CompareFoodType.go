@@ -20,8 +20,6 @@ func FoodType(c *fiber.Ctx) error {
 
 	DB.DB.Where("food_type_id = ?", foodTypeReq.Model.FoodTypeID).Find(&foodData)
 
-	//fmt.Println("Heehehe", foodData)
-
 	options := []map[string]interface{}{}
 
 	for _, food := range foodData {
@@ -42,6 +40,7 @@ func FoodType(c *fiber.Ctx) error {
 			"options": options,
 		},
 	}
+
 	field2 := models.Field{
 		Field: "sub_menu_foods",
 		Value: []map[string]interface{}{},
