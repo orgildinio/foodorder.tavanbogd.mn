@@ -115,3 +115,26 @@ type OrderDetailSet struct {
 func (o *OrderDetailSet) TableName() string {
 	return "order_detail_set"
 }
+
+type ViewOrderDetail struct {
+	CartID            *int    `gorm:"column:cart_id" json:"cart_id"`
+	FoodIamge         *string `gorm:"column:food_iamge" json:"food_iamge"`
+	FoodID            *int    `gorm:"column:food_id" json:"food_id"`
+	FoodName          string  `gorm:"column:food_name" json:"food_name"`
+	FoodOrderTimeName *string `gorm:"column:food_order_time_name" json:"food_order_time_name"`
+	ID                *int    `gorm:"column:id" json:"id"`
+	KitcheAddress     *string `gorm:"column:kitche_address" json:"kitche_address"`
+	KitchenID         *int    `gorm:"column:kitchen_id" json:"kitchen_id"`
+	KitchenImage      *string `gorm:"column:kitchen_image" json:"kitchen_image"`
+	KitckenName       *string `gorm:"column:kitcken_name" json:"kitcken_name"`
+	MenuID            *int    `gorm:"column:menu_id" json:"menu_id"`
+	OrderID           int     `gorm:"column:order_id" json:"order_id"`
+	Price             int     `gorm:"column:price" json:"price"`
+	Qty               int     `gorm:"column:qty" json:"qty"`
+	RuleImages        *string `gorm:"column:rule_images" json:"rule_images"`
+	SetName           *string `gorm:"column:set_name" json:"set_name"`
+}
+
+func (v *ViewOrderDetail) TableName() string {
+	return "view_order_detail"
+}

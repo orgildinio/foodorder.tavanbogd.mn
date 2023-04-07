@@ -55,6 +55,12 @@ func Api(e *fiber.App) {
 	//a.Get("/", handlers.LoginPage)
 	agent.Post("/login", controllers.Login)
 
+	//Ebarimt
+
+	a.Get("/ebarimt-info", controllers.EBarimtInfo)
+	a.Get("/ebarimt-check", controllers.EBarimtCheck)
+	a.Get("/ebarimt-send", controllers.EBarimtSend)
+
 }
 
 ///api/food-type

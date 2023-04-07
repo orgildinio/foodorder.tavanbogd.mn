@@ -5,11 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/lambda-platform/ebarimt/bill"
+	"github.com/lambda-platform/ebarimt/posapi"
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
+	"github.com/leekchan/accounting"
 	"lambda/app/models"
+	"lambda/ebarimt"
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 func QPayInvoice(c *fiber.Ctx) error {
@@ -221,8 +227,71 @@ func LaterPay(c *fiber.Ctx) error {
 
 	DB.DB.Create(&orderLaterPay)
 
+	// create Bill
+	bilInput := posapi.PutInput{}
+
+	amount := bill.FormatNumber(float64(orderLaterPay.Price))
+	bilInput.Amount = amount
+	bilInput.Vat = bill.GetVat(float64(orderLaterPay.Price), true, false)
+	bilInput.BillIDSuffix = bill.GenerateBillIdSuffix()
+	bilInput.CityTax = "0.00"
+	bilInput.BillType = "1"
+	bilInput.CashAmount = "0.00"
+	bilInput.NonCashAmount = amount
+	bilInput.DistrictCode = "23"
+	bilInput.PosNo = "0001"
+	bilInput.BranchNo = "001"
+
+	var items []posapi.Stock
+
+	var orderPayments []models.ViewOrderDetail
+
+	for _, orderPayment := range orderPayments {
+		var item posapi.Stock
+
+		Code := strconv.Itoa(orderPayment.OrderID)
+		Price := bill.FormatNumber(float64(orderPayment.Price))
+		item.Code = Code
+		item.Name = orderPayment.FoodName
+		item.MeasureUnit = "01"
+		item.Qty = Number(orderPayment.Qty)
+		item.UnitPrice = Price
+		item.TotalAmount = Price
+		item.CityTax = Price
+		item.Vat = Price
+		item.BarCode = Code
+
+		items = append(items, item)
+	}
+
+	fmt.Println(items)
+	//appent
+
+	bilInput.Stocks = items
+
+	ebarimtResponse, ebarimtErr := bill.PutBill(bilInput, ebarimt.PosAPI)
+
+	if ebarimtErr != nil {
+		// create error info
+		fmt.Println(ebarimtErr.Error())
+	}
+
 	return c.Status(http.StatusOK).JSON(map[string]string{
-		"status":  "success",
-		"message": orderLaterPay.OrderNumber + " дугаартай захиалга амжилттай",
+		"status":            "success",
+		"message":           orderLaterPay.OrderNumber + " дугаартай захиалга амжилттай",
+		"billId":            ebarimtResponse.BillID,
+		"billType":          ebarimtResponse.BillType,
+		"date":              ebarimtResponse.Date,
+		"internalCode":      ebarimtResponse.InternalCode,
+		"lottery":           ebarimtResponse.Lottery,
+		"lotteryWarningMsg": ebarimtResponse.LotteryWarningMsg,
+		"macAddress":        ebarimtResponse.MacAddress,
+		"qrData":            ebarimtResponse.QRData,
+		"registerNo":        ebarimtResponse.RegisterNo,
 	})
+}
+
+func Number(v interface{}) string {
+	ac := accounting.Accounting{Precision: 2}
+	return strings.ReplaceAll(ac.FormatMoney(v), ",", "")
 }
