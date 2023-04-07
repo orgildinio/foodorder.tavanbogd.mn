@@ -30,6 +30,17 @@ func (o *Orders) TableName() string {
 	return "orders"
 }
 
+type OrderEbarimt struct {
+	ID        int        `gorm:"column:id" json:"id"`
+	OrderID   int        `gorm:"column:order_id" json:"order_id"`
+	Ebarimt   string     `gorm:"column:ebarimt" json:"ebarimt"`
+	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
+}
+
+func (o *OrderEbarimt) TableName() string {
+	return "order_ebarimt"
+}
+
 type OrderRequest struct {
 	ID          int    `json:"id"`
 	UserID      int    `json:"user_id"`

@@ -9,13 +9,10 @@ import (
 	"github.com/lambda-platform/ebarimt/posapi"
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
-	"github.com/leekchan/accounting"
 	"lambda/app/models"
 	"lambda/ebarimt"
-	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 func QPayInvoice(c *fiber.Ctx) error {
@@ -145,12 +142,11 @@ func QpayCallBackCheck(invoiceId string) int {
 
 func QPayCallBack(c *fiber.Ctx) error {
 	//orderUser := agentUtils.AuthUserObject(c)
+	order := models.ViewOrder{}
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
-
-	log.Println(checkOrder.InvoiceID)
 
 	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
 
@@ -171,6 +167,8 @@ func QPayCallBack(c *fiber.Ctx) error {
 		}
 
 		return c.Status(http.StatusOK).JSON("SUCCESS")
+
+		go CreateEbarimt(order)
 	}
 
 	return c.Status(http.StatusOK).JSON("FAILED")
@@ -179,31 +177,31 @@ func QPayCallBack(c *fiber.Ctx) error {
 func LaterPay(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
 	orderStatus := models.OrdersStatus{}
-	orders := models.ViewOrder{}
+	order := models.ViewOrder{}
 
-	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&orders)
-	DB.DB.Where("id = ?", orders.ID).Find(&orderStatus)
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&order)
+	DB.DB.Where("id = ?", order.ID).Find(&orderStatus)
 
-	if orders.ID == 0 {
+	if order.ID == 0 {
 		return c.Status(http.StatusOK).JSON("Not found active order")
 	}
 
-	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&orders)
+	DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&order)
 
 	orderLaterPay := models.OrderLaterPay{}
 
 	orderLaterPay.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
-	orderLaterPay.OrderNumber = orders.OrderNumber
-	orderLaterPay.OrderID = orders.ID
-	orderLaterPay.Qty = orders.OrderQuantity
-	orderLaterPay.Price = orders.Price
+	orderLaterPay.OrderNumber = order.OrderNumber
+	orderLaterPay.OrderID = order.ID
+	orderLaterPay.Qty = order.OrderQuantity
+	orderLaterPay.Price = order.Price
 	orderLaterPay.PaymentStatus = GetStringPointer("success")
 
 	oldOrders := models.Orders{}
 	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
 
 	if oldOrders.ID >= 1 {
-		UpdateStatus(orders.OrderNumber, oldOrders.ID, "mmk", "success")
+		UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
 
@@ -227,12 +225,21 @@ func LaterPay(c *fiber.Ctx) error {
 
 	DB.DB.Create(&orderLaterPay)
 
+	go CreateEbarimt(order)
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"status":  "success",
+		"message": orderLaterPay.OrderNumber + " дугаартай захиалга амжилттай",
+	})
+}
+
+func CreateEbarimt(order models.ViewOrder) {
 	// create Bill
 	bilInput := posapi.PutInput{}
 
-	amount := bill.FormatNumber(float64(orderLaterPay.Price))
+	amount := bill.FormatNumber(float64(order.Price))
 	bilInput.Amount = amount
-	bilInput.Vat = bill.GetVat(float64(orderLaterPay.Price), true, false)
+	bilInput.Vat = bill.GetVat(float64(order.Price), true, false)
 	bilInput.BillIDSuffix = bill.GenerateBillIdSuffix()
 	bilInput.CityTax = "0.00"
 	bilInput.BillType = "1"
@@ -244,28 +251,26 @@ func LaterPay(c *fiber.Ctx) error {
 
 	var items []posapi.Stock
 
-	var orderPayments []models.ViewOrderDetail
+	var orderItems []models.ViewOrderDetail
 
-	for _, orderPayment := range orderPayments {
+	DB.DB.Where("order_id = ?", order.ID).Find(&orderItems)
+
+	for _, orderPayment := range orderItems {
 		var item posapi.Stock
-
 		Code := strconv.Itoa(orderPayment.OrderID)
 		Price := bill.FormatNumber(float64(orderPayment.Price))
+		TotalAmount := bill.FormatNumber(float64(orderPayment.Price * orderPayment.Qty))
 		item.Code = Code
 		item.Name = orderPayment.FoodName
 		item.MeasureUnit = "01"
-		item.Qty = Number(orderPayment.Qty)
+		item.Qty = bill.FormatNumber(float64(orderPayment.Qty))
 		item.UnitPrice = Price
-		item.TotalAmount = Price
+		item.TotalAmount = TotalAmount
 		item.CityTax = Price
 		item.Vat = Price
 		item.BarCode = Code
-
 		items = append(items, item)
 	}
-
-	fmt.Println(items)
-	//appent
 
 	bilInput.Stocks = items
 
@@ -275,23 +280,11 @@ func LaterPay(c *fiber.Ctx) error {
 		// create error info
 		fmt.Println(ebarimtErr.Error())
 	}
-
-	return c.Status(http.StatusOK).JSON(map[string]string{
-		"status":            "success",
-		"message":           orderLaterPay.OrderNumber + " дугаартай захиалга амжилттай",
-		"billId":            ebarimtResponse.BillID,
-		"billType":          ebarimtResponse.BillType,
-		"date":              ebarimtResponse.Date,
-		"internalCode":      ebarimtResponse.InternalCode,
-		"lottery":           ebarimtResponse.Lottery,
-		"lotteryWarningMsg": ebarimtResponse.LotteryWarningMsg,
-		"macAddress":        ebarimtResponse.MacAddress,
-		"qrData":            ebarimtResponse.QRData,
-		"registerNo":        ebarimtResponse.RegisterNo,
-	})
-}
-
-func Number(v interface{}) string {
-	ac := accounting.Accounting{Precision: 2}
-	return strings.ReplaceAll(ac.FormatMoney(v), ",", "")
+	if ebarimtResponse.Success {
+		jsonStrin, _ := json.Marshal(ebarimtResponse)
+		var orderEbarimt models.OrderEbarimt
+		orderEbarimt.Ebarimt = string(jsonStrin)
+		orderEbarimt.OrderID = order.ID
+		DB.DB.Create(&orderEbarimt)
+	}
 }
