@@ -11,7 +11,9 @@ func init() {
 	api, err := posapi.NewPosAPI("/home/mmk/ebarimt/mmk.so")
 	if err != nil {
 		fmt.Println(err)
+	} else {
+		PosAPI = api
+		defer PosAPI.Close()
 	}
-	PosAPI = api
-	defer PosAPI.Close()
+
 }
