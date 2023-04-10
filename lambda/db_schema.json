@@ -39,6 +39,7 @@
   "notifications",
   "order_detail",
   "order_detail_set",
+  "order_ebarimt",
   "order_later_pay",
   "order_set_food",
   "orders",
@@ -3568,6 +3569,48 @@
     "scale": ""
    }
   ],
+  "order_ebarimt": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int4",
+    "table": "order_ebarimt",
+    "key": "PRI",
+    "extra": "auto_increment",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "order_id",
+    "title": "order_id",
+    "dbType": "int4",
+    "table": "order_ebarimt",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "ebarimt",
+    "title": "ebarimt",
+    "dbType": "text",
+    "table": "order_ebarimt",
+    "key": "",
+    "extra": "",
+    "nullable": "NO",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "order_ebarimt",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "order_later_pay": [
    {
     "model": "id",
@@ -4382,6 +4425,16 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "report_huraangui_tailan": [
@@ -4734,8 +4787,8 @@
     "title": "id",
     "dbType": "int8",
     "table": "roles",
-    "key": "PRI",
-    "extra": "auto_increment",
+    "key": "",
+    "extra": "",
     "nullable": "NO",
     "scale": ""
    },
@@ -6396,8 +6449,8 @@
     "title": "id",
     "dbType": "int8",
     "table": "users",
-    "key": "PRI",
-    "extra": "auto_increment",
+    "key": "",
+    "extra": "",
     "nullable": "NO",
     "scale": ""
    },
@@ -10801,6 +10854,16 @@
     "model": "food_iamge",
     "title": "food_iamge",
     "dbType": "text",
+    "table": "view_set_food_sub_menu_foods",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "quantity",
+    "title": "quantity",
+    "dbType": "int4",
     "table": "view_set_food_sub_menu_foods",
     "key": "",
     "extra": "",

@@ -147,7 +147,7 @@ func (v *ViewCartSubMenuFood) TableName() string {
 type ViewFoodBalance struct {
 	CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	FoodID      *int           `gorm:"column:food_id" json:"food_id"`
+	FoodID      int            `gorm:"column:food_id" json:"food_id"`
 	FoodName    *string        `gorm:"column:food_name" json:"food_name"`
 	FoodPrice   float32        `gorm:"column:food_price" json:"food_price"`
 	FoodType    *string        `gorm:"column:food_type" json:"food_type"`

@@ -6,7 +6,6 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
-	"log"
 	"net/http"
 	"time"
 )
@@ -204,14 +203,12 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
 
-	if foodBalance.Quantity > 0 {
-
-		log.Println("======================>", foodBalance.Quantity)
-	}
+	fmt.Println(foodBalance.Quantity)
 
 	balanceQty := foodBalance.Quantity - Quantity
 
 	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
+
 }
 
 func RecepcionRequest(c *fiber.Ctx) error {
