@@ -3337,7 +3337,7 @@
    {
     "model": "sender",
     "title": "sender",
-    "dbType": "numeric",
+    "dbType": "int8",
     "table": "notifications",
     "key": "",
     "extra": "",

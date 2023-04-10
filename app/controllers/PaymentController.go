@@ -202,6 +202,8 @@ func LaterPay(c *fiber.Ctx) error {
 
 	if oldOrders.ID >= 1 {
 
+		//ChekingBalance(c, oldOrders, order)
+
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
 

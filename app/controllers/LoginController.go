@@ -394,7 +394,6 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 func erpKhorooByToken(c *fiber.Ctx, userInfo appModel.UserInfo, isKhoroo bool) error {
 
 	foundUser := agentUtils.AuthUserObjectByLogin(userInfo.Retdata[0].Regno)
-	//fmt.Println("==============>", len(foundUser))
 	if len(foundUser) == 0 {
 
 		// role changed

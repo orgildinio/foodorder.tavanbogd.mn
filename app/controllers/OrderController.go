@@ -190,11 +190,37 @@ func DeleteOrder() {
 
 }
 
+//func ChekingBalance(c *fiber.Ctx, oldOrders models.Orders, order models.ViewOrder) {
+//	orderUser := agentUtils.AuthUserObject(c)
+//
+//	var orderDetails []models.OrderDetail
+//	DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
+//
+//	var orderDetailSets []models.OrderDetailSet
+//	DB.DB.Where("order_id = ?", oldOrders.ID).Find(&orderDetailSets)
+//
+//	for _, orderDetailSet := range orderDetailSets {
+//		foodBalance := models.ViewFoodBalance{}
+//		DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&foodBalance)
+//
+//		if foodBalance.Quantity < orderDetailSet.Quantity {
+//			return nil
+//			}
+//		}
+//		UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
+//		UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+//	}
+//
+//	for _, orderDetail := range orderDetails {
+//		UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+//	}
+//}
+
 func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentStatus string) {
 	now := time.Now()
 	editOrder := models.Orders{}
 
-	DB.DB.Debug().Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006/01/02 15:04:05")})
+	DB.DB.Debug().Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006-01-02 15:04:05")})
 
 }
 
