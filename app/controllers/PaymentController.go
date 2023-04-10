@@ -156,14 +156,14 @@ func QPayCallBack(c *fiber.Ctx) error {
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetails)
 
 		for _, orderDetail := range orderDetails {
-			UpdateBalance(c, orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
 		}
 
 		var orderDetailSets []models.OrderDetailSet
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
 
 		for _, orderDetailSet := range orderDetailSets {
-			UpdateBalance(c, orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
 		return c.Status(http.StatusOK).JSON("SUCCESS")
@@ -201,19 +201,29 @@ func LaterPay(c *fiber.Ctx) error {
 	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
 
 	if oldOrders.ID >= 1 {
-		UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
+
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
-
-		for _, orderDetail := range orderDetails {
-			UpdateBalance(c, orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
-		}
 
 		var orderDetailSets []models.OrderDetailSet
 		DB.DB.Where("order_id = ?", oldOrders.ID).Find(&orderDetailSets)
 
 		for _, orderDetailSet := range orderDetailSets {
-			UpdateBalance(c, orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+			foodBalance := models.ViewFoodBalance{}
+			DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&foodBalance)
+
+			if foodBalance.Quantity < orderDetailSet.Quantity {
+				return c.Status(http.StatusOK).JSON(map[string]string{
+					"status":  "warning",
+					"message": "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
+				})
+			}
+			UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
+			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+		}
+
+		for _, orderDetail := range orderDetails {
+			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
 		}
 
 	} else {

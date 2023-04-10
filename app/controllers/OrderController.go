@@ -198,28 +198,17 @@ func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentSt
 
 }
 
-func UpdateBalance(c *fiber.Ctx, FoodID int, KitchenID int, Quantity int) error {
+func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
 
 	fmt.Println(foodBalance.Quantity)
 
-	//if 0 == foodBalance.Quantity {
-	//    return c.Status(fiber.StatusOK).JSON(fiber.Map{
-	//        "message": "Balance updated successfully",
-	//    })
-	//}
-
 	balanceQty := foodBalance.Quantity - Quantity
 
-	if err := DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
-		})
-	}
+	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
 
-	return nil
 }
 
 func RecepcionRequest(c *fiber.Ctx) error {
