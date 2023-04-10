@@ -10,7 +10,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/gorilla/websocket v1.5.0
-	github.com/lambda-platform/ebarimt v0.1.2
+	github.com/lambda-platform/ebarimt v0.1.3
 	github.com/lambda-platform/lambda v0.6.12
 	github.com/thedevsaddam/govalidator v1.9.10
 	github.com/valyala/fasthttp v1.40.0
@@ -25,6 +25,6 @@ require (
 //replace github.com/lambda-platform/lambda/puzzle v0.2.2 => ../../go/puzzle
 //replace github.com/lambda-platform/lambda/generator v0.0.1 => ../../go/generator
 //
-//replace github.com/lambda-platform/lambda v0.6.6 => ../../../lambda-fiber
+//replace github.com/lambda-platform/lambda v0.6.12 => ../../../lambda-fiber
 
 //replace github.com/lambda-platform/arcGIS v0.0.1 => ./arcGIS

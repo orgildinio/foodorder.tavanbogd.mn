@@ -29,7 +29,7 @@ func main() {
 	/*
 	   Generate Form, Grid
 	*/
-	generator.ModelInit(dbSchema, FormSchemas, GridSchemas, true, "false")
+	generator.ModelInit(dbSchema, FormSchemas, GridSchemas, true, false)
 	/*
 	   Generate GRAPHQL
 	*/

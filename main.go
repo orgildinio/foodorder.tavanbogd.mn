@@ -1,17 +1,36 @@
 package main
 
 import (
-	"lambda/bootstrap"
+    "fmt"
+    "github.com/lambda-platform/lambda/generator"
+    "lambda/bootstrap"
+    "os"
 )
 
 func main() {
 
-	lambda := bootstrap.Set()
-	//DBSchema.GetStruct("order_ebarimt")
-	//DBSchema.GetStruct("sub_menu_uuhim_gt_neg")
-	//DBSchema.GetStruct("sub_menu_uuhim")
-	//DBSchema.GetStruct("VB_SCHEMAS_ADMIN")
+    if len(os.Args) < 2 {
 
-	lambda.Start()
+        lambda := bootstrap.Set()
+        lambda.Start()
+
+    } else {
+        command := os.Args[1]
+
+        switch command {
+        case "generate":
+            bootstrap.Generate()
+        case "table":
+            if len(os.Args) < 3 {
+                fmt.Println("Please provide table name: table your-table-name")
+            } else {
+                table := os.Args[2]
+                generator.GetStruct(table)
+            }
+        default:
+            fmt.Printf("Unknown command: %s\n", command)
+            os.Exit(1)
+        }
+    }
 
 }
