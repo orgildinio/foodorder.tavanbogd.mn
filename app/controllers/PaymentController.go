@@ -156,14 +156,14 @@ func QPayCallBack(c *fiber.Ctx) error {
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetails)
 
 		for _, orderDetail := range orderDetails {
-			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+			UpdateBalance(c, orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
 		}
 
 		var orderDetailSets []models.OrderDetailSet
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
 
 		for _, orderDetailSet := range orderDetailSets {
-			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+			UpdateBalance(c, orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
 		return c.Status(http.StatusOK).JSON("SUCCESS")
@@ -206,14 +206,14 @@ func LaterPay(c *fiber.Ctx) error {
 		DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
 
 		for _, orderDetail := range orderDetails {
-			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+			UpdateBalance(c, orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
 		}
 
 		var orderDetailSets []models.OrderDetailSet
 		DB.DB.Where("order_id = ?", oldOrders.ID).Find(&orderDetailSets)
 
 		for _, orderDetailSet := range orderDetailSets {
-			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+			UpdateBalance(c, orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
 	} else {
@@ -225,7 +225,7 @@ func LaterPay(c *fiber.Ctx) error {
 
 	DB.DB.Create(&orderLaterPay)
 
-	go CreateEbarimt(order)
+	//go CreateEbarimt(order)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",

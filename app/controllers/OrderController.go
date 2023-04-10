@@ -6,7 +6,6 @@ import (
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
-	"log"
 	"net/http"
 	"time"
 )
@@ -199,19 +198,28 @@ func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentSt
 
 }
 
-func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
+func UpdateBalance(c *fiber.Ctx, FoodID int, KitchenID int, Quantity int) error {
 
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
 
-	if foodBalance.Quantity > 0 {
+	fmt.Println(foodBalance.Quantity)
 
-		log.Println("======================>", foodBalance.Quantity)
-	}
+	//if 0 == foodBalance.Quantity {
+	//    return c.Status(fiber.StatusOK).JSON(fiber.Map{
+	//        "message": "Balance updated successfully",
+	//    })
+	//}
 
 	balanceQty := foodBalance.Quantity - Quantity
 
-	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
+	if err := DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return nil
 }
 
 func RecepcionRequest(c *fiber.Ctx) error {
