@@ -8,7 +8,8 @@ import (
 var PosAPI *posapi.PosAPI
 
 func init() {
-	api, err := posapi.NewPosAPI("/home/mmk/ebarimt/mmk.so")
+	api, err := posapi.NewPosAPI("/home/khankhulgen/web/ebarimt/sofiles")
+	//api, err := posapi.NewPosAPI("/home/mmk/ebarimt/mmk.so")
 	if err != nil {
 		fmt.Println(err)
 	} else {

@@ -66,6 +66,7 @@ func Set() *lambda.Lambda {
 		|----------------------------------------------
 	*/
 
+	routes.Api(Lambda.App)
 	routes.Web(Lambda.App)
 
 	return Lambda

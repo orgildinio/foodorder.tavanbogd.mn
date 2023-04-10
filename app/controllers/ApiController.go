@@ -38,7 +38,7 @@ func SendNotification(c *fiber.Ctx) error {
 		ClickAction: config.LambdaConfig.Domain + "/admin",
 	}
 	data := modelsModels.NotificationData{
-		Users: []int{2},
+		Users: []int{17},
 		//Roles:        []int{2},
 		Data:         FCMData,
 		Notification: FCMNotification,
