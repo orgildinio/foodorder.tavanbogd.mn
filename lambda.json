@@ -77,15 +77,15 @@
     },
     "notify": {
         "firebaseConfig": {
-            "apiKey": "AIzaSyCAnFbVIVTC_s8fkWDSFOGLvA5hGgPK3w0",
-            "publicKey": "BKNlR0Chll4xmfO01gTZ1QIDyjzHeIB5_3RF89ITxB0vEiSz6_AKg0itc3y7eymh30x-1xOx-DOMwoZpoeO1Awk ",
-            "authDomain": "tavanbogd-mmk.firebaseapp.com\"",
+            "apiKey": "AIzaSyCijbRZU0E2C7O4qxu7REj3ZGzewnw0xNY",
+            "publicKey": "BN-T1FiEjR_YVfgWjWpeez4Qz-bCRvg2pdscPfTWLbzvMe0lAw2_Dkrx18pKycHToEx0U7kJvYd1P8Z6bIb6ZbE",
+            "authDomain": "cookoo-t.firebaseapp.com",
             "databaseURL": "",
-            "projectId": "tavanbogd-mmk",
-            "storageBucket": "tavanbogd-mmk.appspot.com",
-            "messagingSenderId": "1058813657869",
-            "appId": "1:1058813657869:web:d2db0d7b885ce1f4c5e644",
-            "measurementId": ""
+            "projectId": "cookoo-t",
+            "storageBucket": "cookoo-t.appspot.com",
+            "messagingSenderId": "852450353883",
+            "appId": "1:852450353883:web:6b24667903148db017e2fe",
+            "measurementId": "G-DXBN8V4CXQ"
         },
         "serverKey": "AAAA9oY2Qw0:APA91bHZEZOJubDW8ewnzc5lDlh1b9tPHe-9RUpUxY3wEdzVz_Ek7tiYhrs0zFDNEyDimHoT8Ou8kMOpbkYUX2mMbfCW78MXFP1CU__Rx4tF9KAeJd2iYwXHFUP9AnEHhEecJ-FkRc3K",
         "sound": "/assets/lambda/notification.mp3",
