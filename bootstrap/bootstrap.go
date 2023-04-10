@@ -3,6 +3,8 @@ package bootstrap
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/chart"
+	"github.com/lambda-platform/lambda/config"
+	"github.com/lambda-platform/lambda/notify"
 	"lambda/app/middlewares"
 	"lambda/lambda/graph"
 	"lambda/lambda/models/form/caller"
@@ -41,6 +43,10 @@ func Set() *lambda.Lambda {
 	KrudMiddleWares := []fiber.Handler{}
 	routes.Api(Lambda.App)
 	agent.Set(Lambda.App)
+	if config.LambdaConfig.Notify.FirebaseConfig.APIKey != "" && config.LambdaConfig.Notify.FirebaseConfig.AppID != "" {
+		notify.Set(Lambda.App)
+		KrudMiddleWares = append(KrudMiddleWares, notify.MW(gridCaller.GetMODEL, caller.GetMODEL))
+	}
 	krud.Set(Lambda.App, gridCaller.GetMODEL, caller.GetMODEL, KrudMiddleWares, true)
 
 	exportImport.Set(Lambda.App)
