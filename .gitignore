@@ -14,3 +14,4 @@ node_modules
 crud-export.json
 public/uploaded
 lambda
+main
