@@ -31,10 +31,12 @@ func (o *Orders) TableName() string {
 }
 
 type OrderEbarimt struct {
-	ID        int        `gorm:"column:id" json:"id"`
-	OrderID   int        `gorm:"column:order_id" json:"order_id"`
-	Ebarimt   string     `gorm:"column:ebarimt" json:"ebarimt"`
-	CreatedAt *time.Time `gorm:"column:created_at" json:"created_at"`
+	ID                int        `gorm:"column:id" json:"id"`
+	OrderID           int        `gorm:"column:order_id" json:"order_id"`
+	Ebarimt           string     `gorm:"column:ebarimt" json:"ebarimt"`
+	EbarimtType       *int       `gorm:"column:ebarimt_type" json:"ebarimt_type"`
+	CreatedAt         *time.Time `gorm:"column:created_at" json:"created_at"`
+	OrgRegisterNumber *int       `gorm:"column:org_register_number" json:"org_register_number"`
 }
 
 func (o *OrderEbarimt) TableName() string {

@@ -261,6 +261,17 @@ func CreateEbarimt(order models.ViewOrder) {
 	bilInput.PosNo = "0001"
 	bilInput.BranchNo = "001"
 
+	oEbarimt := models.OrderEbarimt{}
+	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
+
+	if *oEbarimt.EbarimtType == 1 {
+		bilInput.BillType = "1"
+	} else {
+		bilInput.BillType = "2"
+		CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
+		bilInput.CustomerNo = CustomerNo
+	}
+
 	var items []posapi.Stock
 
 	var orderItems []models.ViewOrderDetail
