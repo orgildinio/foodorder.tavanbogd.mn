@@ -35,10 +35,10 @@ func FoodType(c *fiber.Ctx) error {
 
 	field := models.Field2{
 		Field: "food_id",
-		Value: nil,
-		Props: map[string]interface{}{
-			"options": options,
-		},
+		//Value: nil,
+		//Props: map[string]interface{}{
+		//	"options": options,
+		//},
 	}
 
 	field2 := models.Field{

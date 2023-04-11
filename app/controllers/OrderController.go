@@ -229,7 +229,19 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
 
-	fmt.Println(foodBalance.Quantity)
+	//if foodBalance.Quantity < Quantity {
+	//	c.Status(http.StatusOK).JSON(models.UpdateResponse{
+	//		Status:  "warning",
+	//		Message: "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
+	//	})
+
+	//resp := models.UpdateResponse{
+	//	Status:  "warning",
+	//	Message: "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
+	//}
+	//c.Status(http.StatusOK).JSON(resp)
+	//return
+	//}
 
 	balanceQty := foodBalance.Quantity - Quantity
 

@@ -151,3 +151,8 @@ type ViewOrderDetail struct {
 func (v *ViewOrderDetail) TableName() string {
 	return "view_order_detail"
 }
+
+type UpdateResponse struct {
+	Status  string `json:"status"`
+	Message string `json:"message"`
+}

@@ -142,7 +142,7 @@ func QpayCallBackCheck(invoiceId string) int {
 
 func QPayCallBack(c *fiber.Ctx) error {
 	//orderUser := agentUtils.AuthUserObject(c)
-	order := models.ViewOrder{}
+	//order := models.ViewOrder{}
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
@@ -150,25 +150,26 @@ func QPayCallBack(c *fiber.Ctx) error {
 
 	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
 
-		UpdateStatus(orderNumber, checkOrder.ID, "qpay", "success")
-
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetails)
+
+		var orderDetailSets []models.OrderDetailSet
+		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
+
+		UpdateStatus(orderNumber, checkOrder.ID, "qpay", "success")
 
 		for _, orderDetail := range orderDetails {
 			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
 		}
 
-		var orderDetailSets []models.OrderDetailSet
-		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
-
 		for _, orderDetailSet := range orderDetailSets {
 			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
+		//go CreateEbarimt(order)
+
 		return c.Status(http.StatusOK).JSON("SUCCESS")
 
-		go CreateEbarimt(order)
 	}
 
 	return c.Status(http.StatusOK).JSON("FAILED")
@@ -211,15 +212,19 @@ func LaterPay(c *fiber.Ctx) error {
 		DB.DB.Where("order_id = ?", oldOrders.ID).Find(&orderDetailSets)
 
 		for _, orderDetailSet := range orderDetailSets {
-			foodBalance := models.ViewFoodBalance{}
-			DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&foodBalance)
 
-			if foodBalance.Quantity < orderDetailSet.Quantity {
+			viewBalance := models.ViewFoodBalance{}
+			DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&viewBalance)
+
+			fmt.Println("====================", viewBalance.Quantity)
+
+			if viewBalance.Quantity < orderDetailSet.Quantity {
 				return c.Status(http.StatusOK).JSON(map[string]string{
 					"status":  "warning",
 					"message": "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
 				})
 			}
+
 			UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
 			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
@@ -261,16 +266,16 @@ func CreateEbarimt(order models.ViewOrder) {
 	bilInput.PosNo = "0001"
 	bilInput.BranchNo = "001"
 
-	oEbarimt := models.OrderEbarimt{}
-	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
-
-	if *oEbarimt.EbarimtType == 1 {
-		bilInput.BillType = "1"
-	} else {
-		bilInput.BillType = "2"
-		CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
-		bilInput.CustomerNo = CustomerNo
-	}
+	//oEbarimt := models.OrderEbarimt{}
+	//DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
+	//
+	//if *oEbarimt.EbarimtType == 1 {
+	//    bilInput.BillType = "1"
+	//} else {
+	//    bilInput.BillType = "2"
+	//    CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
+	//    bilInput.CustomerNo = CustomerNo
+	//}
 
 	var items []posapi.Stock
 
