@@ -43,7 +43,7 @@ func SendNotification(c *fiber.Ctx) error {
 		Data:         FCMData,
 		Notification: FCMNotification,
 	}
-	notifyHandler.CreateNotification(data)
+	notifyHandler.CreateNotification(data, map[string]interface{}{})
 	return c.JSON(data)
 }
 
