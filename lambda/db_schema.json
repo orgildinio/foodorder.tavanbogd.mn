@@ -3609,6 +3609,26 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "ebarimt_type",
+    "title": "ebarimt_type",
+    "dbType": "int4",
+    "table": "order_ebarimt",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "org_register_number",
+    "title": "org_register_number",
+    "dbType": "int4",
+    "table": "order_ebarimt",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "order_later_pay": [
@@ -10343,7 +10363,7 @@
    {
     "model": "payment_type",
     "title": "payment_type",
-    "dbType": "text",
+    "dbType": "varchar",
     "table": "view_orders_zahialgat",
     "key": "",
     "extra": "",
@@ -10421,6 +10441,26 @@
     "scale": ""
    },
    {
+    "model": "is_delevery",
+    "title": "is_delevery",
+    "dbType": "varchar",
+    "table": "view_orders_zahialgat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "int4",
+    "table": "view_orders_zahialgat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
     "model": "first_name",
     "title": "first_name",
     "dbType": "text",
@@ -10441,8 +10481,8 @@
     "scale": ""
    },
    {
-    "model": "full_name",
-    "title": "full_name",
+    "model": "ebarimt",
+    "title": "ebarimt",
     "dbType": "text",
     "table": "view_orders_zahialgat",
     "key": "",
