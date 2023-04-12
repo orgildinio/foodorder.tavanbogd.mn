@@ -47,14 +47,15 @@ services:
       - ./libPosAPI.so:/home/ebarimtuser/app/libPosAPI.so #./libPosAPI.so path your so file
 #      - ./ebarimt_data:/home/ebarimtuser/.vatps
     labels:
-      - "traefik.http.routers.foodorder.rule=Host(`foodorder.tavanbogd.mn`)"
       - "traefik.http.routers.foodorder.tls=true"
       - "traefik.http.routers.foodorder.tls.certresolver=myresolver"
-      - "traefik.http.services.foodorder.loadbalancer.server.port=8082"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.redirs.entrypoints=web"
       - "traefik.http.routers.redirs.middlewares=redirect-to-https"
+      - "traefik.http.routers.foodorder.rule=Host(`foodorder.tavanbogd.mn`)"
+      - "traefik.http.services.foodorder.loadbalancer.server.port=8082"
+
 
 networks:
   traefik-net:

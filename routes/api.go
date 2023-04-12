@@ -61,6 +61,7 @@ func Api(e *fiber.App) {
 	a.Get("/ebarimt-info", controllers.EBarimtInfo)
 	a.Get("/ebarimt-check", controllers.EBarimtCheck)
 	a.Get("/ebarimt-send", controllers.EBarimtSend)
+	a.Get("/ebarimt-put", controllers.EBarimtPut)
 
 }
 
