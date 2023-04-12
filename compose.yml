@@ -7,11 +7,10 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_INITDB_ARGS: "--listen-addresses '*'"
+      POSTGRES_DB: food
       TZ: Asia/Ulaanbaatar
     volumes:
       - ./db:/var/lib/postgresql/data
-      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     ports:
       - "5432:5432"
   foodorder:
@@ -28,19 +27,26 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       APP_PORT: 8082
+      APP_MIGRATE: false
+      APP_SEED: false
+      DB_DEBUG: true
       JWT_SECRET: BIzaSyBUEDlwdKQ0AZOnHOkZv2MIw0GlRjql6V4
       TZ: Asia/Ulaanbaatar
     depends_on:
       - db
       - traefik
     volumes:
-      - ./public/uploaded:/app/public/uploaded
-      - ./app:/app/app
-      - ./routes:/app/routes
-      - ./go.mod:/app/go.mod
-      - ./lambda.json:/app/lambda.json
-      - ./mmk.so:/home/ebarimtuser/app/libPosAPI.so #./libPosAPI.so path your so file
-      - ./ebarimt_data:/home/ebarimtuser/.vatps:rw
+      - ./public:/home/ebarimtuser/app/public
+      - ./app:/home/ebarimtuser/app/app
+      - ./routes:/home/ebarimtuser/app/routes
+      - ./bootstrap:/home/ebarimtuser/app/bootstrap
+      - ./lambda:/home/ebarimtuser/app/lambda
+      - ./go.mod:/home/ebarimtuser/app/go.mod
+      - ./go.sum:/home/ebarimtuser/app/go.sum
+      - ./lambda.json:/home/ebarimtuser/app/lambda.json
+      - ./start.sh:/home/ebarimtuser/app/start.sh
+      - ./libPosAPI.so:/home/ebarimtuser/app/libPosAPI.so #./libPosAPI.so path your so file
+#      - ./ebarimt_data:/home/ebarimtuser/.vatps
     labels:
       - "traefik.http.routers.foodorder.rule=Host(`foodorder.tavanbogd.mn`)"
       - "traefik.http.routers.foodorder.tls=true"
@@ -50,44 +56,6 @@ services:
       - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.redirs.entrypoints=web"
       - "traefik.http.routers.redirs.middlewares=redirect-to-https"
-
-  traefik:
-    image: traefik:2.9.10
-    container_name: traefik
-    network_mode: "host"
-    restart: always
-    command:
-      - --api.insecure=true
-      - --providers.docker
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --certificatesresolvers.myresolver.acme.httpchallenge=true
-      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.myresolver.acme.email=munkaltai@gmail.com
-      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
-    labels:
-      - "traefik.http.middlewares.traefik_https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.traefik_https-redirect.redirectscheme.permanent=true"
-      - "traefik.docker.network=traefik-net"
-
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./letsencrypt:/letsencrypt
-
-  whoami:
-    image: "traefik/whoami"
-    container_name: "simple-service"
-    restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`foodorder.tavanbogd.mn`)"
-      - "traefik.http.routers.whoami.rule=Host(`analytic.foodorder.tavanbogd.mn`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
 
 networks:
   traefik-net:

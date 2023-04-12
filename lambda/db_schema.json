@@ -81,7 +81,9 @@
   "report_delegrengui_tailan_zadargaa",
   "report_heregleghciin_tailan",
   "report_hool_huraangui_tailan",
+  "report_hool_huraangui_tailan_new",
   "report_huraangui_tailan",
+  "report_new",
   "report_user",
   "set_food_for_cart",
   "view_cart_menu",
@@ -104,6 +106,7 @@
   "view_food_type_group_by",
   "view_kitchen",
   "view_material",
+  "view_notification",
   "view_order",
   "view_order_detail",
   "view_order_detail_success",
@@ -3373,6 +3376,16 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "data",
+    "title": "data",
+    "dbType": "text",
+    "table": "notifications",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "order_detail": [
@@ -4233,16 +4246,6 @@
     "scale": ""
    },
    {
-    "model": "success_time",
-    "title": "success_time",
-    "dbType": "timestamptz",
-    "table": "report_delegrengui_tailan_zadargaa",
-    "key": "",
-    "extra": "",
-    "nullable": "YES",
-    "scale": ""
-   },
-   {
     "model": "food_name",
     "title": "food_name",
     "dbType": "varchar",
@@ -4296,6 +4299,16 @@
     "model": "created_at",
     "title": "created_at",
     "dbType": "date",
+    "table": "report_delegrengui_tailan_zadargaa",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule_id",
+    "title": "order_rule_id",
+    "dbType": "int8",
     "table": "report_delegrengui_tailan_zadargaa",
     "key": "",
     "extra": "",
@@ -4373,6 +4386,16 @@
     "extra": "",
     "nullable": "YES",
     "scale": ""
+   },
+   {
+    "model": "order_rule_id",
+    "title": "order_rule_id",
+    "dbType": "int8",
+    "table": "report_heregleghciin_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
    }
   ],
   "report_hool_huraangui_tailan": [
@@ -4389,6 +4412,16 @@
    {
     "model": "company_id",
     "title": "company_id",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
     "dbType": "varchar",
     "table": "report_hool_huraangui_tailan",
     "key": "",
@@ -4451,6 +4484,78 @@
     "title": "created_at",
     "dbType": "timestamp",
     "table": "report_hool_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_hool_huraangui_tailan_new": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_hool_huraangui_tailan_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_id",
+    "title": "company_id",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_hool_huraangui_tailan_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "report_hool_huraangui_tailan_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "report_hool_huraangui_tailan_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
+    "table": "report_hool_huraangui_tailan_new",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -4553,6 +4658,148 @@
     "title": "created_at",
     "dbType": "date",
     "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_huraangui_tailan",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "report_new": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "company_name",
+    "title": "company_name",
+    "dbType": "varchar",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "pos_name",
+    "title": "pos_name",
+    "dbType": "varchar",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_number",
+    "title": "order_number",
+    "dbType": "varchar",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "user_id",
+    "title": "user_id",
+    "dbType": "int8",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "date",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "price",
+    "title": "price",
+    "dbType": "int4",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "qty",
+    "title": "qty",
+    "dbType": "int2",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_name",
+    "title": "food_name",
+    "dbType": "varchar",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule_id",
+    "title": "order_rule_id",
+    "dbType": "int8",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_name",
+    "title": "set_name",
+    "dbType": "varchar",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
+    "dbType": "text",
+    "table": "report_new",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "food_order_time_name",
+    "title": "food_order_time_name",
+    "dbType": "varchar",
+    "table": "report_new",
     "key": "",
     "extra": "",
     "nullable": "YES",
@@ -9469,6 +9716,108 @@
     "scale": ""
    }
   ],
+  "view_notification": [
+   {
+    "model": "notif_id",
+    "title": "notif_id",
+    "dbType": "int8",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "receiver_id",
+    "title": "receiver_id",
+    "dbType": "int8",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "seen",
+    "title": "seen",
+    "dbType": "int8",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "seen_time",
+    "title": "seen_time",
+    "dbType": "timestamp",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "link",
+    "title": "link",
+    "dbType": "text",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "sender",
+    "title": "sender",
+    "dbType": "int8",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "title",
+    "title": "title",
+    "dbType": "text",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "body",
+    "title": "body",
+    "dbType": "text",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "created_at",
+    "title": "created_at",
+    "dbType": "timestamp",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "data",
+    "title": "data",
+    "dbType": "text",
+    "table": "view_notification",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
   "view_order": [
    {
     "model": "id",
@@ -10483,6 +10832,36 @@
    {
     "model": "ebarimt",
     "title": "ebarimt",
+    "dbType": "text",
+    "table": "view_orders_zahialgat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "ebarimt_type",
+    "title": "ebarimt_type",
+    "dbType": "int4",
+    "table": "view_orders_zahialgat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "ebarimt_org_register_number",
+    "title": "ebarimt_org_register_number",
+    "dbType": "int4",
+    "table": "view_orders_zahialgat",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "full_name",
+    "title": "full_name",
     "dbType": "text",
     "table": "view_orders_zahialgat",
     "key": "",

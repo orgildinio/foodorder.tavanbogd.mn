@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  traefik:
+    image: traefik:2.9.10
+    container_name: traefik
+    network_mode: "host"
+    restart: always
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.myresolver.acme.httpchallenge=true
+      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.myresolver.acme.email=munkaltai@gmail.com
+      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+    labels:
+      - "traefik.http.middlewares.traefik_https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.traefik_https-redirect.redirectscheme.permanent=true"
+      - "traefik.docker.network=traefik-net"
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`foodorder.tavanbogd.mn`)"
+      - "traefik.http.routers.whoami.rule=Host(`analytic.foodorder.tavanbogd.mn`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+
+networks:
+  traefik-net:
+    driver: overlay
+    ipam:
+      driver: bridge

@@ -12,7 +12,14 @@ http://localhost:3000/crud/import/crud-export.json
 
 
 
-docker build --platform linux/amd64 --build-arg ARCH=x64 -t foodorder .
+sudo docker build --platform linux/amd64 --build-arg ARCH=x64 -t foodorder .
 
-
+sudo docker compose down
 sudo docker compose up -d
+sudo ufw allow from 127.0.0.0/16 to any port 5432 proto tcp
+sudo docker logs food-prod
+sudo docker logs postgres-server
+sudo docker ps
+sudo docker exec -it food-prod sh
+sudo docker rmi foodorder
+sudo docker images

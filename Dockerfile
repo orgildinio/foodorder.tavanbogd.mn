@@ -1,5 +1,5 @@
 #FROM golang:latest AS builder
-FROM golang:latest
+FROM golang:1.20.2
 
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
@@ -62,7 +62,12 @@ RUN go build -o main
 
 RUN chmod +x /home/ebarimtuser/app/start.sh
 RUN chmod +x /home/ebarimtuser/app/main
+
 # Expose port 3000 for the application
+RUN mkdir /home/ebarimtuser/.vatps && \
+    chown ebarimtuser:ebarimtuser /home/ebarimtuser/.vatps
+
+RUN chmod -R 755 /home/ebarimtuser/.vatps
 
 ENV DB_CONNECTION=postgres \
     DB_HOST=127.0.0.1 \
@@ -91,4 +96,5 @@ ENV DB_CONNECTION=postgres \
     GRAPHQL_DEBUG=true \
     LAMBDA_ROOT="./node_modules/@lambda-platform/lambda-builder"
 # Run the application when the container starts
+
 CMD ["sh", "./start.sh"]
