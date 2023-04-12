@@ -13,3 +13,6 @@ http://localhost:3000/crud/import/crud-export.json
 
 
 docker build --platform linux/amd64 --build-arg ARCH=x64 -t foodorder .
+
+
+sudo docker compose up -d
