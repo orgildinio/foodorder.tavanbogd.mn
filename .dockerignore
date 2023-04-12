@@ -9,3 +9,9 @@ node_modules
 webpack.mix.js
 package.json
 compose.yml
+db
+letsencrypt
+del
+compose.yml
+uploaded-foodorder
+public/uploaded
