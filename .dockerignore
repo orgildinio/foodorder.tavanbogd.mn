@@ -1,0 +1,11 @@
+.env
+.idea
+.vscode
+/.idea
+/.vscode
+.DS_Store
+*.DS_Store
+node_modules
+webpack.mix.js
+package.json
+compose.yml

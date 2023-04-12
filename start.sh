@@ -8,8 +8,7 @@ if [ -x /app/lambda/ ]; then
    rm -R /app/lambda/
    mkdir /app/lambda/
    chmod -R 700 /app/lambda/
-#   ./main generate
-   go run ./bootstrap/init/init.go
+   ./main generate
 
  fi
 
@@ -17,14 +16,12 @@ else
     if [ $OSTYPE == "msys" ]; then
         rm -R -f ./lambda
         mkdir ./lambda
-#        ./main generate
-        go run ./bootstrap/init/init.go
+        ./main generate
     else
            sudo rm -R lambda/
            mkdir lambda/
            chmod -R 700 lambda/
-#           ./main generate
-           go run ./bootstrap/init/init.go
+           ./main generate
     fi
 fi
 
