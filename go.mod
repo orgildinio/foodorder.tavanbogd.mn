@@ -11,7 +11,7 @@ require (
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/gorilla/websocket v1.5.0
 	github.com/lambda-platform/ebarimt v0.1.3
-	github.com/lambda-platform/lambda v0.6.14
+	github.com/lambda-platform/lambda v0.6.15
 	github.com/thedevsaddam/govalidator v1.9.10
 	github.com/valyala/fasthttp v1.40.0
 	github.com/vektah/gqlparser/v2 v2.5.1
