@@ -124,6 +124,121 @@ func HuraanguiTailanFetchData(c *fiber.Ctx, datagrid datagrid.Datagrid) error {
 	return c.JSON(data)
 
 }
+
+func HuraanguiTailanCompanyAggergation(c *fiber.Ctx, datagrid datagrid.Datagrid) error {
+
+	query := DB.DB.Table("orders")
+
+	query = query.Joins("LEFT JOIN users u ON u.id = orders.user_id LEFT JOIN view_order_detail_searcher d ON orders.id = d.order_id").Where("u.company_id IS NOT NULL")
+
+	query, _ = Filter(c, datagrid, query, "user_short_report")
+
+	if len(datagrid.Condition) > 0 {
+		query = query.Where(datagrid.Condition)
+	}
+
+	query = query.Select(datagrid.Aggergation)
+
+	rows, _ := query.Rows()
+
+	data := []interface{}{}
+	columns, _ := rows.Columns()
+	count := len(columns)
+	values := make([]interface{}, count)
+	valuePtrs := make([]interface{}, count)
+
+	/*end*/
+
+	for rows.Next() {
+
+		/*start */
+
+		for i := range columns {
+			valuePtrs[i] = &values[i]
+		}
+
+		rows.Scan(valuePtrs...)
+
+		var myMap = make(map[string]interface{})
+		for i, col := range columns {
+			val := values[i]
+
+			b, ok := val.([]byte)
+
+			if ok {
+
+				v, error := strconv.ParseInt(string(b), 10, 64)
+				if error != nil {
+					stringValue := string(b)
+
+					myMap[col] = stringValue
+				} else {
+					myMap[col] = v
+				}
+
+			} else {
+				myMap[col] = val
+			}
+
+		}
+		/*end*/
+
+		data = append(data, myMap)
+
+	}
+
+	return c.JSON(data)
+}
+
+func HuraanguiTailanCompanyFetData(c *fiber.Ctx, datagrid datagrid.Datagrid) error {
+
+	pageLimit := c.Query("paginate")
+	page := c.Query("page")
+
+	query := DB.DB.Table("orders")
+
+	query = query.Select(`
+    users.company_name,
+       users.company_id,
+       CASE
+           WHEN tbl_order_rule.food_order_time_name IS NULL THEN 'Захиалгат хоол'::text::character varying
+           ELSE tbl_order_rule.food_order_time_name
+           END                      AS food_order_time_name,
+       max(orders.created_at::date) AS created_at,
+       sum(orders.order_quantity)   AS order_quantity,
+       sum(orders.price)            AS price,
+       tbl_menu.order_rule_id
+`)
+
+	query = query.Joins(" LEFT JOIN users ON users.id = orders.user_id LEFT JOIN view_order_detail_searcher d ON orders.id = d.order_id LEFT JOIN tbl_menu ON d.menu_id = tbl_menu.id LEFT JOIN tbl_order_rule ON tbl_menu.order_rule_id = tbl_order_rule.id").Where("users.company_id IS NOT NULL")
+
+	query = query.Group("users.company_name, tbl_order_rule.food_order_time_name, users.company_id, tbl_menu.order_rule_id")
+
+	query = query.Order("users.company_name ASC")
+
+	//DB.DB.LogMode(true)
+	query, _ = Filter(c, datagrid, query, "user_short_report")
+
+	var Page_ int = 1
+	if page != "" {
+		Page_, _ = strconv.Atoi(page)
+	}
+	Limit_, _ := strconv.Atoi(pageLimit)
+
+	data := utils.Paging(&utils.Param{
+		DB:    query,
+		Page:  Page_,
+		Limit: Limit_,
+	}, datagrid.Data)
+
+	if len(datagrid.Relations) >= 1 {
+		data.Data = datagrid.FillVirtualColumns(datagrid.Data)
+	}
+
+	return c.JSON(data)
+
+}
+
 func Filter(c *fiber.Ctx, datagrid datagrid.Datagrid, query *gorm.DB, reportType string) (*gorm.DB, string) {
 
 	customHeader := ""
