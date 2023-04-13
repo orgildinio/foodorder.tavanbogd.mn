@@ -4480,8 +4480,8 @@
     "scale": ""
    },
    {
-    "model": "created_at",
-    "title": "created_at",
+    "model": "latest_create",
+    "title": "latest_create",
     "dbType": "timestamp",
     "table": "report_hool_huraangui_tailan",
     "key": "",

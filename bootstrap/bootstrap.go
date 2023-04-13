@@ -46,6 +46,7 @@ func Set() *lambda.Lambda {
 	if config.LambdaConfig.Notify.FirebaseConfig.APIKey != "" && config.LambdaConfig.Notify.FirebaseConfig.AppID != "" {
 		notify.Set(Lambda.App)
 		KrudMiddleWares = append(KrudMiddleWares, notify.MW(gridCaller.GetMODEL, caller.GetMODEL))
+		KrudMiddleWares = append(KrudMiddleWares, middlewares.ReportCalculatorMW(gridCaller.GetMODEL, caller.GetMODEL))
 	}
 	krud.Set(Lambda.App, gridCaller.GetMODEL, caller.GetMODEL, KrudMiddleWares, true)
 
