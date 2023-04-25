@@ -55,7 +55,8 @@ services:
       - "traefik.http.routers.redirs.middlewares=redirect-to-https"
       - "traefik.http.routers.foodorder.rule=Host(`foodorder.tavanbogd.mn`)"
       - "traefik.http.services.foodorder.loadbalancer.server.port=8082"
-
+      - "traefik.http.middlewares.foodorder_compress.compress=true"
+      - "traefik.http.routers.foodorder.middlewares=foodorder_compress"
 
 networks:
   traefik-net:

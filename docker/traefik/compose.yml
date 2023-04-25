@@ -14,10 +14,14 @@ services:
       - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
       - --certificatesresolvers.myresolver.acme.email=munkaltai@gmail.com
       - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+
+
     labels:
+      - "traefik.docker.network=traefik-net"
       - "traefik.http.middlewares.traefik_https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.traefik_https-redirect.redirectscheme.permanent=true"
-      - "traefik.docker.network=traefik-net"
+      - "traefik.http.routers.traefik.middlewares=traefik_compress"
+      - "traefik.http.middlewares.traefik_compress.compress=true"
 
     ports:
       - "80:80"

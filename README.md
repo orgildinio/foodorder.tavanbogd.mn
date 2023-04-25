@@ -23,3 +23,7 @@ sudo docker ps
 sudo docker exec -it food-prod sh
 sudo docker rmi foodorder
 sudo docker images
+
+
+sudo docker compose down && sudo docker compose up -d
+sudo docker logs traefik
