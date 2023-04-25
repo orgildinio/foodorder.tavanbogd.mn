@@ -21,6 +21,12 @@ func ReportCalculator(c *fiber.Ctx, GridModelCaller func(schema_id string) datag
 	} else if c.Path() == "/lambda/puzzle/grid/aggergation/313" {
 		grid := GridModelCaller("313")
 		return controllers.HuraanguiTailanAggergation(c, grid)
+	} else if c.Path() == "/lambda/puzzle/grid/data/312" {
+		grid := GridModelCaller("312")
+		return controllers.HuraanguiTailanCompanyFetData(c, grid)
+	} else if c.Path() == "/lambda/puzzle/grid/aggergation/312" {
+		grid := GridModelCaller("312")
+		return controllers.HuraanguiTailanCompanyAggergation(c, grid)
 	}
 
 	return c.Next()
