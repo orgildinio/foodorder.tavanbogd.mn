@@ -216,8 +216,6 @@ func LaterPay(c *fiber.Ctx) error {
 			viewBalance := models.ViewFoodBalance{}
 			DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&viewBalance)
 
-			fmt.Println("====================", viewBalance.Quantity)
-
 			if viewBalance.Quantity < orderDetailSet.Quantity {
 				return c.Status(http.StatusOK).JSON(map[string]string{
 					"status":  "warning",
@@ -242,7 +240,7 @@ func LaterPay(c *fiber.Ctx) error {
 
 	DB.DB.Create(&orderLaterPay)
 
-	//go CreateEbarimt(order)
+	go CreateEbarimt(order)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
@@ -266,16 +264,17 @@ func CreateEbarimt(order models.ViewOrder) {
 	bilInput.PosNo = "0001"
 	bilInput.BranchNo = "001"
 
-	//oEbarimt := models.OrderEbarimt{}
-	//DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
-	//
-	//if *oEbarimt.EbarimtType == 1 {
-	//    bilInput.BillType = "1"
-	//} else {
-	//    bilInput.BillType = "2"
-	//    CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
-	//    bilInput.CustomerNo = CustomerNo
-	//}
+	oEbarimt := models.OrderEbarimt{}
+	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
+
+	if *oEbarimt.EbarimtType == 1 {
+		bilInput.BillType = "1"
+	} else {
+		bilInput.BillType = "3"
+		CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
+		bilInput.CustomerNo = CustomerNo
+
+	}
 
 	var items []posapi.Stock
 
@@ -284,6 +283,7 @@ func CreateEbarimt(order models.ViewOrder) {
 	DB.DB.Where("order_id = ?", order.ID).Find(&orderItems)
 
 	for _, orderPayment := range orderItems {
+
 		var item posapi.Stock
 		Code := strconv.Itoa(orderPayment.OrderID)
 		Price := bill.FormatNumber(float64(orderPayment.Price))
@@ -309,6 +309,7 @@ func CreateEbarimt(order models.ViewOrder) {
 		fmt.Println(ebarimtErr.Error())
 	}
 	if ebarimtResponse.Success {
+
 		jsonStrin, _ := json.Marshal(ebarimtResponse)
 		var orderEbarimt models.OrderEbarimt
 		orderEbarimt.Ebarimt = string(jsonStrin)

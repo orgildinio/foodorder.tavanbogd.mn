@@ -28,6 +28,7 @@ func Api(e *fiber.App) {
 	a.Post("/cart/delete-set", agentMW.IsLoggedIn(), controllers.DeleteCartItem)
 
 	/* Order Zahialgat */
+	a.Get("/pending/order", agentMW.IsLoggedIn(), controllers.GetPendingOrder)
 	a.Get("/create-order", agentMW.IsLoggedIn(), controllers.CreateOrder)
 	a.Post("/cancel-order", agentMW.IsLoggedIn(), controllers.CancelOrder)
 

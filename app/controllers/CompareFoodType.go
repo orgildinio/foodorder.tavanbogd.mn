@@ -35,16 +35,16 @@ func FoodType(c *fiber.Ctx) error {
 
 	field := models.Field2{
 		Field: "food_id",
-		//Value: nil,
-		//Props: map[string]interface{}{
-		//	"options": options,
-		//},
+		Value: nil,
+		Props: map[string]interface{}{
+			"options": options,
+		},
 	}
 
-	field2 := models.Field{
-		Field: "sub_menu_foods",
-		Value: []map[string]interface{}{},
-	}
+	//field2 := models.Field{
+	//	Field: "sub_menu_foods",
+	//	Value: []map[string]interface{}{},
+	//}
 
 	SubSchemas = append(SubSchemas, field)
 
@@ -57,7 +57,7 @@ func FoodType(c *fiber.Ctx) error {
 			},
 		},
 		"schema": []interface{}{
-			field2,
+			//field2,
 		},
 	})
 }

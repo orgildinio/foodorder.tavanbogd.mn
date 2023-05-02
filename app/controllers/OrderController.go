@@ -10,6 +10,28 @@ import (
 	"time"
 )
 
+func GetPendingOrder(c *fiber.Ctx) error {
+	activeOrder := new(models.MyOrders)
+	MyOrder := new(models.MyOrders)
+	orderUser := agentUtils.AuthUserObject(c)
+
+	DB.DB.Select("id, order_number, created_at, ebarimt_data, ebarimt_type, org_register_number, payment_at, payment_status, payment_type, quantity, total_price, user_id, EXTRACT(EPOCH FROM (now() - created_at)) as uldsen_sec").Table("orders").Where("age(now(), created_at) < '5 minutes' AND user_id = ? AND payment_status = ?").Order("id DESC").First(&activeOrder)
+	DB.DB.Where("user_id = ? AND payment_status = ?", orderUser["id"], "pending").Order("id DESC").First(&MyOrder)
+
+	if activeOrder.ID >= 1 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status": "success",
+			"order":  activeOrder,
+		})
+	} else {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":       "warning",
+			"message":      "Худалдан авалтын хугцаа дууссан байна",
+			"order_number": MyOrder.OrderNumber,
+		})
+	}
+}
+
 func CreateOrder(c *fiber.Ctx) error {
 	orderUser := agentUtils.AuthUserObject(c)
 	orders := models.Orders{}
