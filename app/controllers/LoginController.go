@@ -78,6 +78,7 @@ type LoginRes struct {
 
 func Login(c *fiber.Ctx) error {
 	u := new(User)
+
 	if err := c.BodyParser(u); err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(models.Unauthorized{
 			Error:  "Username & password required",
@@ -300,11 +301,11 @@ func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
 
 		loginRES := LoginRes{}
 		errParse := json.Unmarshal([]byte(body), &loginRES)
+
 		if errParse != nil || loginRES.AccessToken == "" {
 			return c.Status(fiber.StatusUnauthorized).JSON(models.Unauthorized{
 				Error:  "User not found",
 				Status: false,
-				//    ==================================
 			})
 		} else {
 			return checkUserByToken(loginRES.AccessToken, c)
@@ -356,7 +357,6 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 	res, _ := http.DefaultClient.Do(req)
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
-
 	fmt.Println(string(body))
 	userInfo := appModel.UserInfo{}
 	err := json.Unmarshal([]byte(body), &userInfo)

@@ -11,6 +11,7 @@ import (
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"lambda/ebarimt"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -217,8 +218,6 @@ func LaterPay(c *fiber.Ctx) error {
 			viewBalance := models.ViewFoodBalance{}
 			DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&viewBalance)
 
-			fmt.Println("====================", viewBalance.Quantity)
-
 			if viewBalance.Quantity < orderDetailSet.Quantity {
 				return c.Status(http.StatusOK).JSON(map[string]string{
 					"status":  "warning",
@@ -304,9 +303,13 @@ func CreateEbarimt(order models.ViewOrder) {
 
 	bilInput.Stocks = items
 
+	log.Println("========== hey2")
+
 	ebarimtResponse, ebarimtErr := bill.PutBill(bilInput, ebarimt.PosAPI)
 
-	fmt.Println("========== hey3", bilInput)
+	log.Println("========== hey3", ebarimtErr)
+	log.Println("========== hey4", ebarimtResponse.Success)
+
 	if ebarimtErr != nil {
 		// create error info
 		fmt.Println(ebarimtErr.Error())

@@ -64,17 +64,19 @@ func CreateOrder(c *fiber.Ctx) error {
 		totalPriceZahialge := 0
 
 		cartID := 0
+		orderType := ""
 
 		for _, cartZahialgaQty := range cartZahialga {
 			totalQtyZahialga = totalQtyZahialga + cartZahialgaQty.Qty
 			totalPriceZahialge = totalPriceZahialge + cartZahialgaQty.Price
 			cartID = cartZahialgaQty.ID
-
+			orderType = "Захиалгат"
 		}
 
 		for _, cartMenu := range cartMenus {
 			totalQtyMenu = totalQtyMenu + cartMenu.Qty
 			totalPriceMenu = totalPriceMenu + cartMenu.PacketPrice
+			orderType = "Багц"
 		}
 
 		totalQty := totalQtyMenu + totalQtyZahialga
@@ -86,6 +88,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.Price = totalPrice
 		orders.IsSelled = GetStringPointer("olgoogui")
 		orders.CartID = cartID
+		orders.OrderType = orderType
 		DB.DB.Omit("is_delivery").Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
