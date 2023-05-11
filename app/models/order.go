@@ -145,7 +145,7 @@ type ViewOrderDetail struct {
 	Price             int     `gorm:"column:price" json:"price"`
 	Qty               int     `gorm:"column:qty" json:"qty"`
 	RuleImages        *string `gorm:"column:rule_images" json:"rule_images"`
-	SetName           *string `gorm:"column:set_name" json:"set_name"`
+	SetName           string  `gorm:"column:set_name" json:"set_name"`
 }
 
 func (v *ViewOrderDetail) TableName() string {

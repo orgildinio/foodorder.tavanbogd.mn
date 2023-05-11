@@ -11,7 +11,6 @@ import (
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"lambda/ebarimt"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -40,9 +39,11 @@ func QPayInvoice(c *fiber.Ctx) error {
 		"invoice_receiver_code": qpayRequest.InvoiceReceiverCode,
 		"invoice_description":   qpayRequest.InvoiceDescription,
 		"amount":                qpayRequest.Amount,
-		//"callback_url":          "https://mmk.khankhulgun.mn/api/qpay/callback/" + qpayRequest.SenderInvoiceNo,
-		"callback_url": "https://foodorder.tavanbogd.mn/api/qpay/callback/" + qpayRequest.SenderInvoiceNo,
+		"callback_url":          "https://foodorder.tavanbogd.mn/api/qpay/callback/" + qpayRequest.SenderInvoiceNo,
 	}
+
+	QPayCallBackFunc(qpayRequest.SenderInvoiceNo)
+
 	jsonValue, _ := json.Marshal(jsonData)
 
 	request, _ = http.NewRequest("POST", "https://merchant.qpay.mn/v2/invoice", bytes.NewBuffer(jsonValue))
@@ -57,7 +58,7 @@ func QPayInvoice(c *fiber.Ctx) error {
 	json.NewDecoder(response.Body).Decode(&res)
 
 	updateOrder := models.Orders{}
-	DB.DB.Debug().Where("order_number = ?", qpayRequest.SenderInvoiceNo).First(&updateOrder)
+	DB.DB.Where("order_number = ?", qpayRequest.SenderInvoiceNo).First(&updateOrder)
 	updateOrder.InvoiceID = fmt.Sprintf("%s", res["invoice_id"])
 	DB.DB.Omit("is_delivery").Save(&updateOrder)
 
@@ -143,22 +144,27 @@ func QpayCallBackCheck(invoiceId string) int {
 }
 
 func QPayCallBack(c *fiber.Ctx) error {
-	//orderUser := agentUtils.AuthUserObject(c)
-	//order := models.ViewOrder{}
+	orderUser := agentUtils.AuthUserObject(c)
+	order := models.ViewOrder{}
+
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
+	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&order)
+	if order.ID == 0 {
+		return c.Status(http.StatusOK).JSON("Not found active order")
+	}
 
 	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
+
+		UpdateStatus(orderNumber, checkOrder.ID, "qpay", "success")
 
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetails)
 
 		var orderDetailSets []models.OrderDetailSet
 		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
-
-		UpdateStatus(orderNumber, checkOrder.ID, "qpay", "success")
 
 		for _, orderDetail := range orderDetails {
 			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
@@ -168,13 +174,48 @@ func QPayCallBack(c *fiber.Ctx) error {
 			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
 
-		//go CreateEbarimt(order)
+		go CreateEbarimt(order)
 
 		return c.Status(http.StatusOK).JSON("SUCCESS")
 
 	}
 
 	return c.Status(http.StatusOK).JSON("FAILED")
+}
+
+func QPayCallBackFunc(orderNumber string) string {
+
+	order := models.ViewOrder{}
+
+	checkOrder := models.Orders{}
+	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
+	DB.DB.Where("order_number = ? AND payment_status = 'pending'", orderNumber).Order("id DESC").Find(&order)
+
+	if QpayCallBackCheck(checkOrder.InvoiceID) > 0 {
+
+		UpdateStatus(orderNumber, checkOrder.ID, "qpay", "success")
+
+		var orderDetails []models.OrderDetail
+		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetails)
+
+		var orderDetailSets []models.OrderDetailSet
+		DB.DB.Where("order_id = ?", checkOrder.ID).Find(&orderDetailSets)
+
+		for _, orderDetail := range orderDetails {
+			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
+		}
+
+		for _, orderDetailSet := range orderDetailSets {
+			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
+		}
+
+		go CreateEbarimt(order)
+
+		return "SUCCESS"
+
+	}
+
+	return "FAILED"
 }
 
 func LaterPay(c *fiber.Ctx) error {
@@ -289,7 +330,14 @@ func CreateEbarimt(order models.ViewOrder) {
 		Price := bill.FormatNumber(float64(orderPayment.Price))
 		TotalAmount := bill.FormatNumber(float64(orderPayment.Price * orderPayment.Qty))
 		item.Code = Code
-		item.Name = orderPayment.FoodName
+		fmt.Println("===========, len(orderPayment.FoodName)", len(orderPayment.FoodName))
+		fmt.Println("===========, len(orderPayment.SetName)", len(orderPayment.SetName))
+		if len(orderPayment.FoodName) != 0 {
+			item.Name = orderPayment.FoodName
+		} else if len(orderPayment.SetName) != 0 {
+			item.Name = orderPayment.SetName
+		}
+		fmt.Println("===========, item.Name", item.Name)
 		item.MeasureUnit = "01"
 		item.Qty = bill.FormatNumber(float64(orderPayment.Qty))
 		item.UnitPrice = Price
@@ -303,22 +351,21 @@ func CreateEbarimt(order models.ViewOrder) {
 
 	bilInput.Stocks = items
 
-	log.Println("========== hey2")
-
+	fmt.Println("===========, bilInput.Stocks", bilInput.Stocks)
+	fmt.Println("===========, bilInput", bilInput)
 	ebarimtResponse, ebarimtErr := bill.PutBill(bilInput, ebarimt.PosAPI)
-
-	log.Println("========== hey3", ebarimtErr)
-	log.Println("========== hey4", ebarimtResponse.Success)
 
 	if ebarimtErr != nil {
 		// create error info
 		fmt.Println(ebarimtErr.Error())
 	}
 
+	fmt.Println("===========, ebarimtResponse.Success", ebarimtResponse.Success)
+
 	if ebarimtResponse.Success {
-		jsonStrin, _ := json.Marshal(ebarimtResponse)
+		jsonString, _ := json.Marshal(ebarimtResponse)
 		var orderEbarimt models.OrderEbarimt
-		orderEbarimt.Ebarimt = string(jsonStrin)
+		orderEbarimt.Ebarimt = string(jsonString)
 		orderEbarimt.OrderID = order.ID
 
 		DB.DB.Create(&orderEbarimt)

@@ -76,6 +76,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		for _, cartMenu := range cartMenus {
 			totalQtyMenu = totalQtyMenu + cartMenu.Qty
 			totalPriceMenu = totalPriceMenu + cartMenu.PacketPrice
+			cartID = cartMenu.ID
 			orderType = "Багц"
 		}
 
@@ -244,6 +245,8 @@ func DeleteOrder() {
 func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentStatus string) {
 	now := time.Now()
 	editOrder := models.Orders{}
+
+	fmt.Println("================, PaymentStatus", PaymentStatus)
 
 	DB.DB.Debug().Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006-01-02 15:04:05")})
 
