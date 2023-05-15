@@ -302,6 +302,8 @@ func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
 		loginRES := LoginRes{}
 		errParse := json.Unmarshal([]byte(body), &loginRES)
 
+		fmt.Println(string(body))
+
 		if errParse != nil || loginRES.AccessToken == "" {
 			return c.Status(fiber.StatusUnauthorized).JSON(models.Unauthorized{
 				Error:  "User not found",
