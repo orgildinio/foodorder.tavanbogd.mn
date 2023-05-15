@@ -194,8 +194,6 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	orderUser := agentUtils.AuthUserObject(c)
 
-	//DB.DB.Model(models.OrdersStatus{}).Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Order("id DESC").Update("payment_status", "canceled")
-
 	DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Find(&orderCancelReq)
 
 	DB.DB.Delete(&orderCancelReq)
@@ -206,47 +204,9 @@ func CancelOrder(c *fiber.Ctx) error {
 	})
 }
 
-func DeleteOrder() {
-	var orders []models.Orders
-	DB.DB.Debug().Where("age(created_at) < '15 minute' AND payment_status = 'pending'").Find(&orders)
-
-	for _, order := range orders {
-		DB.DB.Debug().Delete(&order)
-	}
-
-}
-
-//func ChekingBalance(c *fiber.Ctx, oldOrders models.Orders, order models.ViewOrder) {
-//	orderUser := agentUtils.AuthUserObject(c)
-//
-//	var orderDetails []models.OrderDetail
-//	DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)
-//
-//	var orderDetailSets []models.OrderDetailSet
-//	DB.DB.Where("order_id = ?", oldOrders.ID).Find(&orderDetailSets)
-//
-//	for _, orderDetailSet := range orderDetailSets {
-//		foodBalance := models.ViewFoodBalance{}
-//		DB.DB.Where("food_id = ? AND kitchen_id = ?", orderDetailSet.FoodID, orderDetailSet.KitchenID).Find(&foodBalance)
-//
-//		if foodBalance.Quantity < orderDetailSet.Quantity {
-//			return nil
-//			}
-//		}
-//		UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
-//		UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
-//	}
-//
-//	for _, orderDetail := range orderDetails {
-//		UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
-//	}
-//}
-
 func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentStatus string) {
 	now := time.Now()
 	editOrder := models.Orders{}
-
-	fmt.Println("================, PaymentStatus", PaymentStatus)
 
 	DB.DB.Debug().Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006-01-02 15:04:05")})
 
@@ -256,20 +216,6 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 
 	foodBalance := models.FoodBalance{}
 	DB.DB.Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Find(&foodBalance)
-
-	//if foodBalance.Quantity < Quantity {
-	//	c.Status(http.StatusOK).JSON(models.UpdateResponse{
-	//		Status:  "warning",
-	//		Message: "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
-	//	})
-
-	//resp := models.UpdateResponse{
-	//	Status:  "warning",
-	//	Message: "Сонгосон хоолны үлдэгдэл хүрэлцэхгүй байна",
-	//}
-	//c.Status(http.StatusOK).JSON(resp)
-	//return
-	//}
 
 	balanceQty := foodBalance.Quantity - Quantity
 

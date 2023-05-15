@@ -13,6 +13,8 @@ func Api(e *fiber.App) {
 	a.Get("/send-notification", controllers.SendNotification)
 	//a.Get("/read-icons", controllers.ReadIcons)
 
+	a.Get("/balance", controllers.FoodBalance)
+
 	//Register
 	a.Post("/user-register", controllers.UserRegistration)
 

@@ -19,7 +19,6 @@ require (
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/tools v0.4.0 // indirect
 	gorm.io/gorm v1.24.5
-
 )
 
 //replace github.com/lambda-platform/lambda/puzzle v0.2.2 => ../../go/puzzle

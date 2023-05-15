@@ -308,6 +308,7 @@ func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
 				Status: false,
 			})
 		} else {
+			fmt.Println("===========")
 			return checkUserByToken(loginRES.AccessToken, c)
 		}
 
@@ -349,7 +350,6 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 	//fmt.Println(payload.EmpID)
 
 	url := "http://202.21.112.3:8082/api/hrms/hr/employee/get?EmployeeID=" + payload.EmpID
-	//fmt.Println(url)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json; charset=utf-8")

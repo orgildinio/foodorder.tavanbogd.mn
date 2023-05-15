@@ -2,7 +2,7 @@
     "schema_load_mode": "auto",
     "project_key": "",
     "theme": "aside",
-    "domain": "http://localhost:8080",
+    "domain": "https://foodorder.tavanbogd.mn/",
     "title": "Таван богд групп",
     "subTitle": "Хоол захиалгын систем",
     "copyright": "Таван богд групп© 2023",
