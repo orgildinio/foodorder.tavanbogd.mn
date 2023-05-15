@@ -310,7 +310,6 @@ func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
 				Status: false,
 			})
 		} else {
-			fmt.Println("===========")
 			return checkUserByToken(loginRES.AccessToken, c)
 		}
 

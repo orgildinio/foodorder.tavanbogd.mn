@@ -40,7 +40,7 @@ func Api(e *fiber.App) {
 	//QPAY
 	a.Post("/qpay/invoice", controllers.QPayInvoice)
 	//a.Post("/qpay/check", controllers.QPayPaymentCheck)
-	a.Get("/qpay/callback/:invoice_id", agentMW.IsLoggedIn(), controllers.QPayCallBack)
+	a.Get("/qpay/callback/:invoice_id", controllers.QPayCallBack)
 
 	//Latest Payment
 	a.Get("/payment/latest-payment", agentMW.IsLoggedIn(), controllers.LaterPay)

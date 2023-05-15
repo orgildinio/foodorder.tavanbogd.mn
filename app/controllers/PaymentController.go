@@ -143,14 +143,14 @@ func QpayCallBackCheck(invoiceId string) int {
 }
 
 func QPayCallBack(c *fiber.Ctx) error {
-	orderUser := agentUtils.AuthUserObject(c)
+	//orderUser := agentUtils.AuthUserObject(c)
 	order := models.ViewOrder{}
 
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
-	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Order("id DESC").Find(&order)
+	DB.DB.Where("order_number = ? AND payment_status = 'pending'", orderNumber).Order("id DESC").Find(&order)
 	if order.ID == 0 {
 		return c.Status(http.StatusOK).JSON("Not found active order")
 	}
@@ -274,13 +274,13 @@ func CreateEbarimt(order models.ViewOrder) {
 	oEbarimt := models.OrderEbarimt{}
 	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
 
-	if *oEbarimt.EbarimtType == 1 {
-		bilInput.BillType = "1"
-	} else {
-		bilInput.BillType = "3"
-		CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
-		bilInput.CustomerNo = CustomerNo
-	}
+	//if *oEbarimt.EbarimtType == 1 {
+	//	bilInput.BillType = "1"
+	//} else {
+	//	bilInput.BillType = "3"
+	//	CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
+	//	bilInput.CustomerNo = CustomerNo
+	//}
 
 	var items []posapi.Stock
 
@@ -294,17 +294,11 @@ func CreateEbarimt(order models.ViewOrder) {
 		Price := bill.FormatNumber(float64(orderPayment.Price))
 		TotalAmount := bill.FormatNumber(float64(orderPayment.Price * orderPayment.Qty))
 		item.Code = Code
-
-		//log.Println("orderPayment.FoodName", orderPayment.FoodName)
-		//log.Println("orderPayment.SetName", orderPayment.SetName)
-		//
-		//if len(orderPayment.FoodName) != 0 {
-		//	item.Name = orderPayment.SetName
-		//} else if len(orderPayment.SetName) != 0 {
-		//	item.Name = orderPayment.FoodName
-		//}
-
-		item.Name = "orderPayment.FoodName"
+		if len(orderPayment.FoodName) == 0 {
+			item.Name = orderPayment.SetName
+		} else if len(orderPayment.SetName) == 0 {
+			item.Name = orderPayment.FoodName
+		}
 		item.MeasureUnit = "01"
 		item.Qty = bill.FormatNumber(float64(orderPayment.Qty))
 		item.UnitPrice = Price
