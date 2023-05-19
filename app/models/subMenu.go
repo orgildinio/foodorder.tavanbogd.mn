@@ -18,7 +18,7 @@ type TblMenu struct {
 	PacketPriceID *int           `gorm:"column:packet_price_id" json:"packet_price_id"`
 	Qty           *int           `gorm:"column:qty" json:"qty"`
 	SetDate       *time.Time     `gorm:"column:set_date" json:"set_date"`
-	SetName       *string        `gorm:"column:set_name" json:"set_name"`
+	SetName       string         `gorm:"column:set_name" json:"set_name"`
 	UpdatedAt     *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 	UserID        *int           `gorm:"column:user_id" json:"user_id"`
 }

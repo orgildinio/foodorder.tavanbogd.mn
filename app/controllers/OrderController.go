@@ -220,7 +220,9 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 
 	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
 
-	if balanceQty <= 10 {
+	fmt.Println("balanceQty", balanceQty)
+
+	if balanceQty == 10 {
 		go LeftOverQuantitySend(FoodID, KitchenID, Quantity)
 	}
 

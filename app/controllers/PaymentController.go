@@ -274,11 +274,13 @@ func CreateEbarimt(order models.ViewOrder) {
 	oEbarimt := models.OrderEbarimt{}
 	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
 
-	//if *oEbarimt.EbarimtType == 1 {
+	fmt.Println("oEbarimt.EbarimtType", oEbarimt.EbarimtType)
+
+	//if oEbarimt.EbarimtType == "1" {
 	//	bilInput.BillType = "1"
 	//} else {
 	//	bilInput.BillType = "3"
-	//	CustomerNo := strconv.Itoa(*oEbarimt.OrgRegisterNumber)
+	//	CustomerNo := strconv.Itoa(oEbarimt.OrgRegisterNumber)
 	//	bilInput.CustomerNo = CustomerNo
 	//}
 

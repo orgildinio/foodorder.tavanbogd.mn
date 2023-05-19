@@ -148,17 +148,28 @@ type ViewFoodBalance struct {
 	CreatedAt   *time.Time     `gorm:"column:created_at" json:"created_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	FoodID      int            `gorm:"column:food_id" json:"food_id"`
-	FoodName    *string        `gorm:"column:food_name" json:"food_name"`
+	FoodName    string         `gorm:"column:food_name" json:"food_name"`
 	FoodPrice   float32        `gorm:"column:food_price" json:"food_price"`
 	FoodType    *string        `gorm:"column:food_type" json:"food_type"`
 	FoodTypeID  *int           `gorm:"column:food_type_id" json:"food_type_id"`
 	ID          *int           `gorm:"column:id" json:"id"`
 	KitchenID   *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
-	KitckenName *string        `gorm:"column:kitcken_name" json:"kitcken_name"`
+	KitckenName string         `gorm:"column:kitcken_name" json:"kitcken_name"`
 	Quantity    int            `gorm:"column:quantity" json:"quantity"`
 	UpdatedAt   *time.Time     `gorm:"column:updated_at" json:"updated_at"`
 }
 
 func (v *ViewFoodBalance) TableName() string {
 	return "view_food_balance"
+}
+
+type CountLeftMenuTime struct {
+	ID              int    `gorm:"column:id" json:"id"`
+	SetName         string `gorm:"column:set_name" json:"set_name"`
+	OrderRuleID     int    `gorm:"column:order_rule_id" json:"order_rule_id"`
+	MorningOrderEnd string `gorm:"column:morning_order_end" json:"morning_order_end"`
+}
+
+func (c *CountLeftMenuTime) TableName() string {
+	return "count_left_menu_time"
 }
