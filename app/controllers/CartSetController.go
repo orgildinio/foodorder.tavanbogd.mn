@@ -72,11 +72,11 @@ func AddToCartSet(c *fiber.Ctx) error {
 
 	DB.DB.Create(&orderSet)
 
-	leftTimeMenu := models.CountLeftMenuTime{}
+	//leftTimeMenu := models.CountLeftMenuTime{}
+	//
+	//DB.DB.Where("id = ? AND age(morning_order_end <= 2)", orderSet.MenuID).Find(&leftTimeMenu)
 
-	DB.DB.Where("id = ? AND age(morning_order_end <= 2)", orderSet.MenuID).Find(&leftTimeMenu)
-
-	go LeftTimeSend(leftTimeMenu.ID)
+	//go LeftTimeSend(leftTimeMenu.ID)
 
 	//2 save set subs
 	for _, subMenuData := range setHoolTooCartRequestData.Items {

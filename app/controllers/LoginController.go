@@ -271,7 +271,8 @@ func createJwtToken(user UserData) (string, error) {
 }
 
 func UbERPMobileLogin(Loging string, Password string, c *fiber.Ctx) error {
-	url := "http://202.21.112.3:8082/api/auth-service/login"
+	//url := "http://202.21.112.3:8082/api/auth-service/login"
+	url := "http://192.168.10.11:8082/api/auth-service/login"
 	method := "POST"
 
 	str := Loging
@@ -349,8 +350,9 @@ func checkUserByToken(token string, c *fiber.Ctx) error {
 	//fmt.Println(splited[1])
 	//fmt.Println(string(uDec))
 	//fmt.Println(payload.EmpID)
-
-	url := "http://202.21.112.3:8082/api/hrms/hr/employee/get?EmployeeID=" + payload.EmpID
+	//192.168.10.11
+	//	url := "http://202.21.112.3:8082/api/hrms/hr/employee/get?EmployeeID=" + payload.EmpID
+	url := "http://192.168.10.11:8082/api/hrms/hr/employee/get?EmployeeID=" + payload.EmpID
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json; charset=utf-8")

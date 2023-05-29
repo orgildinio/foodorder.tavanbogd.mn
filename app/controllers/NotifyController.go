@@ -45,35 +45,34 @@ func LeftOverQuantitySend(FoodID int, KitchenID int, Quantity int) {
 
 }
 
-func LeftTimeSend(MenuID int) {
-
-	menu := models.CountLeftMenuTime{}
-
-	DB.DB.Where("id = ?", MenuID).Find(&menu)
-
-	FCMData := modelsModels.FCMData{
-		Title:       "Сет хоолны хугцаа дуусаж байна",
-		Body:        fmt.Sprintf("%s хугцаа дуусаж байна", menu.SetName),
-		FirstName:   "Систем",
-		Sound:       config.LambdaConfig.Notify.Sound,
-		Icon:        config.LambdaConfig.Favicon,
-		Link:        "/admin",
-		ClickAction: config.LambdaConfig.Domain + "/admin",
-	}
-
-	FCMNotification := modelsModels.FCMNotification{
-		Title:       "Сет хоолны хугцаа дуусаж байна",
-		Body:        fmt.Sprintf("%s хугцаа дуусаж байна", menu.SetName),
-		Icon:        config.LambdaConfig.Domain + "/" + config.LambdaConfig.Favicon,
-		ClickAction: config.LambdaConfig.Domain + "/admin",
-	}
-
-	data := modelsModels.NotificationData{
-		//Users: []int{17},
-		Roles:        []int{3},
-		Data:         FCMData,
-		Notification: FCMNotification,
-	}
-	notifyHandler.CreateNotification(data, map[string]interface{}{})
-
-}
+//func LeftTimeSend(MenuID int) {
+//
+//	menu := models.CountLeftMenuTime{}
+//
+//	DB.DB.Where("id = ?", MenuID).Find(&menu)
+//
+//	FCMData := modelsModels.FCMData{
+//		Title:       "Сет хоолны хугацаа дуусаж байна",
+//		Body:        fmt.Sprintf("%s хугцаа дуусаж байна", menu.SetName),
+//		FirstName:   "Систем",
+//		Sound:       config.LambdaConfig.Notify.Sound,
+//		Icon:        config.LambdaConfig.Favicon,
+//		Link:        "/admin",
+//		ClickAction: config.LambdaConfig.Domain + "/admin",
+//	}
+//
+//	FCMNotification := modelsModels.FCMNotification{
+//		Title:       "Сет хоолны хугцаа дуусаж байна",
+//		Body:        fmt.Sprintf("%s хугцаа дуусаж байна", menu.SetName),
+//		Icon:        config.LambdaConfig.Domain + "/" + config.LambdaConfig.Favicon,
+//		ClickAction: config.LambdaConfig.Domain + "/admin",
+//	}
+//
+//	data := modelsModels.NotificationData{
+//		//Users: []int{17},
+//		Roles:        []int{3},
+//		Data:         FCMData,
+//		Notification: FCMNotification,
+//	}
+//	notifyHandler.CreateNotification(data, map[string]interface{}{})
+//}
