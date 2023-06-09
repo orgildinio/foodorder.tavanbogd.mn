@@ -4,7 +4,10 @@ import (
 	"encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/ebarimt/posapi"
+	"io/ioutil"
+	"lambda/app/models"
 	"lambda/ebarimt"
+	"net/http"
 )
 
 func EBarimtInfo(c *fiber.Ctx) error {
@@ -35,6 +38,35 @@ func EBarimtSend(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(res)
+}
+func GetOrganizationInfo(regID string) (models.OrganizationInfo, error) {
+	var response models.OrganizationInfo
+	url := "http://info.ebarimt.mn/rest/merchant/info?regno=" + regID
+	method := "GET"
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+
+	if err != nil {
+		return response, err
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		return response, err
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return response, err
+	}
+
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return response, err
+	}
+
+	return response, nil
 }
 
 func EBarimtPut(c *fiber.Ctx) error {

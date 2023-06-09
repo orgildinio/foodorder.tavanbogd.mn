@@ -149,7 +149,7 @@ func QPayCallBack(c *fiber.Ctx) error {
 	var orderNumber = c.Params("invoice_id")
 
 	checkOrder := models.Orders{}
-	DB.DB.Where("order_number = ?", orderNumber).First(&checkOrder)
+	DB.DB.Where("order_number = ?", orderNumber).Order("id DESC").Find(&checkOrder)
 	DB.DB.Where("order_number = ? AND payment_status = 'pending'", orderNumber).Order("id DESC").Find(&order)
 	if order.ID == 0 {
 		return c.Status(http.StatusOK).JSON("Not found active order")
@@ -172,6 +172,9 @@ func QPayCallBack(c *fiber.Ctx) error {
 		for _, orderDetailSet := range orderDetailSets {
 			UpdateBalance(orderDetailSet.FoodID, orderDetailSet.KitchenID, orderDetailSet.Quantity)
 		}
+
+		//billType := qpayRequest.BillType
+		//orgRegisterNumber := qpayRequest.OrgRegisterNumber
 
 		go CreateEbarimt(order)
 
@@ -260,11 +263,18 @@ func CreateEbarimt(order models.ViewOrder) {
 	bilInput := posapi.PutInput{}
 
 	amount := bill.FormatNumber(float64(order.Price))
+
 	bilInput.Amount = amount
 	bilInput.Vat = bill.GetVat(float64(order.Price), true, false)
 	bilInput.BillIDSuffix = bill.GenerateBillIdSuffix()
 	bilInput.CityTax = "0.00"
-	bilInput.BillType = "1"
+	if order.EbarimtType == "2" {
+		bilInput.BillType = "2"
+		bilInput.CustomerNo = order.EbarimtOrgRegister
+	} else if order.EbarimtType == "1" {
+		bilInput.BillType = "1"
+	}
+
 	bilInput.CashAmount = "0.00"
 	bilInput.NonCashAmount = amount
 	bilInput.DistrictCode = "23"
@@ -273,16 +283,6 @@ func CreateEbarimt(order models.ViewOrder) {
 
 	oEbarimt := models.OrderEbarimt{}
 	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
-
-	fmt.Println("oEbarimt.EbarimtType", oEbarimt.EbarimtType)
-
-	//if oEbarimt.EbarimtType == "1" {
-	//	bilInput.BillType = "1"
-	//} else {
-	//	bilInput.BillType = "3"
-	//	CustomerNo := strconv.Itoa(oEbarimt.OrgRegisterNumber)
-	//	bilInput.CustomerNo = CustomerNo
-	//}
 
 	var items []posapi.Stock
 
@@ -329,7 +329,42 @@ func CreateEbarimt(order models.ViewOrder) {
 		var orderEbarimt models.OrderEbarimt
 		orderEbarimt.Ebarimt = string(jsonString)
 		orderEbarimt.OrderID = order.ID
+		orderEbarimt.EbarimtType = bilInput.BillType
 
 		DB.DB.Create(&orderEbarimt)
 	}
+}
+
+func EbarimtBillType(c *fiber.Ctx) error {
+	orderNumber := c.Params("order_number")
+
+	eType := models.EbarimtType{}
+	err := c.BodyParser(&eType)
+	if err != nil {
+		fmt.Println(err.Error())
+		return c.Status(http.StatusInternalServerError).JSON("server error")
+	}
+
+	orders := models.Orders{}
+	DB.DB.Where("order_number = ?", orderNumber).Order("id DESC").Find(&orders)
+
+	response, err := GetOrganizationInfo(eType.EbarimtOrgRegister)
+	if err != nil {
+		return err
+	}
+
+	if response.Name == "" {
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":  "warning",
+			"message": "Компани олдсонгүй",
+		})
+	} else {
+		DB.DB.Model(&orders).Where("order_number = ? ", orderNumber).Updates(map[string]interface{}{"ebarimt_type": eType.EbarimtType, "ebarimt_org_register": eType.EbarimtOrgRegister})
+
+		return c.Status(http.StatusOK).JSON(map[string]string{
+			"status":  "success",
+			"message": response.Name,
+		})
+	}
+
 }

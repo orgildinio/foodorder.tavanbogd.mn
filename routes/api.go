@@ -63,6 +63,9 @@ func Api(e *fiber.App) {
 	a.Get("/ebarimt-check", controllers.EBarimtCheck)
 	a.Get("/ebarimt-send", controllers.EBarimtSend)
 	a.Get("/ebarimt-put", controllers.EBarimtPut)
+	a.Get("/ebarimt-org-info/:reg_no", controllers.EBarimtOrgInfo)
+
+	a.Post("/ebarimt-type/:order_number", agentMW.IsLoggedIn(), controllers.EbarimtBillType)
 
 }
 

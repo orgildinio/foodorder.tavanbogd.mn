@@ -70,6 +70,7 @@
   "branch_sub_menu",
   "branch_sub_menu_foods",
   "branches",
+  "count_left_menu_time",
   "food_type_view",
   "gal_togoo_guraw_main_menu",
   "gal_togoo_guraw_sub_menu",
@@ -1587,6 +1588,48 @@
     "title": "company_name",
     "dbType": "varchar",
     "table": "companies",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   }
+  ],
+  "count_left_menu_time": [
+   {
+    "model": "id",
+    "title": "id",
+    "dbType": "int8",
+    "table": "count_left_menu_time",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "set_name",
+    "title": "set_name",
+    "dbType": "varchar",
+    "table": "count_left_menu_time",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "order_rule_id",
+    "title": "order_rule_id",
+    "dbType": "int8",
+    "table": "count_left_menu_time",
+    "key": "",
+    "extra": "",
+    "nullable": "YES",
+    "scale": ""
+   },
+   {
+    "model": "morning_order_end",
+    "title": "morning_order_end",
+    "dbType": "time",
+    "table": "count_left_menu_time",
     "key": "",
     "extra": "",
     "nullable": "YES",

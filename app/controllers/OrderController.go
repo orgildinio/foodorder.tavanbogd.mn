@@ -90,7 +90,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.IsSelled = GetStringPointer("olgoogui")
 		orders.CartID = cartID
 		orders.OrderType = orderType
-		DB.DB.Omit("is_delivery").Create(&orders)
+		DB.DB.Omit("is_delivery", "org_register_number").Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
 			for i := 1; i <= cartZahialgas.Qty; i++ {
@@ -220,8 +220,6 @@ func UpdateBalance(FoodID int, KitchenID int, Quantity int) {
 
 	DB.DB.Model(&foodBalance).Where("food_id = ? AND kitchen_id = ?", FoodID, KitchenID).Update("quantity", balanceQty)
 
-	fmt.Println("balanceQty", balanceQty)
-
 	if balanceQty == 10 {
 		go LeftOverQuantitySend(FoodID, KitchenID, Quantity)
 	}
@@ -247,8 +245,9 @@ func RecepcionRequest(c *fiber.Ctx) error {
 	}
 
 	order.IsSelled = receptionRequestData.PaymentStatus
+	DB.DB.Model(&order).Where("id = ? AND is_selled = 'olgoogui'", receptionRequestData.ID).Update("is_selled", receptionRequestData.PaymentStatus)
 
-	DB.DB.Debug().Omit("is_delivery").Save(&order)
+	//DB.DB.Debug().Omit("is_delivery").Save(&order)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",

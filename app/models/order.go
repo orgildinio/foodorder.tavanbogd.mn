@@ -6,24 +6,26 @@ import (
 )
 
 type Orders struct {
-	CreatedAt         *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt         gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	ID                int            `gorm:"column:id" json:"id"`
-	IsSelled          string         `gorm:"column:is_selled" json:"is_selled"`
-	InvoiceID         string         `gorm:"column:invoice_id" json:"invoice_id"`
-	OrderQuantity     int            `gorm:"column:order_quantity" json:"order_quantity"`
-	PaymentType       string         `gorm:"column:payment_type" json:"payment_type"`
-	PaymentStatus     string         `gorm:"column:payment_status" json:"payment_status"`
-	Price             int            `gorm:"column:price" json:"price"`
-	UpdatedAt         *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	UserID            int            `gorm:"column:user_id" json:"user_id"`
-	OrderType         string         `gorm:"column:order_type" json:"order_type"`
-	CartID            int            `gorm:"column:cart_id" json:"cart_id"`
-	KitchenID         int            `gorm:"column:kitchen_id" json:"kitchen_id"`
-	OrgRegisterNumber *int           `gorm:"column:org_register_number" json:"org_register_number"`
-	SuccessTime       string         `gorm:"column:success_time" json:"success_time"`
-	IsDelivery        *string        `gorm:"column:is_delivery" json:"is_delivery"`
-	CompanyID         *int           `gorm:"column:company_id" json:"company_id"`
+	CreatedAt          *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt          gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID                 int            `gorm:"column:id" json:"id"`
+	IsSelled           string         `gorm:"column:is_selled" json:"is_selled"`
+	InvoiceID          string         `gorm:"column:invoice_id" json:"invoice_id"`
+	OrderQuantity      int            `gorm:"column:order_quantity" json:"order_quantity"`
+	PaymentType        string         `gorm:"column:payment_type" json:"payment_type"`
+	PaymentStatus      string         `gorm:"column:payment_status" json:"payment_status"`
+	Price              int            `gorm:"column:price" json:"price"`
+	UpdatedAt          *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID             int            `gorm:"column:user_id" json:"user_id"`
+	OrderType          string         `gorm:"column:order_type" json:"order_type"`
+	CartID             int            `gorm:"column:cart_id" json:"cart_id"`
+	KitchenID          int            `gorm:"column:kitchen_id" json:"kitchen_id"`
+	OrgRegisterNumber  string         `gorm:"column:org_register_number" json:"org_register_number"`
+	SuccessTime        string         `gorm:"column:success_time" json:"success_time"`
+	IsDelivery         *string        `gorm:"column:is_delivery" json:"is_delivery"`
+	CompanyID          *int           `gorm:"column:company_id" json:"company_id"`
+	EbarimtType        *string        `gorm:"column:ebarimt_type" json:"ebarimt_type"`
+	EbarimtOrgRegister *int           `gorm:"column:ebarimt_org_register" json:"ebarimt_org_register"`
 }
 
 func (o *Orders) TableName() string {
@@ -80,20 +82,22 @@ func (o *OrdersStatus) TableName() string {
 }
 
 type ViewOrder struct {
-	CartID        *int           `gorm:"column:cart_id" json:"cart_id"`
-	CreatedAt     *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	ID            int            `gorm:"column:id" json:"id"`
-	InvoiceID     *int           `gorm:"column:invoice_id" json:"invoice_id"`
-	KitchenID     *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
-	OrderNumber   string         `gorm:"column:order_number" json:"order_number"`
-	OrderQuantity int            `gorm:"column:order_quantity" json:"order_quantity"`
-	OrderType     *string        `gorm:"column:order_type" json:"order_type"`
-	PaymentStatus *string        `gorm:"column:payment_status" json:"payment_status"`
-	PaymentType   string         `gorm:"column:payment_type" json:"payment_type"`
-	Price         int            `gorm:"column:price" json:"price"`
-	UpdatedAt     *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	UserID        int            `gorm:"column:user_id" json:"user_id"`
+	CartID             *int           `gorm:"column:cart_id" json:"cart_id"`
+	CreatedAt          *time.Time     `gorm:"column:created_at" json:"created_at"`
+	DeletedAt          gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID                 int            `gorm:"column:id" json:"id"`
+	InvoiceID          *int           `gorm:"column:invoice_id" json:"invoice_id"`
+	KitchenID          *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
+	OrderNumber        string         `gorm:"column:order_number" json:"order_number"`
+	OrderQuantity      int            `gorm:"column:order_quantity" json:"order_quantity"`
+	OrderType          *string        `gorm:"column:order_type" json:"order_type"`
+	PaymentStatus      *string        `gorm:"column:payment_status" json:"payment_status"`
+	PaymentType        string         `gorm:"column:payment_type" json:"payment_type"`
+	Price              int            `gorm:"column:price" json:"price"`
+	UpdatedAt          *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	UserID             int            `gorm:"column:user_id" json:"user_id"`
+	EbarimtType        string         `gorm:"column:ebarimt_type" json:"ebarimt_type"`
+	EbarimtOrgRegister string         `gorm:"column:ebarimt_org_register" json:"ebarimt_org_register"`
 }
 
 func (v *ViewOrder) TableName() string {
@@ -182,4 +186,21 @@ type MyOrders struct {
 
 func (o *MyOrders) TableName() string {
 	return "orders"
+}
+
+type OrganizationInfo struct {
+	VatpayerRegisteredDate string      `json:"vatpayerRegisteredDate"`
+	LastReceiptDate        interface{} `json:"lastReceiptDate"`
+	ReceiptFound           bool        `json:"receiptFound"`
+	Name                   string      `json:"name"`
+	FreeProject            bool        `json:"freeProject"`
+	Citypayer              bool        `json:"citypayer"`
+	Vatpayer               bool        `json:"vatpayer"`
+	Found                  bool        `json:"found"`
+}
+
+type EbarimtType struct {
+	EbarimtType        string `json:"ebarimt_type"`
+	EbarimtOrgRegister string `json:"ebarimt_org_register"`
+	OrderNumber        string `json:"order_number"`
 }
