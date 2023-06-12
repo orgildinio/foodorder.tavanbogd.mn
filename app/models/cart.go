@@ -116,6 +116,8 @@ type ViewCartZahialga struct {
 	Qty             int        `gorm:"column:qty" json:"qty"`
 	UpdatedAt       *time.Time `gorm:"column:updated_at" json:"updated_at"`
 	UserID          int        `gorm:"column:user_id" json:"user_id"`
+	IsDelivery      string     `gorm:"column:is_delivery" json:"is_delivery"`
+	CompanyID       *int       `gorm:"column:company_id" json:"company_id"`
 }
 
 func (v *ViewCartZahialga) TableName() string {

@@ -58,8 +58,9 @@ func QPayInvoice(c *fiber.Ctx) error {
 
 	updateOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", qpayRequest.SenderInvoiceNo).First(&updateOrder)
-	updateOrder.InvoiceID = fmt.Sprintf("%s", res["invoice_id"])
-	DB.DB.Omit("is_delivery").Save(&updateOrder)
+	//updateOrder.InvoiceID = fmt.Sprintf("%s", res["invoice_id"])
+	//DB.DB.Omit("is_delivery").Save(&updateOrder)
+	DB.DB.Model(&updateOrder).Where("order_number = ?", qpayRequest.SenderInvoiceNo).Update("invoice_id", fmt.Sprintf("%s", res["invoice_id"]))
 
 	return c.JSON(res)
 }
@@ -238,6 +239,7 @@ func LaterPay(c *fiber.Ctx) error {
 		}
 
 		for _, orderDetail := range orderDetails {
+			UpdateStatus(order.OrderNumber, oldOrders.ID, "mmk", "success")
 			UpdateBalance(orderDetail.FoodID, orderDetail.KitchenID, orderDetail.Qty)
 		}
 
@@ -330,6 +332,7 @@ func CreateEbarimt(order models.ViewOrder) {
 		orderEbarimt.Ebarimt = string(jsonString)
 		orderEbarimt.OrderID = order.ID
 		orderEbarimt.EbarimtType = bilInput.BillType
+		orderEbarimt.OrgRegisterNumber = bilInput.CustomerNo
 
 		DB.DB.Create(&orderEbarimt)
 	}
@@ -353,18 +356,27 @@ func EbarimtBillType(c *fiber.Ctx) error {
 		return err
 	}
 
-	if response.Name == "" {
-		return c.Status(http.StatusOK).JSON(map[string]string{
-			"status":  "warning",
-			"message": "Компани олдсонгүй",
-		})
-	} else {
-		DB.DB.Model(&orders).Where("order_number = ? ", orderNumber).Updates(map[string]interface{}{"ebarimt_type": eType.EbarimtType, "ebarimt_org_register": eType.EbarimtOrgRegister})
-
+	if eType.EbarimtType == "1" {
+		DB.DB.Model(&orders).Where("order_number = ?", orderNumber).Update("ebarimt_type", eType.EbarimtType)
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":  "success",
-			"message": response.Name,
+			"message": "Амжилттай",
 		})
+	} else {
+
+		if response.Name == "" {
+			return c.Status(http.StatusOK).JSON(map[string]string{
+				"status":  "warning",
+				"message": "Компани олдсонгүй",
+			})
+		} else {
+			DB.DB.Model(&orders).Where("order_number = ? ", orderNumber).Updates(map[string]interface{}{"ebarimt_type": eType.EbarimtType, "ebarimt_org_register": eType.EbarimtOrgRegister})
+
+			return c.Status(http.StatusOK).JSON(map[string]string{
+				"status":  "success",
+				"message": response.Name,
+			})
+		}
 	}
 
 }

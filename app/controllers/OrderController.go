@@ -70,6 +70,8 @@ func CreateOrder(c *fiber.Ctx) error {
 			totalQtyZahialga = totalQtyZahialga + cartZahialgaQty.Qty
 			totalPriceZahialge = totalPriceZahialge + cartZahialgaQty.Price
 			cartID = cartZahialgaQty.ID
+			orders.IsDelevery = cartZahialgaQty.IsDelivery
+			orders.CompanyID = cartZahialgaQty.CompanyID
 			orderType = "Захиалгат"
 		}
 
@@ -77,6 +79,8 @@ func CreateOrder(c *fiber.Ctx) error {
 			totalQtyMenu = totalQtyMenu + cartMenu.Qty
 			totalPriceMenu = totalPriceMenu + cartMenu.PacketPrice
 			cartID = cartMenu.ID
+			orders.IsDelevery = cartMenu.IsDelivery
+			orders.CompanyID = cartMenu.CompanyID
 			orderType = "Багц"
 		}
 
@@ -90,7 +94,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		orders.IsSelled = GetStringPointer("olgoogui")
 		orders.CartID = cartID
 		orders.OrderType = orderType
-		DB.DB.Omit("is_delivery", "org_register_number").Create(&orders)
+		DB.DB.Omit("org_register_number").Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
 			for i := 1; i <= cartZahialgas.Qty; i++ {
@@ -193,9 +197,10 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	orderUser := agentUtils.AuthUserObject(c)
 
-	DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Find(&orderCancelReq)
+	//DB.DB.Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Find(&orderCancelReq)
+	DB.DB.Model(&orderCancelReq).Where("id = ? AND user_id = ? AND payment_status = 'pending'", orderCancelReq.ID, orderUser["id"]).Update("payment_status", "canceled")
 
-	DB.DB.Delete(&orderCancelReq)
+	//DB.DB.Delete(&orderCancelReq)
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
@@ -207,7 +212,7 @@ func UpdateStatus(OrderNumber string, OrderID int, PaymentType string, PaymentSt
 	now := time.Now()
 	editOrder := models.Orders{}
 
-	DB.DB.Debug().Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006-01-02 15:04:05")})
+	DB.DB.Model(&editOrder).Where("id = ? AND order_number = ?", OrderID, OrderNumber).Updates(models.Orders{PaymentStatus: PaymentStatus, PaymentType: PaymentType, SuccessTime: now.Format("2006-01-02 15:04:05")})
 
 }
 

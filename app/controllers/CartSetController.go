@@ -62,6 +62,9 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.IsDelivery = setHoolTooCartRequestData.IsDelivery
 	orderSet.CompanyID = setHoolTooCartRequestData.CompanyID
 
+	fmt.Println("setHoolTooCartRequestData.IsDelivery", setHoolTooCartRequestData.IsDelivery)
+	fmt.Println("orderSet.IsDelivery", orderSet.IsDelivery)
+
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",

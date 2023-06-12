@@ -22,7 +22,7 @@ type Orders struct {
 	KitchenID          int            `gorm:"column:kitchen_id" json:"kitchen_id"`
 	OrgRegisterNumber  string         `gorm:"column:org_register_number" json:"org_register_number"`
 	SuccessTime        string         `gorm:"column:success_time" json:"success_time"`
-	IsDelivery         *string        `gorm:"column:is_delivery" json:"is_delivery"`
+	IsDelevery         string         `gorm:"column:is_delevery" json:"is_delevery"`
 	CompanyID          *int           `gorm:"column:company_id" json:"company_id"`
 	EbarimtType        *string        `gorm:"column:ebarimt_type" json:"ebarimt_type"`
 	EbarimtOrgRegister *int           `gorm:"column:ebarimt_org_register" json:"ebarimt_org_register"`
@@ -38,7 +38,7 @@ type OrderEbarimt struct {
 	Ebarimt           string     `gorm:"column:ebarimt" json:"ebarimt"`
 	EbarimtType       string     `gorm:"column:ebarimt_type" json:"ebarimt_type"`
 	CreatedAt         *time.Time `gorm:"column:created_at" json:"created_at"`
-	OrgRegisterNumber int        `gorm:"column:org_register_number" json:"org_register_number"`
+	OrgRegisterNumber string     `gorm:"column:org_register_number" json:"org_register_number"`
 }
 
 func (o *OrderEbarimt) TableName() string {
