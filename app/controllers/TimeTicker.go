@@ -44,7 +44,7 @@ func TimeTick(orderID int) {
 				for _, cartSet := range cartSets {
 					formattedCreatedAt := cartSet.CreatedAt.Format("2006-01-02 15:04:05")
 
-					if formattedTimeStamp == formattedCreatedAt {
+					if formattedTimeStamp >= formattedCreatedAt {
 						DB.DB.Debug().Where("id = ?", cartSet.ID).Delete(&cartSets)
 					}
 				}
@@ -59,11 +59,9 @@ func TimeTick(orderID int) {
 				fmt.Println(formattedMinusTimeStamp)
 
 				for _, order := range orders {
-					fmt.Println("Something there!!!")
 					formattedCreatedAt := order.CreatedAt.Format("2006-01-02 15:04:05")
 
-					if formattedMinusTimeStamp == formattedCreatedAt {
-						fmt.Println("Right here!!!")
+					if formattedMinusTimeStamp >= formattedCreatedAt {
 						DB.DB.Debug().Model(&orders).Where("id = ?", order.ID).Update("payment_status", "canceled")
 					}
 				}
