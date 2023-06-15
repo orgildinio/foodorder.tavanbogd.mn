@@ -51,8 +51,6 @@ func LeftTimeSend(MenuID int) {
 
 	DB.DB.Where("id = ?", MenuID).Find(&menu)
 
-	fmt.Println("Hello From Notify")
-
 	FCMData := modelsModels.FCMData{
 		Title:       "Багц хоолны захиалгын хугацаа дуусаж байна",
 		Body:        fmt.Sprintf("%s хугацаа дуусаж байна", menu.SetName),

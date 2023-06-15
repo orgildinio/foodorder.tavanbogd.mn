@@ -44,24 +44,23 @@ func (s *SetFoodForCart) TableName() string {
 }
 
 type CartSet struct {
-	//CreatedAt     *time.Time     `gorm:"column:created_at" json:"created_at"`
-	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	FoodID        *int           `gorm:"column:food_id" json:"food_id"`
-	FoodIDDesert  *int           `gorm:"column:food_id_desert" json:"food_id_desert"`
-	FoodIDHoer    *int           `gorm:"column:food_id_hoer" json:"food_id_hoer"`
-	FoodIDNeg     *int           `gorm:"column:food_id_neg" json:"food_id_neg"`
-	FoodIDUuh     *int           `gorm:"column:food_id_uuh" json:"food_id_uuh"`
-	FoodIDZuush   *int           `gorm:"column:food_id_zuush" json:"food_id_zuush"`
-	ID            int            `gorm:"column:id" json:"id"`
-	KitchenID     *int           `gorm:"column:kitchen_id" json:"kitchen_id"`
-	MenuID        *int           `gorm:"column:menu_id" json:"menu_id"`
-	Ognoo         *time.Time     `gorm:"column:ognoo" json:"ognoo"`
-	Price         *int           `gorm:"column:price" json:"price"`
-	Qty           int            `gorm:"column:qty" json:"qty"`
-	SubMenuFoodID *int           `gorm:"column:sub_menu_food_id" json:"sub_menu_food_id"`
-	SubMenuID     *int           `gorm:"column:sub_menu_id" json:"sub_menu_id"`
-	UpdatedAt     *time.Time     `gorm:"column:updated_at" json:"updated_at"`
-	UserID        *int           `gorm:"column:user_id" json:"user_id"`
+	ID            int        `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
+	UserID        *int       `gorm:"column:user_id" json:"user_id"`
+	Ognoo         *time.Time `gorm:"column:ognoo" json:"ognoo"`
+	CreatedAt     *time.Time `gorm:"column:created_at" json:"created_at"`
+	UpdatedAt     *time.Time `gorm:"column:updated_at" json:"updated_at"`
+	MenuID        *int       `gorm:"column:menu_id" json:"menu_id"`
+	SubMenuID     *int       `gorm:"column:sub_menu_id" json:"sub_menu_id"`
+	SubMenuFoodID *int       `gorm:"column:sub_menu_food_id" json:"sub_menu_food_id"`
+	FoodID        *int       `gorm:"column:food_id" json:"food_id"`
+	Qty           *int       `gorm:"column:qty" json:"qty"`
+	Price         *int       `gorm:"column:price" json:"price"`
+	KitchenID     *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
+	FoodIDNeg     *int       `gorm:"column:food_id_neg" json:"food_id_neg"`
+	FoodIDHoer    *int       `gorm:"column:food_id_hoer" json:"food_id_hoer"`
+	FoodIDDesert  *int       `gorm:"column:food_id_desert" json:"food_id_desert"`
+	FoodIDZuush   *int       `gorm:"column:food_id_zuush" json:"food_id_zuush"`
+	FoodIDUuh     *int       `gorm:"column:food_id_uuh" json:"food_id_uuh"`
 }
 
 func (c *CartSet) TableName() string {

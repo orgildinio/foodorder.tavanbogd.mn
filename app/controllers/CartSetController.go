@@ -7,39 +7,9 @@ import (
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"net/http"
-	"time"
 )
 
 func AddToCartSet(c *fiber.Ctx) error {
-
-	var rules []models.TblOrderRule
-
-	ticker := time.NewTicker(1 * time.Second)
-
-	go func() {
-		for {
-			select {
-			case <-ticker.C:
-				now := time.Now()
-				afterFiveMinutes := now.Add(10 * time.Minute)
-				nowTime := afterFiveMinutes.Format("15:04:05")
-
-				fmt.Println(nowTime)
-
-				DB.DB.Order("morning_order_end ASC").Find(&rules)
-
-				for _, rule := range rules {
-
-					if nowTime == rule.MorningOrderEnd {
-						menu := models.TblMenu{}
-						DB.DB.Where("order_rule_id = ? AND set_date = ?", rule.ID, now.Format("2006-01-02")).Find(&menu)
-
-						LeftTimeSend(menu.ID)
-					}
-				}
-			}
-		}
-	}()
 
 	orderSet := models.CartMenu{}
 	err := c.BodyParser(&orderSet)
@@ -217,15 +187,4 @@ func DeleteCartItem(c *fiber.Ctx) error {
 		"status":  "success",
 		"message": "Сагснаас хасагдлаа",
 	})
-}
-
-func CheckFoodBalance(c *fiber.Ctx) error {
-
-	setHool := []models.SetHoolTooCartRequestData{}
-	fmt.Println(setHool)
-
-	balance := []models.FoodBalance{}
-	DB.DB.Where("id = ?", 25).Find(&balance)
-
-	return c.JSON(setHool)
 }

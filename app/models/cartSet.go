@@ -8,7 +8,7 @@ import (
 type CartMenu struct {
 	CancelledAt *time.Time `gorm:"column:cancelled_at" json:"cancelled_at"`
 	CartID      int        `gorm:"column:cart_id" json:"cart_id"`
-	CreatedAt   *time.Time `gorm:"column:created_at" json:"created_at"`
+	CreatedAt   time.Time  `gorm:"column:created_at" json:"created_at"`
 	//DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	ID          int        `gorm:"column:id" json:"id"`
 	MenuID      int        `gorm:"column:menu_id" json:"menu_id"`
