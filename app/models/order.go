@@ -75,6 +75,8 @@ type OrdersStatus struct {
 	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 	PaymentStatus string         `gorm:"column:payment_status" json:"payment_status"`
 	OrderNumber   string         `gorm:"column:order_number" json:"order_number"`
+	UserID        int            `gorm:"column:user_id" json:"user_id"`
+	CreatedAt     time.Time      `gorm:"column:created_at" json:"created_at"`
 }
 
 func (o *OrdersStatus) TableName() string {
@@ -214,4 +216,16 @@ type SubOrderDetail struct {
 
 func (o *SubOrderDetail) TableName() string {
 	return "sub_order_detail"
+}
+
+type OrdersTimeDiff struct {
+	ID          int       `gorm:"column:id" json:"id"`
+	OrderNumber string    `gorm:"column:order_number" json:"order_number"`
+	CreatedAt   time.Time `gorm:"column:created_at" json:"created_at"`
+	UserID      int       `gorm:"column:user_id" json:"user_id"`
+	Diff        string    `gorm:"column:diff" json:"diff"`
+}
+
+func (o *OrdersTimeDiff) TableName() string {
+	return "orders_time_diff"
 }

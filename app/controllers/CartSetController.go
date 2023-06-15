@@ -10,6 +10,7 @@ import (
 )
 
 func AddToCartSet(c *fiber.Ctx) error {
+	TimeTick()
 
 	orderSet := models.CartMenu{}
 	err := c.BodyParser(&orderSet)

@@ -67,6 +67,8 @@ func Api(e *fiber.App) {
 
 	a.Post("/ebarimt-type/:order_number", agentMW.IsLoggedIn(), controllers.EbarimtBillType)
 
+	a.Get("/order-ticker/:order_number", agentMW.IsLoggedIn(), controllers.OrderLeftTimeTicker)
+
 }
 
 ///api/food-type
