@@ -162,14 +162,3 @@ type ViewFoodBalance struct {
 func (v *ViewFoodBalance) TableName() string {
 	return "view_food_balance"
 }
-
-type CountLeftMenuTime struct {
-	ID              int    `gorm:"column:id" json:"id"`
-	SetName         string `gorm:"column:set_name" json:"set_name"`
-	OrderRuleID     int    `gorm:"column:order_rule_id" json:"order_rule_id"`
-	MorningOrderEnd string `gorm:"column:morning_order_end" json:"morning_order_end"`
-}
-
-func (c *CountLeftMenuTime) TableName() string {
-	return "count_left_menu_time"
-}

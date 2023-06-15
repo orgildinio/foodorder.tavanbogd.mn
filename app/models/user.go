@@ -64,3 +64,11 @@ type UserRegisterRequestData struct {
 	Status          string  `gorm:"column:status" json:"status"`
 	Login           string  `gorm:"column:login" json:"login"`
 }
+
+type DeleteUsers struct {
+	ID int `gorm:"column:id" json:"id"`
+}
+
+func (d *DeleteUsers) TableName() string {
+	return "users"
+}

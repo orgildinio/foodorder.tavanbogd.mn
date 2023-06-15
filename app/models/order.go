@@ -204,3 +204,14 @@ type EbarimtType struct {
 	EbarimtOrgRegister string `json:"ebarimt_org_register"`
 	OrderNumber        string `json:"order_number"`
 }
+
+type SubOrderDetail struct {
+	ID      int `gorm:"column:id" json:"id"`
+	OrderID int `gorm:"column:order_id" json:"order_id"`
+	FoodID  int `gorm:"column:food_id" json:"food_id"`
+	Qty     int `gorm:"column:qty" json:"qty"`
+}
+
+func (o *SubOrderDetail) TableName() string {
+	return "sub_order_detail"
+}

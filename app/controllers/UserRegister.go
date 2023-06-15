@@ -75,3 +75,14 @@ func UserRegistration(c *fiber.Ctx) error {
 		"message": "Бүртгэл амжилттай",
 	})
 }
+
+func UserDelete(c *fiber.Ctx) error {
+	orderUser := agentUtils.AuthUserObject(c)
+	user := models.DeleteUsers{}
+	DB.DB.Delete(&user, "id = ?", orderUser["id"])
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"status":  "success",
+		"message": "Хэрэглэгч устгагдлаа",
+	})
+}

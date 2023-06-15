@@ -7,9 +7,40 @@ import (
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"net/http"
+	"time"
 )
 
 func AddToCartSet(c *fiber.Ctx) error {
+
+	var rules []models.TblOrderRule
+
+	ticker := time.NewTicker(1 * time.Second)
+
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				now := time.Now()
+				afterFiveMinutes := now.Add(10 * time.Minute)
+				nowTime := afterFiveMinutes.Format("15:04:05")
+
+				fmt.Println(nowTime)
+
+				DB.DB.Order("morning_order_end ASC").Find(&rules)
+
+				for _, rule := range rules {
+
+					if nowTime == rule.MorningOrderEnd {
+						menu := models.TblMenu{}
+						DB.DB.Where("order_rule_id = ? AND set_date = ?", rule.ID, now.Format("2006-01-02")).Find(&menu)
+
+						LeftTimeSend(menu.ID)
+					}
+				}
+			}
+		}
+	}()
+
 	orderSet := models.CartMenu{}
 	err := c.BodyParser(&orderSet)
 
@@ -30,7 +61,7 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.UserID = int(cartUser["id"].(int64))
 
 	checkCart := models.CartMenuCheck{}
-	DB.DB.Where("user_id = ? AND order_rule_id = ? AND age(now(), created_at) < '30 minute'", orderSet.UserID, setHoolTooCartRequestData.OrderRuleID).Order("id DESC").Find(&checkCart)
+	DB.DB.Where("user_id = ? AND order_rule_id = ?", cartUser["id"], setHoolTooCartRequestData.OrderRuleID).Order("id DESC").Find(&checkCart)
 
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]interface{}{
@@ -62,9 +93,6 @@ func AddToCartSet(c *fiber.Ctx) error {
 	orderSet.IsDelivery = setHoolTooCartRequestData.IsDelivery
 	orderSet.CompanyID = setHoolTooCartRequestData.CompanyID
 
-	fmt.Println("setHoolTooCartRequestData.IsDelivery", setHoolTooCartRequestData.IsDelivery)
-	fmt.Println("orderSet.IsDelivery", orderSet.IsDelivery)
-
 	if setHoolTooCartRequestData.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
 			"status":    "warning",
@@ -74,12 +102,6 @@ func AddToCartSet(c *fiber.Ctx) error {
 	}
 
 	DB.DB.Create(&orderSet)
-
-	//leftTimeMenu := models.CountLeftMenuTime{}
-	//
-	//DB.DB.Where("id = ? AND age(morning_order_end <= 2)", orderSet.MenuID).Find(&leftTimeMenu)
-
-	//go LeftTimeSend(leftTimeMenu.ID)
 
 	//2 save set subs
 	for _, subMenuData := range setHoolTooCartRequestData.Items {

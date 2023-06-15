@@ -151,3 +151,30 @@ type SetHoolTooCartRequestData struct {
 		} `json:"subItems"`
 	} `json:"items"`
 }
+
+type TblOrderRule struct {
+	ID                int            `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
+	OrderCancelTime   *string        `gorm:"column:order_cancel_time" json:"order_cancel_time"`
+	MorningOrderStart *string        `gorm:"column:morning_order_start" json:"morning_order_start"`
+	MorningOrderEnd   string         `gorm:"column:morning_order_end" json:"morning_order_end"`
+	FoodPriceID       *int           `gorm:"column:food_price_id" json:"food_price_id"`
+	LunchOrderEnd     *string        `gorm:"column:lunch_order_end" json:"lunch_order_end"`
+	DinnerOrderStart  *string        `gorm:"column:dinner_order_start" json:"dinner_order_start"`
+	DinnerOrderEnd    *string        `gorm:"column:dinner_order_end" json:"dinner_order_end"`
+	NightOrderStart   *string        `gorm:"column:night_order_start" json:"night_order_start"`
+	NightOrderEnd     *string        `gorm:"column:night_order_end" json:"night_order_end"`
+	CreatedAt         *time.Time     `gorm:"column:created_at" json:"created_at"`
+	UpdatedAt         *time.Time     `gorm:"column:updated_at" json:"updated_at"`
+	DeletedAt         gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	OrderStart        *string        `gorm:"column:order_start" json:"order_start"`
+	OrderEnd          *string        `gorm:"column:order_end" json:"order_end"`
+	UserID            *int           `gorm:"column:user_id" json:"user_id"`
+	FoodOrderTimeName *string        `gorm:"column:food_order_time_name" json:"food_order_time_name"`
+	CanecelingTime    *string        `gorm:"column:caneceling_time" json:"caneceling_time"`
+	Images            *string        `gorm:"column:images" json:"images"`
+	RuleImages        *string        `gorm:"column:rule_images" json:"rule_images"`
+}
+
+func (t *TblOrderRule) TableName() string {
+	return "tbl_order_rule"
+}

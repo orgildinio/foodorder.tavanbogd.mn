@@ -15,6 +15,7 @@ func Api(e *fiber.App) {
 
 	//Register
 	a.Post("/user-register", controllers.UserRegistration)
+	a.Delete("/user-delete", agentMW.IsLoggedIn(), controllers.UserDelete)
 
 	//CART zahialgat
 

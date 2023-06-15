@@ -97,11 +97,10 @@ func CreateOrder(c *fiber.Ctx) error {
 		DB.DB.Omit("org_register_number").Create(&orders)
 
 		for _, cartZahialgas := range cartZahialga {
+			orderDetail := models.OrderDetail{}
 			for i := 1; i <= cartZahialgas.Qty; i++ {
 				foodBalance := models.FoodBalance{}
 				DB.DB.Where("food_id = ? AND kitchen_id = ?", cartZahialgas.FoodID, cartZahialgas.KitchenID).Find(&foodBalance)
-
-				orderDetail := models.OrderDetail{}
 
 				orderDetail.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
 				orderDetail.OrderID = orders.ID
@@ -127,20 +126,23 @@ func CreateOrder(c *fiber.Ctx) error {
 			zahialgatData := models.CartZahialgat{}
 			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&zahialgatData)
 			DB.DB.Delete(zahialgatData)
+
+			go CreateSubOrder(orders.ID, orderDetail.FoodID, cartZahialgas.Qty)
+
 		}
 
 		for _, cartMenu := range cartMenus {
 
+			var cartSubMenuFoods []models.CartSubMenuFood
 			var cartSubMenus []models.CartSubMenu
+			orderDetailSet := models.OrderDetailSet{}
 			DB.DB.Where("menu_id = ?", cartMenu.ID).Find(&cartSubMenus)
 
 			for _, cartSubMenu := range cartSubMenus {
-				var cartSubMenuFoods []models.CartSubMenuFood
 				DB.DB.Where("sub_menu_id = ?", cartSubMenu.ID).Find(&cartSubMenuFoods)
 
 				for _, cartSubMenuFood := range cartSubMenuFoods {
 					for i := 1; i <= cartMenu.Qty; i++ {
-						orderDetailSet := models.OrderDetailSet{}
 
 						orderDetailSet.UserID = GetIntegerPointer(int(orderUser["id"].(int64)))
 						orderDetailSet.OrderID = orders.ID
@@ -152,6 +154,7 @@ func CreateOrder(c *fiber.Ctx) error {
 						DB.DB.Create(&orderDetailSet)
 
 					}
+					go CreateSubOrder(orders.ID, orderDetailSet.FoodID, cartMenu.Qty)
 				}
 			}
 			for i := 1; i <= cartMenu.Qty; i++ {
@@ -172,7 +175,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		}
 
 		cartBagts := models.CartMenu{}
-		DB.DB.Debug().Where("user_id = ?", orderUser["id"]).Order("id DESC").Delete(&cartBagts)
+		DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Delete(&cartBagts)
 
 	}
 
@@ -184,6 +187,16 @@ func CreateOrder(c *fiber.Ctx) error {
 		"message": "Захиалга үүсгэлээ",
 		"data":    ordersResponse,
 	})
+}
+
+func CreateSubOrder(orderID int, foodID int, Qty int) {
+	subOrderDetail := models.SubOrderDetail{}
+
+	subOrderDetail.OrderID = orderID
+	subOrderDetail.FoodID = foodID
+	subOrderDetail.Qty = Qty
+
+	DB.DB.Create(&subOrderDetail)
 }
 
 func CancelOrder(c *fiber.Ctx) error {
