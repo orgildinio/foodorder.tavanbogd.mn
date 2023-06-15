@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TimeTick(orderID int) {
+func TimeTick() {
 	var rules []models.TblOrderRule
 	var carts []models.CartMenu
 	var cartSets []models.CartSet

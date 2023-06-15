@@ -11,7 +11,7 @@ import (
 func main() {
 
 	if len(os.Args) < 2 {
-		controllers.TimeTick(1)
+		controllers.TimeTick()
 		lambda := bootstrap.Set()
 		lambda.Start()
 
