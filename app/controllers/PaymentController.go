@@ -152,6 +152,7 @@ func QPayCallBack(c *fiber.Ctx) error {
 	checkOrder := models.Orders{}
 	DB.DB.Where("order_number = ?", orderNumber).Order("id DESC").Find(&checkOrder)
 	DB.DB.Where("order_number = ? AND payment_status = 'pending'", orderNumber).Order("id DESC").Find(&order)
+
 	if order.ID == 0 {
 		return c.Status(http.StatusOK).JSON("Not found active order")
 	}
@@ -213,8 +214,6 @@ func LaterPay(c *fiber.Ctx) error {
 	DB.DB.Where("user_id = ? AND payment_status = 'pending'", orderUser["id"]).Find(&oldOrders)
 
 	if oldOrders.ID >= 1 {
-
-		//ChekingBalance(c, oldOrders, order)
 
 		var orderDetails []models.OrderDetail
 		DB.DB.Where("order_id = ? AND user_id = ?", oldOrders.ID, orderUser["id"]).Find(&orderDetails)

@@ -91,6 +91,8 @@ func AddToCartSet(c *fiber.Ctx) error {
 
 			DB.DB.Create(&cartSubMenuFood)
 
+			SubOrderDetailSet(orderSet.ID, cartSubMenuFood.FoodID, orderSet.Qty)
+
 		}
 	}
 
@@ -154,6 +156,8 @@ func EditCartItem(c *fiber.Ctx) error {
 
 	DB.DB.Save(&editCart)
 
+	UpdateSubOrderDetailSet(cartMenu.ID, editCart.Qty)
+
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
 		"message": "Update success",
@@ -188,4 +192,26 @@ func DeleteCartItem(c *fiber.Ctx) error {
 		"status":  "success",
 		"message": "Сагснаас хасагдлаа",
 	})
+}
+
+func SubOrderDetailSet(cartID int, foodID int, qty int) {
+	detail := models.SubOrderDetailSet{}
+
+	detail.CartID = cartID
+	detail.FoodID = foodID
+	detail.Qty = qty
+
+	DB.DB.Save(&detail)
+
+}
+
+func UpdateSubOrderDetailSet(cartID int, qty int) {
+	var details []models.SubOrderDetailSet
+	DB.DB.Where("cart_id = ?", cartID).Find(&details)
+
+	for i := range details {
+		details[i].Qty = qty
+	}
+
+	DB.DB.Model(&models.SubOrderDetailSet{}).Where("cart_id = ?", cartID).Updates(map[string]interface{}{"qty": qty})
 }

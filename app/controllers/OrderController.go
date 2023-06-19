@@ -127,8 +127,6 @@ func CreateOrder(c *fiber.Ctx) error {
 			DB.DB.Where("user_id = ?", orderUser["id"]).Order("id DESC").Find(&zahialgatData)
 			DB.DB.Delete(zahialgatData)
 
-			go CreateSubOrder(orders.ID, orderDetail.FoodID, cartZahialgas.Qty)
-
 		}
 
 		for _, cartMenu := range cartMenus {
@@ -150,11 +148,12 @@ func CreateOrder(c *fiber.Ctx) error {
 						orderDetailSet.CartID = cartMenu.ID
 						orderDetailSet.KitchenID = cartMenu.KitchenID
 						orderDetailSet.Quantity = GetIntegerPointer(1)
+						orderDetailSet.RandomString = ""
 
 						DB.DB.Create(&orderDetailSet)
 
 					}
-					go CreateSubOrder(orders.ID, orderDetailSet.FoodID, cartMenu.Qty)
+
 				}
 			}
 			for i := 1; i <= cartMenu.Qty; i++ {
@@ -187,16 +186,6 @@ func CreateOrder(c *fiber.Ctx) error {
 		"message": "Захиалга үүсгэлээ",
 		"data":    ordersResponse,
 	})
-}
-
-func CreateSubOrder(orderID int, foodID int, Qty int) {
-	subOrderDetail := models.SubOrderDetail{}
-
-	subOrderDetail.OrderID = orderID
-	subOrderDetail.FoodID = foodID
-	subOrderDetail.Qty = Qty
-
-	DB.DB.Create(&subOrderDetail)
 }
 
 func CancelOrder(c *fiber.Ctx) error {

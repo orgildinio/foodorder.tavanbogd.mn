@@ -122,13 +122,14 @@ func (l *LutPacketPrice) TableName() string {
 }
 
 type OrderDetailSet struct {
-	CartID    int `gorm:"column:cart_id" json:"cart_id"`
-	FoodID    int `gorm:"column:food_id" json:"food_id"`
-	ID        int `gorm:"column:id" json:"id"`
-	KitchenID int `gorm:"column:kitchen_id" json:"kitchen_id"`
-	OrderID   int `gorm:"column:order_id" json:"order_id"`
-	UserID    int `gorm:"column:user_id" json:"user_id"`
-	Quantity  int `gorm:"column:quantity" json:"quantity"`
+	CartID       int    `gorm:"column:cart_id" json:"cart_id"`
+	FoodID       int    `gorm:"column:food_id" json:"food_id"`
+	ID           int    `gorm:"column:id" json:"id"`
+	KitchenID    int    `gorm:"column:kitchen_id" json:"kitchen_id"`
+	OrderID      int    `gorm:"column:order_id" json:"order_id"`
+	UserID       int    `gorm:"column:user_id" json:"user_id"`
+	Quantity     int    `gorm:"column:quantity" json:"quantity"`
+	RandomString string `gorm:"column:random_string" json:"random_string"`
 }
 
 func (o *OrderDetailSet) TableName() string {
@@ -208,10 +209,13 @@ type EbarimtType struct {
 }
 
 type SubOrderDetail struct {
-	ID      int `gorm:"column:id" json:"id"`
-	OrderID int `gorm:"column:order_id" json:"order_id"`
-	FoodID  int `gorm:"column:food_id" json:"food_id"`
-	Qty     int `gorm:"column:qty" json:"qty"`
+	ID            int    `gorm:"column:id" json:"id"`
+	OrderID       int    `gorm:"column:order_id" json:"order_id"`
+	FoodID        int    `gorm:"column:food_id" json:"food_id"`
+	Qty           int    `gorm:"column:qty" json:"qty"`
+	KitchenID     int    `gorm:"column:kitchen_id" json:"kitchen_id"`
+	OrderDetailID int    `gorm:"column:order_detail_id" json:"order_detail_id"`
+	RandomString  string `gorm:"column:random_string" json:"random_string"`
 }
 
 func (o *SubOrderDetail) TableName() string {
@@ -228,4 +232,16 @@ type OrdersTimeDiff struct {
 
 func (o *OrdersTimeDiff) TableName() string {
 	return "orders_time_diff"
+}
+
+type SubOrderDetailSet struct {
+	ID        int `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
+	CartID    int `gorm:"column:cart_id" json:"cart_id"`
+	FoodID    int `gorm:"column:food_id" json:"food_id"`
+	Qty       int `gorm:"column:qty" json:"qty"`
+	SubCartID int `gorm:"column:sub_cart_id" json:"sub_cart_id"`
+}
+
+func (s *SubOrderDetailSet) TableName() string {
+	return "sub_order_detail_set"
 }
