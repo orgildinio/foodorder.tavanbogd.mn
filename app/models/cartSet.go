@@ -88,19 +88,21 @@ func (c *CartMenuCheck) TableName() string {
 }
 
 type ViewCartMenu struct {
-	FoodOrderTimeName *string    `gorm:"column:food_order_time_name" json:"food_order_time_name"`
-	ID                int        `gorm:"column:id" json:"id"`
-	MenuID            int        `gorm:"column:menu_id" json:"menu_id"`
-	MorningOrderEnd   *string    `gorm:"column:morning_order_end" json:"morning_order_end"`
-	MorningOrderStart *string    `gorm:"column:morning_order_start" json:"morning_order_start"`
-	OrderRuleImages   *string    `gorm:"column:order_rule_images" json:"order_rule_images"`
-	PacketPrice       float32    `gorm:"column:packet_price" json:"packet_price"`
-	Qty               int        `gorm:"column:qty" json:"qty"`
-	RuleImages        *string    `gorm:"column:rule_images" json:"rule_images"`
-	SetDate           *time.Time `gorm:"column:set_date" json:"set_date"`
+	ID                *int       `gorm:"column:id" json:"id"`
+	UserID            *int       `gorm:"column:user_id" json:"user_id"`
+	MenuID            *int       `gorm:"column:menu_id" json:"menu_id"`
+	CartID            *int       `gorm:"column:cart_id" json:"cart_id"`
+	Qty               *int       `gorm:"column:qty" json:"qty"`
+	KitchenID         *int       `gorm:"column:kitchen_id" json:"kitchen_id"`
 	SetName           *string    `gorm:"column:set_name" json:"set_name"`
-	UserID            int        `gorm:"column:user_id" json:"user_id"`
-	KitchenID         int        `gorm:"column:kitchen_id" json:"kitchen_id"`
+	SetDate           *time.Time `gorm:"column:set_date" json:"set_date"`
+	MorningOrderStart *string    `gorm:"column:morning_order_start" json:"morning_order_start"`
+	MorningOrderEnd   *string    `gorm:"column:morning_order_end" json:"morning_order_end"`
+	FoodOrderTimeName *string    `gorm:"column:food_order_time_name" json:"food_order_time_name"`
+	OrderRuleImages   *string    `gorm:"column:order_rule_images" json:"order_rule_images"`
+	RuleImages        *string    `gorm:"column:rule_images" json:"rule_images"`
+	PacketPrice       *int       `gorm:"column:packet_price" json:"packet_price"`
+	OrderRuleID       int        `gorm:"column:order_rule_id" json:"order_rule_id"`
 }
 
 func (v *ViewCartMenu) TableName() string {

@@ -48,6 +48,26 @@ func AddToCartSet(c *fiber.Ctx) error {
 		})
 	}
 
+	var discounted []models.ViewCartMenu
+	DB.DB.Where("user_id = ? AND order_rule_id = ?", cartUser["id"], 4).Find(&discounted)
+
+	if len(discounted) == 1 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "Та хямдарсан хоол сагсалсан байна.",
+		})
+	}
+
+	var nonDiscounted []models.ViewCartMenu
+	DB.DB.Where("user_id = ? AND order_rule_id <> ?", cartUser["id"], 4).Find(&nonDiscounted)
+
+	if len(nonDiscounted) == 1 {
+		return c.Status(http.StatusOK).JSON(map[string]interface{}{
+			"status":  "warning",
+			"message": "Та багц хоол сагсалсан байна.",
+		})
+	}
+
 	packePrice := models.LutPacketPrice{}
 	DB.DB.Find(&packePrice)
 

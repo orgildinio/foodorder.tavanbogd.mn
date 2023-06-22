@@ -10,6 +10,7 @@ import (
 )
 
 func AddToCart(c *fiber.Ctx) error {
+	user := agentUtils.AuthUserObject(c)
 	cart := new(models.CartZahialgat)
 	err := c.BodyParser(&cart)
 
@@ -56,7 +57,7 @@ func AddToCart(c *fiber.Ctx) error {
 	cart.CompanyID = cartFood.CompanyID
 
 	checkCart := models.ViewCartZahialga{}
-	DB.DB.Where("food_id = ? AND user_id = ? AND age(now(), created_at) < '30 minute'", checkCart.FoodID, cart.UserID).Find(&checkCart)
+	DB.DB.Where("food_id = ? AND user_id = ?", checkCart.FoodID, user["id"]).Find(&checkCart)
 
 	if cartFood.Qty > 5 {
 		return c.Status(http.StatusOK).JSON(map[string]string{
