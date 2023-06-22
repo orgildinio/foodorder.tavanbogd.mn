@@ -19,7 +19,7 @@ func LeftOverQuantitySend(FoodID int, KitchenID int, Quantity int) {
 
 		FCMData := modelsModels.FCMData{
 			Title:       "Хоолны үлдэгдэл",
-			Body:        fmt.Sprintf("%s, %s-хоолны үлдэгдэл дуусаж байна. Үлдэгдэл %d !!!", food.KitckenName, food.FoodName, food.Quantity),
+			Body:        fmt.Sprintf("%s, %s-Үлдэгдэл дуусаж байна. Үлдэгдэл %d !!!", food.KitckenName, food.FoodName, food.Quantity),
 			FirstName:   "Админ",
 			Sound:       config.LambdaConfig.Notify.Sound,
 			Icon:        config.LambdaConfig.Favicon,
@@ -29,7 +29,7 @@ func LeftOverQuantitySend(FoodID int, KitchenID int, Quantity int) {
 
 		FCMNotification := modelsModels.FCMNotification{
 			Title:       "Хоолны үлдэгдэл",
-			Body:        fmt.Sprintf("%s, %s-үлдэгдэл дуусаж байна. Үлдэгдэл %d !!!", food.KitckenName, food.FoodName, food.Quantity),
+			Body:        fmt.Sprintf("%s, %s-Үлдэгдэл дуусаж байна. Үлдэгдэл %d !!!", food.KitckenName, food.FoodName, food.Quantity),
 			Icon:        config.LambdaConfig.Domain + "/" + config.LambdaConfig.Favicon,
 			ClickAction: config.LambdaConfig.Domain + "/admin",
 		}
@@ -53,7 +53,7 @@ func LeftTimeSend(MenuID int) {
 
 	FCMData := modelsModels.FCMData{
 		Title:       "Багц хоолны захиалгын хугацаа дуусаж байна",
-		Body:        fmt.Sprintf("%s хугацаа дуусаж байна", menu.SetName),
+		Body:        fmt.Sprintf("%s-Захиалгын хугацаа дуусаж байна", menu.SetName),
 		FirstName:   "Админ",
 		Sound:       config.LambdaConfig.Notify.Sound,
 		Icon:        config.LambdaConfig.Favicon,
@@ -63,7 +63,7 @@ func LeftTimeSend(MenuID int) {
 
 	FCMNotification := modelsModels.FCMNotification{
 		Title:       "Багц хоолны захиалгын хугацаа дуусаж байна",
-		Body:        fmt.Sprintf("%s хугацаа дуусаж байна", menu.SetName),
+		Body:        fmt.Sprintf("%s-Захиалгын хугацаа дуусаж байна", menu.SetName),
 		Icon:        config.LambdaConfig.Domain + "/" + config.LambdaConfig.Favicon,
 		ClickAction: config.LambdaConfig.Domain + "/admin",
 	}

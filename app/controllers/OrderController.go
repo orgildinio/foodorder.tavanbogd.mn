@@ -206,7 +206,7 @@ func CancelOrder(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(map[string]interface{}{
 		"status":  "success",
-		"message": " Захиалга цуцлгадлаа",
+		"message": " Захиалга цуцлагдлаа",
 	})
 }
 
