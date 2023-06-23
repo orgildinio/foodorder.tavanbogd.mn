@@ -11,7 +11,6 @@ import (
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
 	"lambda/app/models"
 	"lambda/ebarimt"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -249,9 +248,9 @@ func LaterPay(c *fiber.Ctx) error {
 		})
 	}
 
-	DB.DB.Create(&orderLaterPay)
-
+	fmt.Println("Before Ebarimt")
 	go CreateEbarimt(order)
+	DB.DB.Create(&orderLaterPay)
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
 		"status":  "success",
@@ -269,21 +268,18 @@ func CreateEbarimt(order models.ViewOrder) {
 	bilInput.Vat = bill.GetVat(float64(order.Price), true, false)
 	bilInput.BillIDSuffix = bill.GenerateBillIdSuffix()
 	bilInput.CityTax = "0.00"
-	if order.EbarimtType == "2" {
-		bilInput.BillType = "2"
+	if order.EbarimtType == "3" {
+		bilInput.BillType = "3"
 		bilInput.CustomerNo = order.EbarimtOrgRegister
 	} else if order.EbarimtType == "1" {
 		bilInput.BillType = "1"
 	}
-
+	fmt.Println("bilInput.BillType", bilInput.BillType)
 	bilInput.CashAmount = "0.00"
 	bilInput.NonCashAmount = amount
 	bilInput.DistrictCode = "23"
 	bilInput.PosNo = "0001"
 	bilInput.BranchNo = "001"
-
-	oEbarimt := models.OrderEbarimt{}
-	DB.DB.Where("order_id = ?", order.ID).Find(&oEbarimt)
 
 	var items []posapi.Stock
 
@@ -317,12 +313,14 @@ func CreateEbarimt(order models.ViewOrder) {
 
 	ebarimtResponse, ebarimtErr := bill.PutBill(bilInput, ebarimt.PosAPI)
 
-	log.Println(bilInput)
-
 	if ebarimtErr != nil {
 		// create error info
 		fmt.Println(ebarimtErr.Error())
 	}
+
+	fmt.Println("ebarimtResponse.Success", ebarimtResponse)
+	fmt.Println("order.EbarimtOrgRegister", order.EbarimtOrgRegister)
+	fmt.Printf("order.EbarimtOrgRegisterType: %T\n", order.EbarimtOrgRegister)
 
 	if ebarimtResponse.Success {
 
@@ -331,7 +329,9 @@ func CreateEbarimt(order models.ViewOrder) {
 		orderEbarimt.Ebarimt = string(jsonString)
 		orderEbarimt.OrderID = order.ID
 		orderEbarimt.EbarimtType = bilInput.BillType
-		orderEbarimt.OrgRegisterNumber = bilInput.CustomerNo
+		orderEbarimt.OrgRegisterNumber = order.EbarimtOrgRegister
+
+		fmt.Println("After Ebarimt")
 
 		DB.DB.Create(&orderEbarimt)
 	}

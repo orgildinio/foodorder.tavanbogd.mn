@@ -24,8 +24,9 @@ type Orders struct {
 	SuccessTime        string         `gorm:"column:success_time" json:"success_time"`
 	IsDelevery         string         `gorm:"column:is_delevery" json:"is_delevery"`
 	CompanyID          *int           `gorm:"column:company_id" json:"company_id"`
-	EbarimtType        *string        `gorm:"column:ebarimt_type" json:"ebarimt_type"`
-	EbarimtOrgRegister *int           `gorm:"column:ebarimt_org_register" json:"ebarimt_org_register"`
+	EbarimtType        string         `gorm:"column:ebarimt_type" json:"ebarimt_type"`
+	EbarimtOrgRegister string         `gorm:"column:ebarimt_org_register" json:"ebarimt_org_register"`
+	OrderRuleID        int            `gorm:"column:order_rule_id" json:"order_rule_id"`
 }
 
 func (o *Orders) TableName() string {

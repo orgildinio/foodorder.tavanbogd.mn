@@ -82,6 +82,7 @@ func CreateOrder(c *fiber.Ctx) error {
 			orders.IsDelevery = cartMenu.IsDelivery
 			orders.CompanyID = cartMenu.CompanyID
 			orderType = "Багц"
+			orders.OrderRuleID = cartMenu.OrderRuleID
 		}
 
 		totalQty := totalQtyMenu + totalQtyZahialga
