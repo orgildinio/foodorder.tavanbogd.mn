@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/lambda-platform/lambda/DB"
 	agentUtils "github.com/lambda-platform/lambda/agent/utils"
@@ -73,12 +74,15 @@ func TimeTick() {
 		ruleEndTime := getTodayStartDatetime(rule.MorningOrderEnd)
 		remainingMinutes := ruleEndTime.Sub(currentTime).Minutes()
 
+		fmt.Println(int(remainingMinutes))
+		fmt.Println(*rule.FoodOrderTimeName)
 		if int(remainingMinutes) == 15 {
-			if nowTime == rule.MorningOrderEnd {
-				menu := models.TblMenu{}
-				DB.DB.Where("order_rule_id = ? AND set_date = ?", rule.ID, now.Format("2006-01-02")).Find(&menu)
-				LeftTimeSend(menu.ID)
-			}
+
+			menu := models.TblMenu{}
+			DB.DB.Where("order_rule_id = ? AND set_date = ?", rule.ID, now.Format("2006-01-02")).Find(&menu)
+			fmt.Println(menu.SetName)
+			LeftTimeSend(menu.ID)
+
 		}
 
 	}
