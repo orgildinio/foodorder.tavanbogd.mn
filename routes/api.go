@@ -9,6 +9,7 @@ import (
 func Api(e *fiber.App) {
 	a := e.Group("/api")
 	a.Get("/users", controllers.Users)
+	a.Get("/send-order-notification", controllers.SendOrderNotification)
 	a.Post("/food-type", controllers.FoodType)
 	a.Get("/send-notification", controllers.SendNotification)
 	//a.Get("/read-icons", controllers.ReadIcons)

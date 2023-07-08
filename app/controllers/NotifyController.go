@@ -53,7 +53,7 @@ func LeftTimeSend(MenuID int) {
 
 	FCMData := modelsModels.FCMData{
 		Title:       "Багц хоолны захиалгын хугацаа дуусаж байна",
-		Body:        fmt.Sprintf("%s-Захиалгын хугацаа дуусаж байна", menu.SetName),
+		Body:        fmt.Sprintf("%s-Захиалгын хугацаа дуусахад 15 минут үлдлээ", menu.SetName),
 		FirstName:   "Админ",
 		Sound:       config.LambdaConfig.Notify.Sound,
 		Icon:        config.LambdaConfig.Favicon,
@@ -63,7 +63,7 @@ func LeftTimeSend(MenuID int) {
 
 	FCMNotification := modelsModels.FCMNotification{
 		Title:       "Багц хоолны захиалгын хугацаа дуусаж байна",
-		Body:        fmt.Sprintf("%s-Захиалгын хугацаа дуусаж байна", menu.SetName),
+		Body:        fmt.Sprintf("%s-Захиалгын хугацаа дуусахад 15 минут үлдлээ", menu.SetName),
 		Icon:        config.LambdaConfig.Domain + "/" + config.LambdaConfig.Favicon,
 		ClickAction: config.LambdaConfig.Domain + "/admin",
 	}

@@ -9,6 +9,7 @@ import (
 	modelsModels "github.com/lambda-platform/lambda/notify/models"
 	"lambda/app/models"
 	"os"
+	"time"
 )
 
 func Users(c *fiber.Ctx) error {
@@ -17,6 +18,19 @@ func Users(c *fiber.Ctx) error {
 	DB.DB.Find(&users)
 
 	return c.JSON(users)
+}
+
+func SendOrderNotification(c *fiber.Ctx) error {
+
+	TimeTick()
+	now := time.Now()
+	formattedTimeStamp := now.Format("2006-01-02 15:04:05")
+	fmt.Println(formattedTimeStamp)
+	fmt.Println("Sent Order Notification")
+
+	return c.JSON(map[string]interface{}{
+		"msg": "sent",
+	})
 }
 
 func SendNotification(c *fiber.Ctx) error {

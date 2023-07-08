@@ -23,7 +23,7 @@ func TimeTick() {
 			case <-ticker.C:
 				now := time.Now()
 
-				afterTenMinutes := now.Add(10 * time.Minute)
+				afterTenMinutes := now.Add(15 * time.Minute)
 				nowTime := afterTenMinutes.Format("15:04:05")
 
 				minusThirtyMinute := now.Add(-30 * time.Minute)
