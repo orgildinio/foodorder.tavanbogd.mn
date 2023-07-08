@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/lambda-platform/lambda/generator"
-	"lambda/app/controllers"
 	"lambda/bootstrap"
 	"os"
 )
@@ -11,7 +10,7 @@ import (
 func main() {
 
 	if len(os.Args) < 2 {
-		controllers.TimeTick()
+		//	controllers.TimeTick()
 		lambda := bootstrap.Set()
 		lambda.Start()
 
