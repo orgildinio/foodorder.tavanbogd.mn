@@ -248,7 +248,6 @@ func LaterPay(c *fiber.Ctx) error {
 		})
 	}
 
-	fmt.Println("Before Ebarimt")
 	go CreateEbarimt(order)
 	DB.DB.Create(&orderLaterPay)
 
@@ -274,7 +273,6 @@ func CreateEbarimt(order models.ViewOrder) {
 	} else if order.EbarimtType == "1" {
 		bilInput.BillType = "1"
 	}
-	fmt.Println("bilInput.BillType", bilInput.BillType)
 	bilInput.CashAmount = "0.00"
 	bilInput.NonCashAmount = amount
 	bilInput.DistrictCode = "23"
@@ -318,23 +316,18 @@ func CreateEbarimt(order models.ViewOrder) {
 		fmt.Println(ebarimtErr.Error())
 	}
 
-	fmt.Println("ebarimtResponse.Success", ebarimtResponse)
-	fmt.Println("order.EbarimtOrgRegister", order.EbarimtOrgRegister)
-	fmt.Printf("order.EbarimtOrgRegisterType: %T\n", order.EbarimtOrgRegister)
+	//if ebarimtResponse.Success {
 
-	if ebarimtResponse.Success {
+	jsonString, _ := json.Marshal(ebarimtResponse)
+	var orderEbarimt models.OrderEbarimt
+	orderEbarimt.Ebarimt = string(jsonString)
+	fmt.Println("orderEbarimt.Ebarimt", ebarimtResponse.Lottery)
+	orderEbarimt.OrderID = order.ID
+	orderEbarimt.EbarimtType = bilInput.BillType
+	orderEbarimt.OrgRegisterNumber = order.EbarimtOrgRegister
 
-		jsonString, _ := json.Marshal(ebarimtResponse)
-		var orderEbarimt models.OrderEbarimt
-		orderEbarimt.Ebarimt = string(jsonString)
-		orderEbarimt.OrderID = order.ID
-		orderEbarimt.EbarimtType = bilInput.BillType
-		orderEbarimt.OrgRegisterNumber = order.EbarimtOrgRegister
-
-		fmt.Println("After Ebarimt")
-
-		DB.DB.Create(&orderEbarimt)
-	}
+	DB.DB.Create(&orderEbarimt)
+	//}
 }
 
 func EbarimtBillType(c *fiber.Ctx) error {
